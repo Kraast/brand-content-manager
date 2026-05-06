@@ -474,6 +474,49 @@
     font-size: 12px;
   }
 
+  .editor-toolbar-card {
+    margin-bottom: 18px;
+  }
+
+  .card-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .card-display-stack,
+  .brain-display-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .inline-editor-panel {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .inline-editor-panel h4 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  .inline-editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .inline-editor-grid .editor-field.full {
+    grid-column: 1 / -1;
+  }
+
   .editor-section-title {
     grid-column: 1 / -1;
     margin-top: 8px;
@@ -527,6 +570,29 @@
   .toast.success .toast-title { color: #65BA7A; }
   .toast.error .toast-title { color: #e86b6b; }
   .toast.parse .toast-title { color: #f5c542; }
+
+  .brain-display-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .brain-panel {
+    background: rgba(255,255,255,0.045);
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+
+  .brain-panel h4 {
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  .brain-summary-box {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+  }
 
   .page-footer {
     max-width: 1180px;
@@ -716,6 +782,9 @@
       padding: 0 24px;
     }
 
+    .card-layout,
+    .brain-display-grid,
+    .inline-editor-grid,
     .hero-top,
     .framework-grid,
     .pillar-grid,
@@ -765,182 +834,286 @@
       <p id="brand-intro"></p>
     </div>
   </div>
-  <div class="framework-grid">
-    <div class="framework-panel">
-      <h4>Framework</h4>
-      <ul id="framework-list"></ul>
-    </div>
-    <div class="framework-panel">
-      <h4>Voice</h4>
-      <ul id="voice-list"></ul>
-    </div>
-  </div>
-  <div class="card">
-    <h3>Positioning Statement</h3>
-    <div class="positioning-box" id="positioning-box"></div>
-    <button class="copy-btn" id="positioning-copy-btn" type="button">Copy Positioning</button>
-  </div>
-  <div class="card" id="visual-rule-card" style="display:none">
-    <h3>Visual Rule</h3>
-    <div class="story-box" id="visual-rule-box"></div>
-    <button class="copy-btn" id="visual-rule-copy-btn" type="button">Copy Visual Rule</button>
-  </div>
-  <div class="card">
-    <h3>Brand Story</h3>
-    <div class="story-box" id="story-box"></div>
-    <button class="copy-btn" id="story-copy-btn" type="button">Copy Story</button>
-  </div>
-  <div class="card">
-    <h3>Content Pillars</h3>
-    <div class="pillar-grid" id="pillar-grid"></div>
-  </div>
-  <div class="card">
-    <h3>Content Do's and Don'ts</h3>
-    <div class="framework-grid">
-      <div class="framework-panel">
-        <h4>Do</h4>
-        <ul class="copy-list" id="do-list"></ul>
-      </div>
-      <div class="framework-panel">
-        <h4>Don't</h4>
-        <ul class="copy-list" id="dont-list"></ul>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <h3>Brand Brain Editor</h3>
-    <p class="editor-intro">Update the working brand strategy here and save it. These changes stay local in the app and feed the generator, so tone, positioning, claims, angles, and image guidance can evolve without touching code.</p>
+  <div class="card editor-toolbar-card">
+    <h3>Brand Brain Controls</h3>
+    <p class="editor-intro">Edit the strategy right next to the content it affects. Save once when you are happy, and the app keeps those adjustments locally for the selected brand.</p>
     <div class="editor-brand-switch">
       <button class="editor-brand-btn" id="editor-brand-zerobubble" type="button" onclick="setEditorBrand('zerobubble')">Edit ZeroBubble</button>
       <button class="editor-brand-btn" id="editor-brand-smartone" type="button" onclick="setEditorBrand('smartone')">Edit SmartOne</button>
-    </div>
-    <div class="editor-grid">
-      <div class="editor-section-title">Core Direction</div>
-      <div class="editor-field">
-        <label for="editor-focus">Focus</label>
-        <input id="editor-focus" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-positioning">Positioning</label>
-        <input id="editor-positioning" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-audience">Audience</label>
-        <input id="editor-audience" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-promise">Promise</label>
-        <input id="editor-promise" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-angle">Content Angle</label>
-        <input id="editor-angle" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-visual-system">Visual System</label>
-        <input id="editor-visual-system" type="text">
-      </div>
-      <div class="editor-field">
-        <label for="editor-keywords">Keywords</label>
-        <textarea id="editor-keywords"></textarea>
-        <div class="hint">Use commas to separate keywords.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-voice">Voice</label>
-        <textarea id="editor-voice"></textarea>
-        <div class="hint">Use commas to separate voice traits.</div>
-      </div>
-      <div class="editor-field full">
-        <label for="editor-story">Brand Story</label>
-        <textarea id="editor-story"></textarea>
-      </div>
-      <div class="editor-field full">
-        <label for="editor-visual-rule">Visual Rule</label>
-        <textarea id="editor-visual-rule"></textarea>
-      </div>
-      <div class="editor-field full">
-        <label for="editor-image-prefix">Image Prompt Prefix</label>
-        <textarea id="editor-image-prefix"></textarea>
-      </div>
-      <div class="editor-field full">
-        <label for="editor-image-style-notes">Image Style Notes</label>
-        <textarea id="editor-image-style-notes"></textarea>
-      </div>
-      <div class="editor-field">
-        <label for="editor-do-list">Do List</label>
-        <textarea id="editor-do-list"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-dont-list">Don't List</label>
-        <textarea id="editor-dont-list"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-section-title">Brand Brain</div>
-      <div class="editor-field full">
-        <label for="editor-brand-summary">Brand Summary</label>
-        <textarea id="editor-brand-summary"></textarea>
-      </div>
-      <div class="editor-field">
-        <label for="editor-core-audience">Core Audience</label>
-        <textarea id="editor-core-audience"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-primary-positioning">Primary Positioning</label>
-        <textarea id="editor-primary-positioning"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-core-value-props">Core Value Propositions</label>
-        <textarea id="editor-core-value-props"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-pain-points">Pain Points</label>
-        <textarea id="editor-pain-points"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-objections">Objections</label>
-        <textarea id="editor-objections"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-approved-themes">Approved Messaging Themes</label>
-        <textarea id="editor-approved-themes"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-claims-to-avoid">Claims to Avoid</label>
-        <textarea id="editor-claims-to-avoid"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-tone-of-voice">Tone of Voice</label>
-        <textarea id="editor-tone-of-voice"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-cta-styles">CTA Styles</label>
-        <textarea id="editor-cta-styles"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-content-angles">Content Angles</label>
-        <textarea id="editor-content-angles"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
-      <div class="editor-field">
-        <label for="editor-image-guidance">Image Guidance</label>
-        <textarea id="editor-image-guidance"></textarea>
-        <div class="hint">Use one item per line.</div>
-      </div>
     </div>
     <div class="editor-actions">
       <button class="editor-save-btn" type="button" onclick="saveDirectionEditor()">Save Brand Brain</button>
       <button class="editor-reset-btn" type="button" onclick="resetDirectionEditor()">Reset This Brand</button>
       <div class="editor-status" id="editor-status">Editing the saved strategy layer used by the app.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Framework</h3>
+    <div class="card-layout">
+      <div class="card-display-stack">
+        <div class="framework-grid">
+          <div class="framework-panel">
+            <h4>Framework</h4>
+            <ul id="framework-list"></ul>
+          </div>
+          <div class="framework-panel">
+            <h4>Voice</h4>
+            <ul id="voice-list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="inline-editor-panel">
+        <h4>Edit Framework</h4>
+        <div class="inline-editor-grid">
+          <div class="editor-field">
+            <label for="editor-focus">Focus</label>
+            <input id="editor-focus" type="text">
+          </div>
+          <div class="editor-field">
+            <label for="editor-audience">Audience</label>
+            <input id="editor-audience" type="text">
+          </div>
+          <div class="editor-field">
+            <label for="editor-promise">Promise</label>
+            <input id="editor-promise" type="text">
+          </div>
+          <div class="editor-field">
+            <label for="editor-angle">Content Angle</label>
+            <input id="editor-angle" type="text">
+          </div>
+          <div class="editor-field full">
+            <label for="editor-visual-system">Visual System</label>
+            <input id="editor-visual-system" type="text">
+          </div>
+          <div class="editor-field">
+            <label for="editor-keywords">Keywords</label>
+            <textarea id="editor-keywords"></textarea>
+            <div class="hint">Use commas to separate keywords.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-voice">Voice</label>
+            <textarea id="editor-voice"></textarea>
+            <div class="hint">Use commas to separate voice traits.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Positioning and Story</h3>
+    <div class="card-layout">
+      <div class="card-display-stack">
+        <div>
+          <div class="positioning-box" id="positioning-box"></div>
+          <button class="copy-btn" id="positioning-copy-btn" type="button">Copy Positioning</button>
+        </div>
+        <div class="framework-panel">
+          <h4>Brand Summary</h4>
+          <div class="brain-summary-box" id="brand-summary-box"></div>
+        </div>
+        <div>
+          <div class="story-box" id="story-box"></div>
+          <button class="copy-btn" id="story-copy-btn" type="button">Copy Story</button>
+        </div>
+      </div>
+      <div class="inline-editor-panel">
+        <h4>Edit Narrative</h4>
+        <div class="inline-editor-grid">
+          <div class="editor-field full">
+            <label for="editor-positioning">Positioning</label>
+            <textarea id="editor-positioning"></textarea>
+          </div>
+          <div class="editor-field full">
+            <label for="editor-brand-summary">Brand Summary</label>
+            <textarea id="editor-brand-summary"></textarea>
+          </div>
+          <div class="editor-field full">
+            <label for="editor-story">Brand Story</label>
+            <textarea id="editor-story"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="visual-rule-card" style="display:none">
+    <h3>Visual Direction</h3>
+    <div class="card-layout">
+      <div class="card-display-stack">
+        <div>
+          <div class="story-box" id="visual-rule-box"></div>
+          <button class="copy-btn" id="visual-rule-copy-btn" type="button">Copy Visual Rule</button>
+        </div>
+        <div class="framework-panel">
+          <h4>Image Guidance</h4>
+          <ul class="copy-list" id="brain-image-guidance-list"></ul>
+        </div>
+      </div>
+      <div class="inline-editor-panel">
+        <h4>Edit Visual Direction</h4>
+        <div class="inline-editor-grid">
+          <div class="editor-field full">
+            <label for="editor-visual-rule">Visual Rule</label>
+            <textarea id="editor-visual-rule"></textarea>
+          </div>
+          <div class="editor-field full">
+            <label for="editor-image-prefix">Image Prompt Prefix</label>
+            <textarea id="editor-image-prefix"></textarea>
+          </div>
+          <div class="editor-field full">
+            <label for="editor-image-style-notes">Image Style Notes</label>
+            <textarea id="editor-image-style-notes"></textarea>
+          </div>
+          <div class="editor-field full">
+            <label for="editor-image-guidance">Image Guidance</label>
+            <textarea id="editor-image-guidance"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Brand Brain</h3>
+    <div class="card-layout">
+      <div class="card-display-stack">
+        <div class="brain-display-grid">
+          <div class="brain-panel">
+            <h4>Core Audience</h4>
+            <ul class="copy-list" id="brain-audience-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Primary Positioning</h4>
+            <ul class="copy-list" id="brain-positioning-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Core Value Propositions</h4>
+            <ul class="copy-list" id="brain-value-props-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Pain Points</h4>
+            <ul class="copy-list" id="brain-pain-points-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Objections</h4>
+            <ul class="copy-list" id="brain-objections-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Approved Messaging Themes</h4>
+            <ul class="copy-list" id="brain-approved-themes-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Claims to Avoid</h4>
+            <ul class="copy-list" id="brain-claims-to-avoid-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Tone of Voice</h4>
+            <ul class="copy-list" id="brain-tone-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>CTA Styles</h4>
+            <ul class="copy-list" id="brain-cta-list"></ul>
+          </div>
+          <div class="brain-panel">
+            <h4>Content Angles</h4>
+            <ul class="copy-list" id="brain-content-angles-list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="inline-editor-panel">
+        <h4>Edit Brand Brain</h4>
+        <div class="inline-editor-grid">
+          <div class="editor-field">
+            <label for="editor-core-audience">Core Audience</label>
+            <textarea id="editor-core-audience"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-primary-positioning">Primary Positioning</label>
+            <textarea id="editor-primary-positioning"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-core-value-props">Core Value Propositions</label>
+            <textarea id="editor-core-value-props"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-pain-points">Pain Points</label>
+            <textarea id="editor-pain-points"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-objections">Objections</label>
+            <textarea id="editor-objections"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-approved-themes">Approved Messaging Themes</label>
+            <textarea id="editor-approved-themes"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-claims-to-avoid">Claims to Avoid</label>
+            <textarea id="editor-claims-to-avoid"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-tone-of-voice">Tone of Voice</label>
+            <textarea id="editor-tone-of-voice"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-cta-styles">CTA Styles</label>
+            <textarea id="editor-cta-styles"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-content-angles">Content Angles</label>
+            <textarea id="editor-content-angles"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Content Pillars</h3>
+    <div class="pillar-grid" id="pillar-grid"></div>
+  </div>
+
+  <div class="card">
+    <h3>Content Do's and Don'ts</h3>
+    <div class="card-layout">
+      <div class="framework-grid">
+        <div class="framework-panel">
+          <h4>Do</h4>
+          <ul class="copy-list" id="do-list"></ul>
+        </div>
+        <div class="framework-panel">
+          <h4>Don't</h4>
+          <ul class="copy-list" id="dont-list"></ul>
+        </div>
+      </div>
+      <div class="inline-editor-panel">
+        <h4>Edit Guardrails</h4>
+        <div class="inline-editor-grid">
+          <div class="editor-field">
+            <label for="editor-do-list">Do List</label>
+            <textarea id="editor-do-list"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+          <div class="editor-field">
+            <label for="editor-dont-list">Don't List</label>
+            <textarea id="editor-dont-list"></textarea>
+            <div class="hint">Use one item per line.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1016,6 +1189,7 @@
   function renderPage() {
     pageBrand = getBrand(viewBrandId);
     pageContent = getBrandContent(viewBrandId);
+    const brandBrain = pageContent.brandBrain || {};
     applyTheme(pageBrand);
 
     document.getElementById("hero-logo").src = pageBrand.id === "smartone" ? "./smartone-logo-white.png" : "./zerobubble-logo-white.png";
@@ -1039,11 +1213,23 @@
     renderList("dont-list", pageContent.brandKit.dontList);
 
     document.getElementById("positioning-box").textContent = pageContent.brandKit.positioning;
+    document.getElementById("brand-summary-box").textContent = brandBrain.brandSummary || "";
     document.getElementById("story-box").textContent = pageContent.brandKit.story;
+    renderList("brain-audience-list", brandBrain.coreAudience || []);
+    renderList("brain-positioning-list", brandBrain.primaryPositioning || []);
+    renderList("brain-value-props-list", brandBrain.coreValuePropositions || []);
+    renderList("brain-pain-points-list", brandBrain.painPoints || []);
+    renderList("brain-objections-list", brandBrain.objections || []);
+    renderList("brain-approved-themes-list", brandBrain.approvedMessagingThemes || []);
+    renderList("brain-claims-to-avoid-list", brandBrain.claimsToAvoid || []);
+    renderList("brain-tone-list", brandBrain.toneOfVoice || []);
+    renderList("brain-cta-list", brandBrain.ctaStyles || []);
+    renderList("brain-content-angles-list", brandBrain.contentAngles || []);
+    renderList("brain-image-guidance-list", brandBrain.imageGuidance || []);
 
-    if (pageContent.brandKit.visualRule) {
+    if (pageContent.brandKit.visualRule || (brandBrain.imageGuidance || []).length) {
       document.getElementById("visual-rule-card").style.display = "block";
-      document.getElementById("visual-rule-box").textContent = pageContent.brandKit.visualRule;
+      document.getElementById("visual-rule-box").textContent = pageContent.brandKit.visualRule || "Use the image guidance on this card as the current visual rule for the brand.";
     } else {
       document.getElementById("visual-rule-card").style.display = "none";
       document.getElementById("visual-rule-box").textContent = "";
