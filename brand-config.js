@@ -44,8 +44,8 @@ const BRANDS = {
     background: "#000000",
     surface: "#171019",
     text: "#F5F5F5",
-    focus: "VAT-approved fiscal cash register with integrated card payments",
-    positioning: "Malta's only VAT-approved cash register with integrated card payments, one device, one team to call, zero complexity.",
+    focus: "Integrated fiscal cash register and card payments solution for Malta merchants",
+    positioning: "An all-in-one fiscal cash register and card payments solution that helps Malta merchants simplify checkout, reduce counter clutter, lower operating costs, and access more competitive transaction rates.",
     keywords: [
       "VAT-approved",
       "fiscal cash register",
@@ -58,7 +58,7 @@ const BRANDS = {
       "purple fintech"
     ],
     competitors: "Viva Wallet, traditional card terminals, banks offering payment solutions in Malta",
-    auditDescription: "SmartOne is a VAT-approved fiscal cash register with integrated card payments, unique in the Maltese market. Sold by ZeroBubble Ltd. Targets SMB merchants across all retail verticals in Malta. Brand colours: pure black #000000 + purple #5A17B4. Tone: slick, fintech-forward, confidence-inspiring.",
+    auditDescription: "SmartOne is an all-in-one fiscal cash register and card payments solution for Malta merchants. It combines compliant fiscal receipts and card acceptance in one cleaner setup designed to reduce clutter, simplify operations, and support more competitive transaction rates where applicable. Sold by ZeroBubble Ltd. Brand colours: pure black #000000 + purple #5A17B4. Tone: slick, fintech-forward, confidence-inspiring.",
     voice: [
       "Clear",
       "Reliable",
@@ -293,17 +293,19 @@ const CONTENT = {
       heroTitle: "SmartOne Marketing Kit",
       heroSubtitle: "Fiscal cash register positioning, ad copy, payment-first content, and demo nurture sequence.",
       framework: {
-        audience: "Merchants who need a VAT-approved cash register with card payments built in.",
-        promise: "One compliant checkout device with one local team to call.",
-        angle: "Payment speed, fiscal receipts, compliance confidence, and simple setup.",
+        audience: "Merchants who want an all-in-one fiscal cash register and card payments setup with less clutter and clearer day-to-day operations.",
+        promise: "One all-in-one checkout system that combines fiscal receipts and card payments in a cleaner, commercially smarter setup.",
+        angle: "Integrated fiscal checkout, lower clutter, smoother operations, cost efficiency, and stronger transaction-rate conversations.",
         visualSystem: "Pure black, vivid purple, clean fintech confidence, product-first imagery."
       },
-      positioning: "Malta's only VAT-approved cash register with integrated card payments, one device, one team to call, zero complexity.",
-      story: "Malta merchants should not have to choose between compliance and convenience. SmartOne gives businesses one device for fiscal receipts and card payments, backed by a local team that picks up the phone. Faster checkout. Cleaner operations. Less stress around compliance.",
+      positioning: "An all-in-one fiscal cash register and card payments solution that helps Malta merchants simplify checkout, reduce clutter, lower operating costs, and explore more competitive transaction rates.",
+      story: "Malta merchants should not have to juggle separate machines, separate payment flows, and extra operational drag just to stay compliant. SmartOne combines fiscal receipts and card payments in one all-in-one system, helping businesses reduce counter clutter, streamline day-to-day operations, and create room for lower operating costs and stronger transaction-rate conversations.",
       visualRule: "SmartOne should look pure black and purple, slick, confident, product-first, and separate from ZeroBubble orange.",
       doList: [
         "Speak to merchants in plain language",
-        "Lead with checkout speed and compliance confidence",
+        "Lead with integrated checkout, compliance confidence, and all-in-one simplicity",
+        "Highlight reduced clutter and cleaner counter operations",
+        "Reference operating cost and transaction-rate benefits carefully and commercially",
         "Show the device in real Maltese business settings",
         "Use product-focused imagery with black and purple branding",
         "Close with a demo CTA"
@@ -317,7 +319,7 @@ const CONTENT = {
       ]
     },
     brandBrain: {
-      brandSummary: "SmartOne helps businesses take card payments and manage modern merchant transactions with more clarity, trust, and commercial confidence.",
+      brandSummary: "SmartOne is an all-in-one fiscal cash register and card payments solution that helps merchants simplify checkout, reduce clutter, lower operating costs, and improve commercial confidence.",
       coreAudience: [
         "SMEs in Malta",
         "merchants evaluating payment solutions",
@@ -325,18 +327,23 @@ const CONTENT = {
         "teams comparing providers, pricing, support, and speed of setup"
       ],
       primaryPositioning: [
-        "practical and trustworthy payments partner",
+        "all-in-one fiscal cash register and card payments solution",
+        "practical and trustworthy merchant payments partner",
         "clear merchant-focused value, not vague fintech hype",
-        "local relevance with real business usefulness"
+        "local relevance with real operational usefulness"
       ],
       coreValuePropositions: [
-        "easier card payment acceptance",
-        "smoother merchant onboarding and setup confidence",
-        "practical support for business growth through better payment tools",
-        "clarity around business payment options and use cases"
+        "integrated fiscal receipts and card payments in one system",
+        "less counter clutter and fewer separate devices to manage",
+        "lower operating costs through a simpler all-in-one setup",
+        "potentially lower transaction rates depending on merchant setup",
+        "smoother onboarding and more day-to-day checkout confidence"
       ],
       painPoints: [
         "confusing payment options",
+        "too many separate devices at the till",
+        "counter clutter and messy checkout flow",
+        "higher-than-expected transaction costs",
         "fear of choosing the wrong provider",
         "concern about reliability, speed, and day-to-day usability",
         "friction around setup, support, and merchant confidence",
@@ -345,20 +352,27 @@ const CONTENT = {
       objections: [
         "Will this be hard to set up?",
         "Is this right for my business size or sector?",
+        "Will it really reduce clutter and simplify the counter?",
+        "Can it actually help lower my operating costs or transaction rates?",
         "Will support actually be available when needed?",
         "Is this worth switching for?",
         "Will pricing and terms be clear?"
       ],
       approvedMessagingThemes: [
+        "all-in-one simplicity",
+        "cleaner checkout setup",
         "simplicity",
         "merchant confidence",
-        "business growth support",
+        "cost efficiency",
+        "commercial value",
         "clarity",
         "local relevance",
         "trust and professionalism"
       ],
       claimsToAvoid: [
         "absolute pricing claims unless confirmed",
+        "promising lower transaction rates without qualification",
+        "claiming cost savings as guaranteed",
         "guaranteed revenue growth claims",
         "guaranteed fastest / cheapest / best language",
         "compliance-sensitive claims without verification",
@@ -374,10 +388,15 @@ const CONTENT = {
       ctaStyles: [
         "request a demo",
         "speak to the team",
+        "see how one device can replace your current setup",
+        "ask about the right transaction setup for your business",
         "explore the right setup",
         "get started with a smarter payment setup"
       ],
       contentAngles: [
+        "why merchants are moving to all-in-one fiscal and card payment systems",
+        "how one device can reduce counter clutter and simplify checkout",
+        "when an integrated setup can lower operating friction and payment costs",
         "choosing the right payment setup for your business",
         "when to upgrade from a basic payment process",
         "what merchants should look for in a payment partner",

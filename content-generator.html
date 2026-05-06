@@ -612,6 +612,32 @@ function buildBrandBrainPrompt(brandBrain) {
   ].filter((line) => !line.endsWith(": ")).join("\n");
 }
 
+function buildBrandFrameworkPrompt(brandId) {
+  if (brandId === "smartone") {
+    return [
+      "Brand-specific framework:",
+      "- Write like a payments and merchant-enablement brand, not a generic POS vendor.",
+      "- Focus on integrated fiscal checkout, card acceptance, merchant trust, setup clarity, support, compliance confidence, and practical business usefulness.",
+      "- Keep the copy engaging and easy to follow. Open with a vivid merchant frustration, operational truth, or commercial tension.",
+      "- Explain the value clearly: fewer devices, less clutter, cleaner checkout flow, simpler day-to-day operations, and commercially smarter payment conversations.",
+      "- Vary the phrasing. Do not over-repeat lines like 'one device' or 'one setup'. Use natural alternatives such as all-in-one system, integrated checkout, cleaner counter, or simpler payment flow.",
+      "- Use claims carefully. Do not imply guaranteed growth, guaranteed savings, or absolute pricing leadership.",
+      "- If mentioning cost or transaction-rate benefits, frame them as possible or contextual, not guaranteed.",
+      "- Prefer concrete merchant language over abstract fintech language.",
+      "- Use CTA language that suits a merchant considering a switch or demo, not a broad software signup."
+    ].join("\n");
+  }
+
+  return [
+    "Brand-specific framework:",
+    "- Write like an operations-first POS partner for retail and hospitality, not a generic SME marketing brand.",
+    "- Keep the copy engaging and easy to scan. Open with a real operational frustration, bottleneck, or missed-efficiency moment.",
+    "- Focus on speed, control, visibility, stock, reporting, integrations, and calmer day-to-day operations.",
+    "- Keep the copy grounded in real trading-floor friction and business outcomes rather than abstract tech language.",
+    "- Use CTA language that fits a demo, audit, or operational improvement conversation."
+  ].join("\n");
+}
+
 function getActivePillars() {
   return getBrandContent(state.brand).contentPillars;
 }
@@ -814,6 +840,7 @@ Voice traits: ${b.voice.join(", ")}
 Keywords: ${b.keywords.join(", ")}
 Do this: ${b.doList.join(" | ")}
 Avoid this: ${b.dontList.join(" | ")}
+${buildBrandFrameworkPrompt(state.brand)}
 ${buildBrandBrainPrompt(b.brandBrain)}
 Messaging Pillar: ${pillar.label} — ${pillar.desc}
 Platform: ${state.platform}
@@ -821,7 +848,7 @@ Post Type: ${state.postType}
 ${topic?`Additional context: ${topic}`:""}
 
 CREATIVE DIRECTION FOR THIS POST: ${variationSeed}
-Be original. Do not reuse phrases, structures, or hooks from typical posts about this topic. Every generation must feel fresh and distinct. Avoid clichés. Avoid starting with "Are you" or "Is your". Make the copy feel aligned to the selected brand strategy above.
+Be original. Do not reuse phrases, structures, or hooks from typical posts about this topic. Every generation must feel fresh and distinct. Avoid clichés. Avoid starting with "Are you" or "Is your". Keep the writing engaging, clear, and easy to skim. Use short paragraphs, clean rhythm, and specific business language. Do not repeat the same phrase more than once unless necessary. Make the copy feel aligned to the selected brand strategy above.
 
 Generate a complete ${state.postType} post for ${state.platform} for the ${b.name} brand.
 
@@ -830,7 +857,7 @@ Respond ONLY in this JSON format (no markdown, no backticks):
   "headline": "short punchy headline or hook — must follow the creative direction above",
   "body": "full post copy ready to publish",
   "cta": "call to action text",
-  "hashtags": ["tag1","tag2","tag3","tag4","tag5"]
+  "hashtags": ["#tag1","#tag2","#tag3","#tag4","#tag5"]
 }`;
 
   try {

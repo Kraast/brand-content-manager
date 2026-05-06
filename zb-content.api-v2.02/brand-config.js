@@ -44,8 +44,8 @@ const BRANDS = {
     background: "#000000",
     surface: "#171019",
     text: "#F5F5F5",
-    focus: "VAT-approved fiscal cash register with integrated card payments",
-    positioning: "Malta's only VAT-approved cash register with integrated card payments, one device, one team to call, zero complexity.",
+    focus: "Integrated fiscal cash register and card payments solution for Malta merchants",
+    positioning: "An all-in-one fiscal cash register and card payments solution that helps Malta merchants simplify checkout, reduce counter clutter, lower operating costs, and access more competitive transaction rates.",
     keywords: [
       "VAT-approved",
       "fiscal cash register",
@@ -58,7 +58,7 @@ const BRANDS = {
       "purple fintech"
     ],
     competitors: "Viva Wallet, traditional card terminals, banks offering payment solutions in Malta",
-    auditDescription: "SmartOne is a VAT-approved fiscal cash register with integrated card payments, unique in the Maltese market. Sold by ZeroBubble Ltd. Targets SMB merchants across all retail verticals in Malta. Brand colours: pure black #000000 + purple #5A17B4. Tone: slick, fintech-forward, confidence-inspiring.",
+    auditDescription: "SmartOne is an all-in-one fiscal cash register and card payments solution for Malta merchants. It combines compliant fiscal receipts and card acceptance in one cleaner setup designed to reduce clutter, simplify operations, and support more competitive transaction rates where applicable. Sold by ZeroBubble Ltd. Brand colours: pure black #000000 + purple #5A17B4. Tone: slick, fintech-forward, confidence-inspiring.",
     voice: [
       "Clear",
       "Reliable",
@@ -95,6 +95,82 @@ const CONTENT = {
         "Talk like a software vendor instead of a retail partner",
         "Use generic stock imagery",
         "Post without tying back to a clear business problem"
+      ]
+    },
+    brandBrain: {
+      brandSummary: "ZeroBubble POS helps retail and hospitality businesses run day-to-day operations with more speed, control, visibility, and confidence.",
+      coreAudience: [
+        "retail shops",
+        "restaurants, cafes, and hospitality operators",
+        "multi-site or growing businesses",
+        "owners and managers who care about operations, stock, reporting, and control"
+      ],
+      primaryPositioning: [
+        "practical POS system for real operational needs",
+        "focused on control, efficiency, and business visibility",
+        "built for retail and hospitality realities, not generic software messaging"
+      ],
+      coreValuePropositions: [
+        "faster day-to-day operations",
+        "better visibility across sales, stock, and reporting",
+        "stronger business control",
+        "practical support for scaling operations cleanly",
+        "fewer bottlenecks at point of sale"
+      ],
+      painPoints: [
+        "slow or messy checkout flow",
+        "weak stock visibility",
+        "disconnected reporting",
+        "lack of control across staff, branches, or busy service periods",
+        "operational inefficiency that slows growth"
+      ],
+      objections: [
+        "Will this be disruptive to switch to?",
+        "Is it too complex for the team?",
+        "Will it actually save time in real operations?",
+        "Does it fit my type of retail or hospitality business?",
+        "Can it support reporting, integrations, and scale?"
+      ],
+      approvedMessagingThemes: [
+        "speed",
+        "control",
+        "visibility",
+        "operational confidence",
+        "retail and hospitality fit",
+        "practical growth enablement"
+      ],
+      claimsToAvoid: [
+        "guaranteed business growth claims",
+        "guaranteed cost savings without proof",
+        "one-size-fits-all messaging",
+        "overly technical feature dumping without business value",
+        "unsupported competitor comparisons"
+      ],
+      toneOfVoice: [
+        "direct",
+        "capable",
+        "operationally smart",
+        "grounded",
+        "efficiency-led"
+      ],
+      ctaStyles: [
+        "book a demo",
+        "see how it works for your business",
+        "improve your day-to-day operations",
+        "get more control at point of sale"
+      ],
+      contentAngles: [
+        "how POS improves speed and service flow",
+        "stock and reporting control for growing businesses",
+        "retail efficiency improvements",
+        "hospitality service and checkout improvements",
+        "how operators can reduce friction during busy periods"
+      ],
+      imageGuidance: [
+        "retail counters, hospitality service areas, checkout moments",
+        "screens, devices, stock, scanning, receipts, real business operations",
+        "busy but controlled environments",
+        "avoid vague corporate office scenes that do not reflect POS usage"
       ]
     },
     contentPillars: [
@@ -217,17 +293,19 @@ const CONTENT = {
       heroTitle: "SmartOne Marketing Kit",
       heroSubtitle: "Fiscal cash register positioning, ad copy, payment-first content, and demo nurture sequence.",
       framework: {
-        audience: "Merchants who need a VAT-approved cash register with card payments built in.",
-        promise: "One compliant checkout device with one local team to call.",
-        angle: "Payment speed, fiscal receipts, compliance confidence, and simple setup.",
+        audience: "Merchants who want an all-in-one fiscal cash register and card payments setup with less clutter and clearer day-to-day operations.",
+        promise: "One all-in-one checkout system that combines fiscal receipts and card payments in a cleaner, commercially smarter setup.",
+        angle: "Integrated fiscal checkout, lower clutter, smoother operations, cost efficiency, and stronger transaction-rate conversations.",
         visualSystem: "Pure black, vivid purple, clean fintech confidence, product-first imagery."
       },
-      positioning: "Malta's only VAT-approved cash register with integrated card payments, one device, one team to call, zero complexity.",
-      story: "Malta merchants should not have to choose between compliance and convenience. SmartOne gives businesses one device for fiscal receipts and card payments, backed by a local team that picks up the phone. Faster checkout. Cleaner operations. Less stress around compliance.",
+      positioning: "An all-in-one fiscal cash register and card payments solution that helps Malta merchants simplify checkout, reduce clutter, lower operating costs, and explore more competitive transaction rates.",
+      story: "Malta merchants should not have to juggle separate machines, separate payment flows, and extra operational drag just to stay compliant. SmartOne combines fiscal receipts and card payments in one all-in-one system, helping businesses reduce counter clutter, streamline day-to-day operations, and create room for lower operating costs and stronger transaction-rate conversations.",
       visualRule: "SmartOne should look pure black and purple, slick, confident, product-first, and separate from ZeroBubble orange.",
       doList: [
         "Speak to merchants in plain language",
-        "Lead with checkout speed and compliance confidence",
+        "Lead with integrated checkout, compliance confidence, and all-in-one simplicity",
+        "Highlight reduced clutter and cleaner counter operations",
+        "Reference operating cost and transaction-rate benefits carefully and commercially",
         "Show the device in real Maltese business settings",
         "Use product-focused imagery with black and purple branding",
         "Close with a demo CTA"
@@ -238,6 +316,99 @@ const CONTENT = {
         "Use abstract fintech copy without retail context",
         "Talk about compliance in vague terms",
         "Hide the product in wide lifestyle shots"
+      ]
+    },
+    brandBrain: {
+      brandSummary: "SmartOne is an all-in-one fiscal cash register and card payments solution that helps merchants simplify checkout, reduce clutter, lower operating costs, and improve commercial confidence.",
+      coreAudience: [
+        "SMEs in Malta",
+        "merchants evaluating payment solutions",
+        "business owners who want easier payment acceptance and better day-to-day control",
+        "teams comparing providers, pricing, support, and speed of setup"
+      ],
+      primaryPositioning: [
+        "all-in-one fiscal cash register and card payments solution",
+        "practical and trustworthy merchant payments partner",
+        "clear merchant-focused value, not vague fintech hype",
+        "local relevance with real operational usefulness"
+      ],
+      coreValuePropositions: [
+        "integrated fiscal receipts and card payments in one system",
+        "less counter clutter and fewer separate devices to manage",
+        "lower operating costs through a simpler all-in-one setup",
+        "potentially lower transaction rates depending on merchant setup",
+        "smoother onboarding and more day-to-day checkout confidence"
+      ],
+      painPoints: [
+        "confusing payment options",
+        "too many separate devices at the till",
+        "counter clutter and messy checkout flow",
+        "higher-than-expected transaction costs",
+        "fear of choosing the wrong provider",
+        "concern about reliability, speed, and day-to-day usability",
+        "friction around setup, support, and merchant confidence",
+        "uncertainty around what solution best fits the business"
+      ],
+      objections: [
+        "Will this be hard to set up?",
+        "Is this right for my business size or sector?",
+        "Will it really reduce clutter and simplify the counter?",
+        "Can it actually help lower my operating costs or transaction rates?",
+        "Will support actually be available when needed?",
+        "Is this worth switching for?",
+        "Will pricing and terms be clear?"
+      ],
+      approvedMessagingThemes: [
+        "all-in-one simplicity",
+        "cleaner checkout setup",
+        "simplicity",
+        "merchant confidence",
+        "cost efficiency",
+        "commercial value",
+        "clarity",
+        "local relevance",
+        "trust and professionalism"
+      ],
+      claimsToAvoid: [
+        "absolute pricing claims unless confirmed",
+        "promising lower transaction rates without qualification",
+        "claiming cost savings as guaranteed",
+        "guaranteed revenue growth claims",
+        "guaranteed fastest / cheapest / best language",
+        "compliance-sensitive claims without verification",
+        "anything that implies financial outcomes are certain"
+      ],
+      toneOfVoice: [
+        "clear",
+        "confident",
+        "helpful",
+        "commercially smart",
+        "modern but not overhyped"
+      ],
+      ctaStyles: [
+        "request a demo",
+        "speak to the team",
+        "see how one device can replace your current setup",
+        "ask about the right transaction setup for your business",
+        "explore the right setup",
+        "get started with a smarter payment setup"
+      ],
+      contentAngles: [
+        "why merchants are moving to all-in-one fiscal and card payment systems",
+        "how one device can reduce counter clutter and simplify checkout",
+        "when an integrated setup can lower operating friction and payment costs",
+        "choosing the right payment setup for your business",
+        "when to upgrade from a basic payment process",
+        "what merchants should look for in a payment partner",
+        "how smoother payments improve customer experience and business flow",
+        "local Malta merchant use cases"
+      ],
+      imageGuidance: [
+        "modern merchant environments",
+        "clean payment moments at checkout or service points",
+        "local Malta cues where useful",
+        "polished, practical, commercial visuals",
+        "avoid generic crypto / startup / stock-fintech clichés"
       ]
     },
     contentPillars: [

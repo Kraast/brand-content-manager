@@ -546,13 +546,15 @@ function buildSmartOneImagePrompt(topic, platform, postType, hasRef, strategy) {
     scene = `Malta retail business environment relevant to: ${topic}. Authentic local setting, Mediterranean cues`;
   }
   const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, colours, and branding — reproduce the device accurately." : "";
-  return `${strategy.brand.imagePromptPrefix} Malta setting: ${scene}. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. ${strategy.content.brandKit.visualRule || ""} A SmartOne fiscal cash register terminal is prominently featured in the scene.${refNote} Local Maltese people interacting naturally in the environment. Commercial photography quality. No text overlays. Platform context: ${platform} ${postType}.`;
+  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
+  return `${strategy.brand.imagePromptPrefix} Malta setting: ${scene}. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. ${strategy.content.brandKit.visualRule || ""}${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""} A SmartOne fiscal cash register terminal is prominently featured in the scene.${refNote} Local Maltese people interacting naturally in the environment. Commercial photography quality. No text overlays. Platform context: ${platform} ${postType}.`;
 }
 
 function buildZeroBubbleImagePrompt(topic, platform, postType, hasRef, strategy) {
   const style = getRandom(POS_IMAGE_STYLES);
   const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, ZeroBubble logo, and brand colours — reproduce them accurately." : "";
-  return `${strategy.brand.imagePromptPrefix} Cloud POS system on retail counter in a Malta retail or hospitality setting. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. Brand story cue: ${strategy.content.brandKit.story}.${refNote} Commercial photography quality. No text overlays. Aspect ratio suited for ${platform}.`;
+  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
+  return `${strategy.brand.imagePromptPrefix} Cloud POS system on retail counter in a Malta retail or hospitality setting. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. Brand story cue: ${strategy.content.brandKit.story}.${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""}${refNote} Commercial photography quality. No text overlays. Aspect ratio suited for ${platform}.`;
 }
 
 let state = { brand:getSelectedBrand(), platform:"facebook", postType:"Carousel", pillar:"p1", result:null, imageB64:null, imagePrompt:null, refImages:[], aspectSize:"1024x1024" };
@@ -575,7 +577,8 @@ function getBrandConfig(brandId) {
     story: content.brandKit.story,
     visualRule: content.brandKit.visualRule || "",
     doList: content.brandKit.doList,
-    dontList: content.brandKit.dontList
+    dontList: content.brandKit.dontList,
+    brandBrain: content.brandBrain || null
   };
 }
 
@@ -584,6 +587,54 @@ function getBrandStrategy(brandId) {
     brand: getBrand(brandId),
     content: getBrandContent(brandId)
   };
+}
+
+function formatBrainItems(items) {
+  return Array.isArray(items) ? items.join(" | ") : "";
+}
+
+function buildBrandBrainPrompt(brandBrain) {
+  if (!brandBrain) return "";
+  return [
+    `Brand summary: ${brandBrain.brandSummary || ""}`,
+    `Core audience: ${formatBrainItems(brandBrain.coreAudience)}`,
+    `Primary positioning: ${formatBrainItems(brandBrain.primaryPositioning)}`,
+    `Core value propositions: ${formatBrainItems(brandBrain.coreValuePropositions)}`,
+    `Pain points to speak to: ${formatBrainItems(brandBrain.painPoints)}`,
+    `Objections to address: ${formatBrainItems(brandBrain.objections)}`,
+    `Approved messaging themes: ${formatBrainItems(brandBrain.approvedMessagingThemes)}`,
+    `Claims to avoid: ${formatBrainItems(brandBrain.claimsToAvoid)}`,
+    `Tone of voice: ${formatBrainItems(brandBrain.toneOfVoice)}`,
+    `CTA styles: ${formatBrainItems(brandBrain.ctaStyles)}`,
+    `Useful content angles: ${formatBrainItems(brandBrain.contentAngles)}`,
+    `Image guidance: ${formatBrainItems(brandBrain.imageGuidance)}`
+  ].filter((line) => !line.endsWith(": ")).join("\n");
+}
+
+function buildBrandFrameworkPrompt(brandId) {
+  if (brandId === "smartone") {
+    return [
+      "Brand-specific framework:",
+      "- Write like a payments and merchant-enablement brand, not a generic POS vendor.",
+      "- Focus on integrated fiscal checkout, card acceptance, merchant trust, setup clarity, support, compliance confidence, and practical business usefulness.",
+      "- Keep the copy engaging and easy to follow. Open with a vivid merchant frustration, operational truth, or commercial tension.",
+      "- Explain the value clearly: fewer devices, less clutter, cleaner checkout flow, simpler day-to-day operations, and commercially smarter payment conversations.",
+      "- Vary the phrasing. Do not over-repeat lines like 'one device' or 'one setup'. Use natural alternatives such as all-in-one system, integrated checkout, cleaner counter, or simpler payment flow.",
+      "- Use claims carefully. Do not imply guaranteed growth, guaranteed savings, or absolute pricing leadership.",
+      "- If mentioning cost or transaction-rate benefits, frame them as possible or contextual, not guaranteed.",
+      "- Prefer concrete merchant language over abstract fintech language.",
+      "- Use CTA language that suits a merchant considering a switch or demo, not a broad software signup."
+    ].join("\n");
+  }
+
+  return [
+    "Brand-specific framework:",
+    "- Write like an operations-first POS partner for retail and hospitality, not a generic SME marketing brand.",
+    "- Keep the copy engaging and easy to scan. Open with a real operational frustration, bottleneck, or missed-efficiency moment.",
+    "- Focus on speed, control, visibility, stock, reporting, integrations, and calmer day-to-day operations.",
+    "- Keep the copy grounded in real trading-floor friction and business outcomes rather than abstract tech language.",
+    "- Use CTA language that fits a demo, audit, or operational improvement conversation."
+  ].join("\n");
 }
 
 function getActivePillars() {
@@ -788,13 +839,15 @@ Voice traits: ${b.voice.join(", ")}
 Keywords: ${b.keywords.join(", ")}
 Do this: ${b.doList.join(" | ")}
 Avoid this: ${b.dontList.join(" | ")}
+${buildBrandFrameworkPrompt(state.brand)}
+${buildBrandBrainPrompt(b.brandBrain)}
 Messaging Pillar: ${pillar.label} — ${pillar.desc}
 Platform: ${state.platform}
 Post Type: ${state.postType}
 ${topic?`Additional context: ${topic}`:""}
 
 CREATIVE DIRECTION FOR THIS POST: ${variationSeed}
-Be original. Do not reuse phrases, structures, or hooks from typical posts about this topic. Every generation must feel fresh and distinct. Avoid clichés. Avoid starting with "Are you" or "Is your". Make the copy feel aligned to the selected brand strategy above.
+Be original. Do not reuse phrases, structures, or hooks from typical posts about this topic. Every generation must feel fresh and distinct. Avoid clichés. Avoid starting with "Are you" or "Is your". Keep the writing engaging, clear, and easy to skim. Use short paragraphs, clean rhythm, and specific business language. Do not repeat the same phrase more than once unless necessary. Make the copy feel aligned to the selected brand strategy above.
 
 Generate a complete ${state.postType} post for ${state.platform} for the ${b.name} brand.
 
@@ -803,7 +856,7 @@ Respond ONLY in this JSON format (no markdown, no backticks):
   "headline": "short punchy headline or hook — must follow the creative direction above",
   "body": "full post copy ready to publish",
   "cta": "call to action text",
-  "hashtags": ["tag1","tag2","tag3","tag4","tag5"]
+  "hashtags": ["#tag1","#tag2","#tag3","#tag4","#tag5"]
 }`;
 
   try {
