@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Kit v2.02</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #F47F20;
+    --secondary: #4BAFE8;
+    --bg: #111111;
+    --surface: rgba(255,255,255,0.05);
+    --surface-2: rgba(255,255,255,0.035);
+    --text: #F3F0EA;
+    --muted: rgba(243,240,234,0.62);
+    --border: rgba(255,255,255,.08);
+    --brand-glow: rgba(244,127,32,0.22);
+    --brand-surface: rgba(244,127,32,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%),
+      radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%),
+      linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  body.smartone-theme {
+    background:
+      radial-gradient(circle at top left, rgba(90,23,180,0.16), transparent 34%),
+      radial-gradient(circle at bottom right, rgba(165,130,255,0.14), transparent 28%),
+      linear-gradient(180deg, #ffffff 0%, #f8f4ff 54%, #f2ebff 100%);
+    --text: #1f1430;
+    --muted: rgba(31,20,48,0.62);
+    --border: rgba(90,23,180,.14);
+    --surface: rgba(255,255,255,0.82);
+    --surface-2: rgba(255,255,255,0.68);
+    --brand-glow: rgba(90,23,180,0.16);
+    --brand-surface: rgba(90,23,180,0.08);
+  }
+
+  body.smartone-theme .hero-logo {
+    background: transparent;
+    border: none;
+    filter: invert(1);
+    box-shadow: none;
+  }
+
+  body.smartone-theme .card,
+  body.smartone-theme .framework-panel,
+  body.smartone-theme .pillar-panel,
+  body.smartone-theme .post-row,
+  body.smartone-theme .ad-card,
+  body.smartone-theme .email-card,
+  body.smartone-theme .positioning-box,
+  body.smartone-theme .story-box,
+  body.smartone-theme .editor-field input,
+  body.smartone-theme .editor-field textarea,
+  body.smartone-theme nav a,
+  body.smartone-theme nav button {
+    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(244,237,255,0.82));
+    box-shadow: 0 16px 30px rgba(90,23,180,0.06);
+  }
+
+  body.smartone-theme .section-icon {
+    color: #ffffff;
+    background: linear-gradient(135deg, #7a39d6, #5a17b4);
+  }
+
+  body.smartone-theme .framework-panel ul,
+  body.smartone-theme .copy-list,
+  body.smartone-theme .notes-list,
+  body.smartone-theme .post-copy,
+  body.smartone-theme .email-subject,
+  body.smartone-theme .tag,
+  body.smartone-theme .editor-status,
+  body.smartone-theme .hint,
+  body.smartone-theme .ad-copy,
+  body.smartone-theme .email-body {
+    color: #1f1430;
+  }
+
+  body.smartone-theme .week-title {
+    color: #ffffff;
+    background: linear-gradient(90deg, #7a39d6, #5a17b4);
+  }
+
+  body.smartone-theme .post-hook,
+  body.smartone-theme .hero-tag,
+  body.smartone-theme .email-title,
+  body.smartone-theme .ad-label,
+  body.smartone-theme .framework-panel h4,
+  body.smartone-theme .pillar-panel h4,
+  body.smartone-theme .card h3 {
+    color: #5a17b4;
+  }
+
+  body.zerobubble-theme {
+    background:
+      radial-gradient(circle at top left, rgba(244,127,32,0.2), transparent 34%),
+      radial-gradient(circle at top right, rgba(75,175,232,0.16), transparent 28%),
+      linear-gradient(160deg, #111111 0%, #181717 48%, #0c0c0c 100%);
+  }
+
+  .hero {
+    padding: 30px 24px 22px;
+  }
+
+  .hero-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(circle at top right, var(--brand-glow), transparent 38%),
+      linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.18));
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 60px rgba(0,0,0,0.16);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner::after {
+    content: "";
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 22px;
+  }
+
+  .hero-logo {
+    max-width: 352px;
+    max-height: 102px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 8vw, 68px);
+    line-height: 0.96;
+    margin-bottom: 10px;
+    max-width: 700px;
+  }
+
+  .hero p {
+    max-width: 620px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    max-width: 1180px;
+    margin: 0 auto 14px;
+    padding: 0 24px;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  nav a,
+  nav button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 999px;
+    transition: all .2s;
+    text-decoration: none;
+  }
+
+  nav button.active,
+  nav a:hover,
+  nav button:hover {
+    color: var(--text);
+  }
+
+  nav button.active {
+    color: var(--primary);
+    border-color: color-mix(in srgb, var(--primary) 50%, rgba(255,255,255,.08) 50%);
+    background: color-mix(in srgb, var(--primary) 12%, rgba(255,255,255,0.03) 88%);
+    box-shadow: 0 14px 30px var(--brand-glow);
+  }
+
+  .divider {
+    width: 1px;
+    background: transparent;
+    margin: 0;
+  }
+
+  section {
+    display: none;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  section.active {
+    display: block;
+  }
+
+  .section-header {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .section-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 16px 32px var(--brand-glow);
+  }
+
+  .section-header h2 {
+    font-size: 30px;
+  }
+
+  .section-header p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  .card h3 {
+    font-size: 18px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  .framework-grid,
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .framework-panel,
+  .pillar-panel {
+    background: rgba(255,255,255,0.045);
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--primary);
+  }
+
+  .framework-panel h4,
+  .pillar-panel h4 {
+    font-size: 18px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  .framework-panel ul,
+  .copy-list,
+  .notes-list {
+    padding-left: 16px;
+    color: #d7d7d7;
+    line-height: 1.9;
+    font-size: 14px;
+  }
+
+  .positioning-box,
+  .story-box {
+    background: rgba(0,0,0,.18);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 24px;
+    color: var(--text);
+  }
+
+  .positioning-box {
+    font-size: 24px;
+    line-height: 1.35;
+  }
+
+  .story-box {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .copy-btn {
+    margin-top: 12px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .editor-intro {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .editor-brand-switch {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .editor-brand-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .editor-brand-btn.active {
+    color: var(--primary);
+    border-color: color-mix(in srgb, var(--primary) 50%, rgba(255,255,255,.08) 50%);
+    background: color-mix(in srgb, var(--primary) 12%, rgba(255,255,255,0.03) 88%);
+    box-shadow: 0 14px 30px var(--brand-glow);
+  }
+
+  .editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .editor-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .editor-field.full {
+    grid-column: 1 / -1;
+  }
+
+  .editor-field label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .editor-field input,
+  .editor-field textarea {
+    width: 100%;
+    background: rgba(0,0,0,.18);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--text);
+    padding: 12px 14px;
+    font: inherit;
+    outline: none;
+  }
+
+  .editor-field textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .editor-field .hint {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .editor-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    align-items: center;
+  }
+
+  .editor-save-btn,
+  .editor-reset-btn {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .editor-save-btn {
+    background: var(--primary);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 14px 30px var(--brand-glow);
+  }
+
+  .editor-reset-btn {
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+  }
+
+  .editor-status {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .toast-stack {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: grid;
+    gap: 10px;
+    z-index: 999;
+  }
+
+  .toast {
+    min-width: 280px;
+    max-width: 380px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: rgba(12,12,12,0.9);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    backdrop-filter: blur(18px);
+  }
+
+  body.smartone-theme .toast {
+    background: rgba(255,255,255,0.94);
+  }
+
+  .toast-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+
+  .toast-copy {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .toast.success .toast-title { color: #65BA7A; }
+  .toast.error .toast-title { color: #e86b6b; }
+  .toast.parse .toast-title { color: #f5c542; }
+
+  .page-footer {
+    max-width: 1180px;
+    margin: 8px auto 30px;
+    padding: 0 24px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: rgba(243,240,234,0.34);
+  }
+
+  body.smartone-theme .page-footer {
+    color: rgba(31,20,48,0.42);
+  }
+
+  .week-block {
+    margin-bottom: 26px;
+  }
+
+  .week-title {
+    background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 65%, #000 35%));
+    border-radius: 16px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .05em;
+  }
+
+  .post-row {
+    background: rgba(255,255,255,0.045);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 92px 90px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .platform-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-align: center;
+  }
+
+  .platform-badge.facebook { background: rgba(24,119,242,.18); color: #4B9EF5; }
+  .platform-badge.instagram { background: rgba(225,48,108,.18); color: #E1306C; }
+  .platform-badge.linkedin { background: rgba(10,102,194,.18); color: #4BAFE8; }
+  .platform-badge.email { background: rgba(101,186,122,.18); color: #65BA7A; }
+
+  .post-type {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+    padding-top: 6px;
+  }
+
+  .post-content h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .post-hook {
+    color: var(--primary);
+    font-style: italic;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .post-copy {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .pillar-tag {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    color: var(--text);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .ad-card,
+  .email-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+
+  .ad-card {
+    border-top: 3px solid var(--primary);
+  }
+
+  .ad-label,
+  .email-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+
+  .ad-copy,
+  .email-body {
+    white-space: pre-wrap;
+    color: #ddd;
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .tag-row {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    background: rgba(255,255,255,.08);
+    color: var(--text);
+  }
+
+  .email-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .email-num {
+    font-size: 42px;
+    font-weight: 800;
+    color: rgba(255,255,255,.16);
+    line-height: 1;
+  }
+
+  .email-title {
+    font-size: 20px;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+
+  .email-subject {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .email-cta {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  @media (max-width: 760px) {
+    nav {
+      padding: 0 24px;
+    }
+
+    .hero-top,
+    .framework-grid,
+    .pillar-grid,
+    .post-row {
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+
+    .hero-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .email-header {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <img class="hero-logo" id="hero-logo" src="" alt="">
+      <div class="hero-tag" id="hero-tag">Marketing Kit</div>
+    </div>
+    <h1 id="hero-title"></h1>
+    <p id="hero-subtitle"></p>
+  </div>
+</div>
+
+<nav>
+  <a href="./index.html">← Dashboard</a>
+  <div class="divider"></div>
+  <button class="active" data-tab="brand" onclick="showTab('brand', this)">Brand Foundation</button>
+  <button data-tab="calendar" onclick="showTab('calendar', this)">30-Day Calendar</button>
+  <button data-tab="ads" onclick="showTab('ads', this)">Meta Ads</button>
+  <button data-tab="emails" onclick="showTab('emails', this)">Email Sequence</button>
+</nav>
+
+<section id="brand" class="active">
+  <div class="section-header">
+    <div class="section-icon">01</div>
+    <div>
+      <h2>Brand Foundation</h2>
+      <p id="brand-intro"></p>
+    </div>
+  </div>
+  <div class="framework-grid">
+    <div class="framework-panel">
+      <h4>Framework</h4>
+      <ul id="framework-list"></ul>
+    </div>
+    <div class="framework-panel">
+      <h4>Voice</h4>
+      <ul id="voice-list"></ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Positioning Statement</h3>
+    <div class="positioning-box" id="positioning-box"></div>
+    <button class="copy-btn" id="positioning-copy-btn" type="button">Copy Positioning</button>
+  </div>
+  <div class="card" id="visual-rule-card" style="display:none">
+    <h3>Visual Rule</h3>
+    <div class="story-box" id="visual-rule-box"></div>
+    <button class="copy-btn" id="visual-rule-copy-btn" type="button">Copy Visual Rule</button>
+  </div>
+  <div class="card">
+    <h3>Brand Story</h3>
+    <div class="story-box" id="story-box"></div>
+    <button class="copy-btn" id="story-copy-btn" type="button">Copy Story</button>
+  </div>
+  <div class="card">
+    <h3>Content Pillars</h3>
+    <div class="pillar-grid" id="pillar-grid"></div>
+  </div>
+  <div class="card">
+    <h3>Content Do's and Don'ts</h3>
+    <div class="framework-grid">
+      <div class="framework-panel">
+        <h4>Do</h4>
+        <ul class="copy-list" id="do-list"></ul>
+      </div>
+      <div class="framework-panel">
+        <h4>Don't</h4>
+        <ul class="copy-list" id="dont-list"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Direction Editor</h3>
+    <p class="editor-intro">Update the working brand direction here and save it. These changes stay local in the app and can be used by the content generator so the strategy becomes adjustable instead of static.</p>
+    <div class="editor-brand-switch">
+      <button class="editor-brand-btn" id="editor-brand-zerobubble" type="button" onclick="setEditorBrand('zerobubble')">Edit ZeroBubble</button>
+      <button class="editor-brand-btn" id="editor-brand-smartone" type="button" onclick="setEditorBrand('smartone')">Edit SmartOne</button>
+    </div>
+    <div class="editor-grid">
+      <div class="editor-field">
+        <label for="editor-focus">Focus</label>
+        <input id="editor-focus" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-positioning">Positioning</label>
+        <input id="editor-positioning" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-audience">Audience</label>
+        <input id="editor-audience" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-promise">Promise</label>
+        <input id="editor-promise" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-angle">Content Angle</label>
+        <input id="editor-angle" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-visual-system">Visual System</label>
+        <input id="editor-visual-system" type="text">
+      </div>
+      <div class="editor-field">
+        <label for="editor-keywords">Keywords</label>
+        <textarea id="editor-keywords"></textarea>
+        <div class="hint">Use commas to separate keywords.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-voice">Voice</label>
+        <textarea id="editor-voice"></textarea>
+        <div class="hint">Use commas to separate voice traits.</div>
+      </div>
+      <div class="editor-field full">
+        <label for="editor-story">Brand Story</label>
+        <textarea id="editor-story"></textarea>
+      </div>
+      <div class="editor-field full">
+        <label for="editor-visual-rule">Visual Rule</label>
+        <textarea id="editor-visual-rule"></textarea>
+      </div>
+      <div class="editor-field full">
+        <label for="editor-image-prefix">Image Prompt Prefix</label>
+        <textarea id="editor-image-prefix"></textarea>
+      </div>
+      <div class="editor-field full">
+        <label for="editor-image-style-notes">Image Style Notes</label>
+        <textarea id="editor-image-style-notes"></textarea>
+      </div>
+      <div class="editor-field">
+        <label for="editor-do-list">Do List</label>
+        <textarea id="editor-do-list"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-dont-list">Don't List</label>
+        <textarea id="editor-dont-list"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+    </div>
+    <div class="editor-actions">
+      <button class="editor-save-btn" type="button" onclick="saveDirectionEditor()">Save Brand Direction</button>
+      <button class="editor-reset-btn" type="button" onclick="resetDirectionEditor()">Reset This Brand</button>
+      <div class="editor-status" id="editor-status">Editing the saved strategy layer used by the app.</div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="section-header">
+    <div class="section-icon">02</div>
+    <div>
+      <h2>30-Day Calendar</h2>
+      <p id="calendar-intro"></p>
+    </div>
+  </div>
+  <div id="calendar-wrap"></div>
+</section>
+
+<section id="ads">
+  <div class="section-header">
+    <div class="section-icon">03</div>
+    <div>
+      <h2>Meta Ads</h2>
+      <p id="ads-intro"></p>
+    </div>
+  </div>
+  <div id="ads-wrap"></div>
+</section>
+
+<section id="emails">
+  <div class="section-header">
+    <div class="section-icon">04</div>
+    <div>
+      <h2>Email Sequence</h2>
+      <p id="emails-intro"></p>
+    </div>
+  </div>
+  <div id="emails-wrap"></div>
+  <div class="card">
+    <h3>Sequence Notes</h3>
+    <ul class="notes-list">
+      <li>Send from a real person, not a no-reply inbox.</li>
+      <li>Plain text often performs better than over-designed templates in B2B flows.</li>
+      <li>Pause the sequence immediately if the lead books the audit or demo.</li>
+      <li>Track open rate and response rate, not just clicks.</li>
+      <li>Test subject lines, especially the first two touches.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="page-footer">Copyright © Chris Ellul · v2.02 · Deployed 2026-05-03 17:11 CEST</div>
+<div class="toast-stack" id="toast-stack"></div>
+
+<script src="./brand-config.js"></script>
+<script>
+  const DIRECTION_KEY = "brandDirectionOverridesV201";
+  const viewBrandId = getSelectedBrand();
+  let pageBrand = null;
+  let pageContent = null;
+  let editorBrandId = viewBrandId;
+
+  function applyTheme(brand) {
+    document.documentElement.style.setProperty("--primary", brand.primary);
+    document.documentElement.style.setProperty("--secondary", brand.secondary);
+    document.documentElement.style.setProperty("--bg", brand.background);
+    document.documentElement.style.setProperty("--brand-glow", `${brand.primary}33`);
+    document.documentElement.style.setProperty("--brand-surface", `${brand.primary}16`);
+    document.body.classList.remove("smartone-theme", "zerobubble-theme");
+    document.body.classList.add(brand.id === "smartone" ? "smartone-theme" : "zerobubble-theme");
+  }
+
+  function renderList(targetId, items) {
+    document.getElementById(targetId).innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+  }
+
+  function renderPage() {
+    pageBrand = getBrand(viewBrandId);
+    pageContent = getBrandContent(viewBrandId);
+    applyTheme(pageBrand);
+
+    document.getElementById("hero-logo").src = pageBrand.id === "smartone" ? "./smartone-logo-white.png" : "./zerobubble-logo-white.png";
+    document.getElementById("hero-logo").alt = pageBrand.name;
+    document.getElementById("hero-title").textContent = pageContent.brandKit.heroTitle;
+    document.getElementById("hero-subtitle").textContent = pageContent.brandKit.heroSubtitle;
+    document.getElementById("brand-intro").textContent = `${pageBrand.name} only. Everything on this page is filtered to the selected brand.`;
+    document.getElementById("calendar-intro").textContent = `${pageBrand.name} monthly content direction, rendered from the shared content object.`;
+    document.getElementById("ads-intro").textContent = `${pageBrand.name} Meta ad angles, copy, and CTA structure.`;
+    document.getElementById("emails-intro").textContent = `${pageBrand.name} nurture sequence only, with no mixed-brand copy.`;
+
+    renderList("framework-list", [
+      `Audience: ${pageContent.brandKit.framework.audience}`,
+      `Promise: ${pageContent.brandKit.framework.promise}`,
+      `Content angle: ${pageContent.brandKit.framework.angle}`,
+      `Visual system: ${pageContent.brandKit.framework.visualSystem}`
+    ]);
+
+    renderList("voice-list", pageBrand.voice.map((word) => `${word}`));
+    renderList("do-list", pageContent.brandKit.doList);
+    renderList("dont-list", pageContent.brandKit.dontList);
+
+    document.getElementById("positioning-box").textContent = pageContent.brandKit.positioning;
+    document.getElementById("story-box").textContent = pageContent.brandKit.story;
+
+    if (pageContent.brandKit.visualRule) {
+      document.getElementById("visual-rule-card").style.display = "block";
+      document.getElementById("visual-rule-box").textContent = pageContent.brandKit.visualRule;
+    } else {
+      document.getElementById("visual-rule-card").style.display = "none";
+      document.getElementById("visual-rule-box").textContent = "";
+    }
+
+    document.getElementById("pillar-grid").innerHTML = pageContent.contentPillars.map((pillar, index) => `
+      <div class="pillar-panel">
+        <h4>0${index + 1} · ${pillar.label}</h4>
+        <p>${pillar.desc}</p>
+      </div>
+    `).join("");
+
+    const pillarMap = Object.fromEntries(pageContent.contentPillars.map((pillar) => [pillar.id, pillar.label]));
+
+    document.getElementById("calendar-wrap").innerHTML = pageContent.calendar.map((week) => `
+      <div class="week-block">
+        <div class="week-title">${week.title}</div>
+        ${week.posts.map((post) => `
+          <div class="post-row">
+            <div><span class="platform-badge ${post.platform.toLowerCase()}">${post.platform}</span></div>
+            <div class="post-type">${post.type}</div>
+            <div class="post-content">
+              <h4>${post.title}</h4>
+              <div class="post-hook">"${post.hook}"</div>
+              <div class="post-copy">${post.body}</div>
+              <span class="pillar-tag">${pillarMap[post.pillar] || post.pillar}</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `).join("");
+
+    document.getElementById("ads-wrap").innerHTML = pageContent.metaAds.map((ad, index) => `
+      <div class="ad-card">
+        <div class="ad-label">Angle ${index + 1} · ${ad.angle}</div>
+        <div class="ad-copy">${ad.copy}</div>
+        <div class="tag-row">
+          <span class="tag">CTA: ${ad.cta}</span>
+          <span class="tag">Format: ${ad.format}</span>
+          <span class="tag">Audience: ${ad.audience}</span>
+        </div>
+        <button class="copy-btn" type="button" onclick="copyAd(${index})">Copy Ad Copy</button>
+      </div>
+    `).join("");
+
+    document.getElementById("emails-wrap").innerHTML = pageContent.emailSequences.map((email, index) => `
+      <div class="email-card">
+        <div class="email-header">
+          <div>
+            <div class="email-title">Email ${index + 1} · ${email.day}</div>
+            <div class="email-subject">Subject: <strong>${email.subject}</strong></div>
+          </div>
+          <div class="email-num">0${index + 1}</div>
+        </div>
+        <div class="email-body">${email.body}</div>
+        <span class="email-cta">${email.cta}</span>
+      </div>
+    `).join("");
+  }
+
+  function bindCopy(buttonId, textProvider) {
+    const button = document.getElementById(buttonId);
+    if (!button) return;
+    button.addEventListener("click", () => {
+      navigator.clipboard.writeText(textProvider());
+      const original = button.textContent;
+      button.textContent = "Copied";
+      setTimeout(() => {
+        button.textContent = original;
+      }, 1800);
+    });
+  }
+
+  bindCopy("positioning-copy-btn", () => pageContent.brandKit.positioning);
+  bindCopy("story-copy-btn", () => pageContent.brandKit.story);
+  bindCopy("visual-rule-copy-btn", () => pageContent.brandKit.visualRule || "");
+
+  function splitCommaList(value) {
+    return value.split(",").map((item) => item.trim()).filter(Boolean);
+  }
+
+  function splitLineList(value) {
+    return value.split("\n").map((item) => item.trim()).filter(Boolean);
+  }
+
+  function updateEditorButtons() {
+    document.querySelectorAll(".editor-brand-btn").forEach((button) => button.classList.remove("active"));
+    document.getElementById(`editor-brand-${editorBrandId}`).classList.add("active");
+  }
+
+  function setEditorStatus(message) {
+    document.getElementById("editor-status").textContent = message;
+  }
+
+  function showToast(type, title, copy) {
+    const stack = document.getElementById("toast-stack");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<div class="toast-title">${title}</div><div class="toast-copy">${copy}</div>`;
+    stack.appendChild(toast);
+    setTimeout(() => toast.remove(), 3200);
+  }
+
+  function populateEditor() {
+    const snapshot = getBrandDirectionSnapshot(editorBrandId);
+    const brand = snapshot.brand;
+    const content = snapshot.content;
+    document.getElementById("editor-focus").value = brand.focus || "";
+    document.getElementById("editor-positioning").value = content.brandKit.positioning || "";
+    document.getElementById("editor-audience").value = content.brandKit.framework.audience || "";
+    document.getElementById("editor-promise").value = content.brandKit.framework.promise || "";
+    document.getElementById("editor-angle").value = content.brandKit.framework.angle || "";
+    document.getElementById("editor-visual-system").value = content.brandKit.framework.visualSystem || "";
+    document.getElementById("editor-keywords").value = (brand.keywords || []).join(", ");
+    document.getElementById("editor-voice").value = (brand.voice || []).join(", ");
+    document.getElementById("editor-story").value = content.brandKit.story || "";
+    document.getElementById("editor-visual-rule").value = content.brandKit.visualRule || "";
+    document.getElementById("editor-image-prefix").value = brand.imagePromptPrefix || "";
+    document.getElementById("editor-image-style-notes").value = brand.imageStyleNotes || "";
+    document.getElementById("editor-do-list").value = (content.brandKit.doList || []).join("\n");
+    document.getElementById("editor-dont-list").value = (content.brandKit.dontList || []).join("\n");
+    updateEditorButtons();
+    setEditorStatus(`Editing saved direction for ${brand.name}.`);
+  }
+
+  function setEditorBrand(brandId) {
+    editorBrandId = normalizeBrand(brandId);
+    populateEditor();
+  }
+
+  function saveDirectionEditor() {
+    try {
+      const raw = window.localStorage.getItem(DIRECTION_KEY);
+      if (raw) JSON.parse(raw);
+    } catch (error) {
+      showToast("parse", "Parse Error", "Saved brand-direction data is malformed. Reset this brand or clear the saved strategy first.");
+      setEditorStatus("Could not save because the stored direction data could not be parsed.");
+      return;
+    }
+
+    const positioning = document.getElementById("editor-positioning").value.trim();
+    const override = {
+      brand: {
+        focus: document.getElementById("editor-focus").value.trim(),
+        positioning,
+        keywords: splitCommaList(document.getElementById("editor-keywords").value),
+        voice: splitCommaList(document.getElementById("editor-voice").value),
+        imagePromptPrefix: document.getElementById("editor-image-prefix").value.trim(),
+        imageStyleNotes: document.getElementById("editor-image-style-notes").value.trim()
+      },
+      content: {
+        brandKit: {
+          positioning,
+          story: document.getElementById("editor-story").value.trim(),
+          visualRule: document.getElementById("editor-visual-rule").value.trim(),
+          framework: {
+            audience: document.getElementById("editor-audience").value.trim(),
+            promise: document.getElementById("editor-promise").value.trim(),
+            angle: document.getElementById("editor-angle").value.trim(),
+            visualSystem: document.getElementById("editor-visual-system").value.trim()
+          },
+          doList: splitLineList(document.getElementById("editor-do-list").value),
+          dontList: splitLineList(document.getElementById("editor-dont-list").value)
+        }
+      }
+    };
+
+    try {
+      setBrandDirectionOverride(editorBrandId, override);
+      if (editorBrandId === viewBrandId) {
+        renderPage();
+      }
+      setEditorStatus(`Saved live direction for ${getBrand(editorBrandId).name}.`);
+      showToast("success", "Save Successful", `${getBrand(editorBrandId).name} direction has been updated.`);
+    } catch (error) {
+      setEditorStatus(`Could not save ${getBrand(editorBrandId).name}.`);
+      showToast("error", "Save Unsuccessful", error?.message || "We could not save the brand direction.");
+    }
+  }
+
+  function resetDirectionEditor() {
+    clearBrandDirectionOverride(editorBrandId);
+    if (editorBrandId === viewBrandId) {
+      renderPage();
+    }
+    populateEditor();
+    setEditorStatus(`Reset ${getBrand(editorBrandId).name} to the default direction.`);
+    showToast("success", "Reset Complete", `${getBrand(editorBrandId).name} is back on the default direction.`);
+  }
+
+  function copyAd(index) {
+    navigator.clipboard.writeText(pageContent.metaAds[index].copy);
+  }
+
+  function showTab(id, button) {
+    document.querySelectorAll("section").forEach((section) => section.classList.remove("active"));
+    document.querySelectorAll("nav button").forEach((btn) => btn.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    button.classList.add("active");
+  }
+
+  renderPage();
+  populateEditor();
+</script>
+</body>
+</html>
