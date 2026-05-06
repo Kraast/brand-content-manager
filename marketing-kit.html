@@ -474,6 +474,18 @@
     font-size: 12px;
   }
 
+  .editor-section-title {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
   .toast-stack {
     position: fixed;
     right: 20px;
@@ -796,13 +808,14 @@
     </div>
   </div>
   <div class="card">
-    <h3>Direction Editor</h3>
-    <p class="editor-intro">Update the working brand direction here and save it. These changes stay local in the app and can be used by the content generator so the strategy becomes adjustable instead of static.</p>
+    <h3>Brand Brain Editor</h3>
+    <p class="editor-intro">Update the working brand strategy here and save it. These changes stay local in the app and feed the generator, so tone, positioning, claims, angles, and image guidance can evolve without touching code.</p>
     <div class="editor-brand-switch">
       <button class="editor-brand-btn" id="editor-brand-zerobubble" type="button" onclick="setEditorBrand('zerobubble')">Edit ZeroBubble</button>
       <button class="editor-brand-btn" id="editor-brand-smartone" type="button" onclick="setEditorBrand('smartone')">Edit SmartOne</button>
     </div>
     <div class="editor-grid">
+      <div class="editor-section-title">Core Direction</div>
       <div class="editor-field">
         <label for="editor-focus">Focus</label>
         <input id="editor-focus" type="text">
@@ -863,9 +876,69 @@
         <textarea id="editor-dont-list"></textarea>
         <div class="hint">Use one item per line.</div>
       </div>
+      <div class="editor-section-title">Brand Brain</div>
+      <div class="editor-field full">
+        <label for="editor-brand-summary">Brand Summary</label>
+        <textarea id="editor-brand-summary"></textarea>
+      </div>
+      <div class="editor-field">
+        <label for="editor-core-audience">Core Audience</label>
+        <textarea id="editor-core-audience"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-primary-positioning">Primary Positioning</label>
+        <textarea id="editor-primary-positioning"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-core-value-props">Core Value Propositions</label>
+        <textarea id="editor-core-value-props"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-pain-points">Pain Points</label>
+        <textarea id="editor-pain-points"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-objections">Objections</label>
+        <textarea id="editor-objections"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-approved-themes">Approved Messaging Themes</label>
+        <textarea id="editor-approved-themes"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-claims-to-avoid">Claims to Avoid</label>
+        <textarea id="editor-claims-to-avoid"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-tone-of-voice">Tone of Voice</label>
+        <textarea id="editor-tone-of-voice"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-cta-styles">CTA Styles</label>
+        <textarea id="editor-cta-styles"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-content-angles">Content Angles</label>
+        <textarea id="editor-content-angles"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
+      <div class="editor-field">
+        <label for="editor-image-guidance">Image Guidance</label>
+        <textarea id="editor-image-guidance"></textarea>
+        <div class="hint">Use one item per line.</div>
+      </div>
     </div>
     <div class="editor-actions">
-      <button class="editor-save-btn" type="button" onclick="saveDirectionEditor()">Save Brand Direction</button>
+      <button class="editor-save-btn" type="button" onclick="saveDirectionEditor()">Save Brand Brain</button>
       <button class="editor-reset-btn" type="button" onclick="resetDirectionEditor()">Reset This Brand</button>
       <div class="editor-status" id="editor-status">Editing the saved strategy layer used by the app.</div>
     </div>
@@ -1078,6 +1151,7 @@
     const snapshot = getBrandDirectionSnapshot(editorBrandId);
     const brand = snapshot.brand;
     const content = snapshot.content;
+    const brandBrain = content.brandBrain || {};
     document.getElementById("editor-focus").value = brand.focus || "";
     document.getElementById("editor-positioning").value = content.brandKit.positioning || "";
     document.getElementById("editor-audience").value = content.brandKit.framework.audience || "";
@@ -1092,8 +1166,20 @@
     document.getElementById("editor-image-style-notes").value = brand.imageStyleNotes || "";
     document.getElementById("editor-do-list").value = (content.brandKit.doList || []).join("\n");
     document.getElementById("editor-dont-list").value = (content.brandKit.dontList || []).join("\n");
+    document.getElementById("editor-brand-summary").value = brandBrain.brandSummary || "";
+    document.getElementById("editor-core-audience").value = (brandBrain.coreAudience || []).join("\n");
+    document.getElementById("editor-primary-positioning").value = (brandBrain.primaryPositioning || []).join("\n");
+    document.getElementById("editor-core-value-props").value = (brandBrain.coreValuePropositions || []).join("\n");
+    document.getElementById("editor-pain-points").value = (brandBrain.painPoints || []).join("\n");
+    document.getElementById("editor-objections").value = (brandBrain.objections || []).join("\n");
+    document.getElementById("editor-approved-themes").value = (brandBrain.approvedMessagingThemes || []).join("\n");
+    document.getElementById("editor-claims-to-avoid").value = (brandBrain.claimsToAvoid || []).join("\n");
+    document.getElementById("editor-tone-of-voice").value = (brandBrain.toneOfVoice || []).join("\n");
+    document.getElementById("editor-cta-styles").value = (brandBrain.ctaStyles || []).join("\n");
+    document.getElementById("editor-content-angles").value = (brandBrain.contentAngles || []).join("\n");
+    document.getElementById("editor-image-guidance").value = (brandBrain.imageGuidance || []).join("\n");
     updateEditorButtons();
-    setEditorStatus(`Editing saved direction for ${brand.name}.`);
+    setEditorStatus(`Editing saved Brand Brain for ${brand.name}.`);
   }
 
   function setEditorBrand(brandId) {
@@ -1134,6 +1220,20 @@
           },
           doList: splitLineList(document.getElementById("editor-do-list").value),
           dontList: splitLineList(document.getElementById("editor-dont-list").value)
+        },
+        brandBrain: {
+          brandSummary: document.getElementById("editor-brand-summary").value.trim(),
+          coreAudience: splitLineList(document.getElementById("editor-core-audience").value),
+          primaryPositioning: splitLineList(document.getElementById("editor-primary-positioning").value),
+          coreValuePropositions: splitLineList(document.getElementById("editor-core-value-props").value),
+          painPoints: splitLineList(document.getElementById("editor-pain-points").value),
+          objections: splitLineList(document.getElementById("editor-objections").value),
+          approvedMessagingThemes: splitLineList(document.getElementById("editor-approved-themes").value),
+          claimsToAvoid: splitLineList(document.getElementById("editor-claims-to-avoid").value),
+          toneOfVoice: splitLineList(document.getElementById("editor-tone-of-voice").value),
+          ctaStyles: splitLineList(document.getElementById("editor-cta-styles").value),
+          contentAngles: splitLineList(document.getElementById("editor-content-angles").value),
+          imageGuidance: splitLineList(document.getElementById("editor-image-guidance").value)
         }
       }
     };
@@ -1143,8 +1243,8 @@
       if (editorBrandId === viewBrandId) {
         renderPage();
       }
-      setEditorStatus(`Saved live direction for ${getBrand(editorBrandId).name}.`);
-      showToast("success", "Save Successful", `${getBrand(editorBrandId).name} direction has been updated.`);
+      setEditorStatus(`Saved Brand Brain for ${getBrand(editorBrandId).name}.`);
+      showToast("success", "Save Successful", `${getBrand(editorBrandId).name} Brand Brain has been updated.`);
     } catch (error) {
       setEditorStatus(`Could not save ${getBrand(editorBrandId).name}.`);
       showToast("error", "Save Unsuccessful", error?.message || "We could not save the brand direction.");
