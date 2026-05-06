@@ -546,13 +546,16 @@ function buildSmartOneImagePrompt(topic, platform, postType, hasRef, strategy) {
     scene = `Malta retail business environment relevant to: ${topic}. Authentic local setting, Mediterranean cues`;
   }
   const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, colours, and branding — reproduce the device accurately." : "";
-  return `${strategy.brand.imagePromptPrefix} Malta setting: ${scene}. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. ${strategy.content.brandKit.visualRule || ""} A SmartOne fiscal cash register terminal is prominently featured in the scene.${refNote} Local Maltese people interacting naturally in the environment. Commercial photography quality. No text overlays. Platform context: ${platform} ${postType}.`;
+  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
+  return `${strategy.brand.imagePromptPrefix} Malta setting: ${scene}. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. ${strategy.content.brandKit.visualRule || ""}${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""} A SmartOne fiscal cash register terminal is prominently featured in the scene.${refNote} Local Maltese people interacting naturally in the environment. Commercial photography quality. No text overlays. Platform context: ${platform} ${postType}.`;
 }
+
 
 function buildZeroBubbleImagePrompt(topic, platform, postType, hasRef, strategy) {
   const style = getRandom(POS_IMAGE_STYLES);
   const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, ZeroBubble logo, and brand colours — reproduce them accurately." : "";
-  return `${strategy.brand.imagePromptPrefix} Cloud POS system on retail counter in a Malta retail or hospitality setting. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. Brand story cue: ${strategy.content.brandKit.story}.${refNote} Commercial photography quality. No text overlays. Aspect ratio suited for ${platform}.`;
+  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
+  return `${strategy.brand.imagePromptPrefix} Cloud POS system on retail counter in a Malta retail or hospitality setting. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. Brand story cue: ${strategy.content.brandKit.story}.${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""}${refNote} Commercial photography quality. No text overlays. Aspect ratio suited for ${platform}.`;
 }
 
 let state = { brand:getSelectedBrand(), platform:"facebook", postType:"Carousel", pillar:"p1", result:null, imageB64:null, imagePrompt:null, refImages:[], aspectSize:"1024x1024" };
@@ -575,7 +578,8 @@ function getBrandConfig(brandId) {
     story: content.brandKit.story,
     visualRule: content.brandKit.visualRule || "",
     doList: content.brandKit.doList,
-    dontList: content.brandKit.dontList
+    dontList: content.brandKit.dontList,
+    brandBrain: content.brandBrain || null
   };
 }
 
@@ -584,6 +588,28 @@ function getBrandStrategy(brandId) {
     brand: getBrand(brandId),
     content: getBrandContent(brandId)
   };
+}
+
+function formatBrainItems(items) {
+  return Array.isArray(items) ? items.join(" | ") : "";
+}
+
+function buildBrandBrainPrompt(brandBrain) {
+  if (!brandBrain) return "";
+  return [
+    `Brand summary: ${brandBrain.brandSummary || ""}`,
+    `Core audience: ${formatBrainItems(brandBrain.coreAudience)}`,
+    `Primary positioning: ${formatBrainItems(brandBrain.primaryPositioning)}`,
+    `Core value propositions: ${formatBrainItems(brandBrain.coreValuePropositions)}`,
+    `Pain points to speak to: ${formatBrainItems(brandBrain.painPoints)}`,
+    `Objections to address: ${formatBrainItems(brandBrain.objections)}`,
+    `Approved messaging themes: ${formatBrainItems(brandBrain.approvedMessagingThemes)}`,
+    `Claims to avoid: ${formatBrainItems(brandBrain.claimsToAvoid)}`,
+    `Tone of voice: ${formatBrainItems(brandBrain.toneOfVoice)}`,
+    `CTA styles: ${formatBrainItems(brandBrain.ctaStyles)}`,
+    `Useful content angles: ${formatBrainItems(brandBrain.contentAngles)}`,
+    `Image guidance: ${formatBrainItems(brandBrain.imageGuidance)}`
+  ].filter((line) => !line.endsWith(": ")).join("\n");
 }
 
 function getActivePillars() {
@@ -788,6 +814,7 @@ Voice traits: ${b.voice.join(", ")}
 Keywords: ${b.keywords.join(", ")}
 Do this: ${b.doList.join(" | ")}
 Avoid this: ${b.dontList.join(" | ")}
+${buildBrandBrainPrompt(b.brandBrain)}
 Messaging Pillar: ${pillar.label} — ${pillar.desc}
 Platform: ${state.platform}
 Post Type: ${state.postType}

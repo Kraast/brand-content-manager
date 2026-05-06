@@ -97,6 +97,82 @@ const CONTENT = {
         "Post without tying back to a clear business problem"
       ]
     },
+    brandBrain: {
+      brandSummary: "ZeroBubble POS helps retail and hospitality businesses run day-to-day operations with more speed, control, visibility, and confidence.",
+      coreAudience: [
+        "retail shops",
+        "restaurants, cafes, and hospitality operators",
+        "multi-site or growing businesses",
+        "owners and managers who care about operations, stock, reporting, and control"
+      ],
+      primaryPositioning: [
+        "practical POS system for real operational needs",
+        "focused on control, efficiency, and business visibility",
+        "built for retail and hospitality realities, not generic software messaging"
+      ],
+      coreValuePropositions: [
+        "faster day-to-day operations",
+        "better visibility across sales, stock, and reporting",
+        "stronger business control",
+        "practical support for scaling operations cleanly",
+        "fewer bottlenecks at point of sale"
+      ],
+      painPoints: [
+        "slow or messy checkout flow",
+        "weak stock visibility",
+        "disconnected reporting",
+        "lack of control across staff, branches, or busy service periods",
+        "operational inefficiency that slows growth"
+      ],
+      objections: [
+        "Will this be disruptive to switch to?",
+        "Is it too complex for the team?",
+        "Will it actually save time in real operations?",
+        "Does it fit my type of retail or hospitality business?",
+        "Can it support reporting, integrations, and scale?"
+      ],
+      approvedMessagingThemes: [
+        "speed",
+        "control",
+        "visibility",
+        "operational confidence",
+        "retail and hospitality fit",
+        "practical growth enablement"
+      ],
+      claimsToAvoid: [
+        "guaranteed business growth claims",
+        "guaranteed cost savings without proof",
+        "one-size-fits-all messaging",
+        "overly technical feature dumping without business value",
+        "unsupported competitor comparisons"
+      ],
+      toneOfVoice: [
+        "direct",
+        "capable",
+        "operationally smart",
+        "grounded",
+        "efficiency-led"
+      ],
+      ctaStyles: [
+        "book a demo",
+        "see how it works for your business",
+        "improve your day-to-day operations",
+        "get more control at point of sale"
+      ],
+      contentAngles: [
+        "how POS improves speed and service flow",
+        "stock and reporting control for growing businesses",
+        "retail efficiency improvements",
+        "hospitality service and checkout improvements",
+        "how operators can reduce friction during busy periods"
+      ],
+      imageGuidance: [
+        "retail counters, hospitality service areas, checkout moments",
+        "screens, devices, stock, scanning, receipts, real business operations",
+        "busy but controlled environments",
+        "avoid vague corporate office scenes that do not reflect POS usage"
+      ]
+    },
     contentPillars: [
       {
         id: "p1",
@@ -238,6 +314,82 @@ const CONTENT = {
         "Use abstract fintech copy without retail context",
         "Talk about compliance in vague terms",
         "Hide the product in wide lifestyle shots"
+      ]
+    },
+    brandBrain: {
+      brandSummary: "SmartOne helps businesses take card payments and manage modern merchant transactions with more clarity, trust, and commercial confidence.",
+      coreAudience: [
+        "SMEs in Malta",
+        "merchants evaluating payment solutions",
+        "business owners who want easier payment acceptance and better day-to-day control",
+        "teams comparing providers, pricing, support, and speed of setup"
+      ],
+      primaryPositioning: [
+        "practical and trustworthy payments partner",
+        "clear merchant-focused value, not vague fintech hype",
+        "local relevance with real business usefulness"
+      ],
+      coreValuePropositions: [
+        "easier card payment acceptance",
+        "smoother merchant onboarding and setup confidence",
+        "practical support for business growth through better payment tools",
+        "clarity around business payment options and use cases"
+      ],
+      painPoints: [
+        "confusing payment options",
+        "fear of choosing the wrong provider",
+        "concern about reliability, speed, and day-to-day usability",
+        "friction around setup, support, and merchant confidence",
+        "uncertainty around what solution best fits the business"
+      ],
+      objections: [
+        "Will this be hard to set up?",
+        "Is this right for my business size or sector?",
+        "Will support actually be available when needed?",
+        "Is this worth switching for?",
+        "Will pricing and terms be clear?"
+      ],
+      approvedMessagingThemes: [
+        "simplicity",
+        "merchant confidence",
+        "business growth support",
+        "clarity",
+        "local relevance",
+        "trust and professionalism"
+      ],
+      claimsToAvoid: [
+        "absolute pricing claims unless confirmed",
+        "guaranteed revenue growth claims",
+        "guaranteed fastest / cheapest / best language",
+        "compliance-sensitive claims without verification",
+        "anything that implies financial outcomes are certain"
+      ],
+      toneOfVoice: [
+        "clear",
+        "confident",
+        "helpful",
+        "commercially smart",
+        "modern but not overhyped"
+      ],
+      ctaStyles: [
+        "request a demo",
+        "speak to the team",
+        "explore the right setup",
+        "get started with a smarter payment setup"
+      ],
+      contentAngles: [
+        "choosing the right payment setup for your business",
+        "when to upgrade from a basic payment process",
+        "what merchants should look for in a payment partner",
+        "how smoother payments improve customer experience and business flow",
+        "local Malta merchant use cases"
+      ],
+      imageGuidance: [
+        "modern merchant environments",
+        "clean payment moments at checkout or service points",
+        "local Malta cues where useful",
+        "polished, practical, commercial visuals",
+        "avoid generic crypto / startup / stock-fintech clichés"
       ]
     },
     contentPillars: [
