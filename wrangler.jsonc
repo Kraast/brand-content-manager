@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brand-content-manager",
+  "compatibility_date": "2026-06-23",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "zb-content.api-v2.02"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}

@@ -5,3 +5,8 @@
 
 # Archive artifacts
 *.zip
+
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
