@@ -1,19 +1,43 @@
-function corsHeaders() {
+// Only these origins may call the API. Add a custom domain here if one is set up later.
+const ALLOWED_ORIGINS = [
+  'https://brand-content-manager.pages.dev',
+];
+
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow Cloudflare Pages preview deployments: <hash>.brand-content-manager.pages.dev
+  try {
+    return new URL(origin).host.endsWith('.brand-content-manager.pages.dev');
+  } catch {
+    return false;
+  }
+}
+
+function corsHeaders(origin) {
+  const allow = isAllowedOrigin(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
   };
 }
 
 export default {
   async fetch(request, env) {
-    
-    const cors = corsHeaders();
+
+    const origin = request.headers.get('Origin');
+    const cors = corsHeaders(origin);
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: cors });
+    }
+
+    // Reject browser calls from origins that are not on the allowlist
+    if (origin && !isAllowedOrigin(origin)) {
+      return new Response('Forbidden', { status: 403, headers: cors });
     }
 
     if (request.method !== 'POST') {
@@ -94,7 +118,7 @@ export default {
     // ── Route: / — OpenAI chat completions (text + vision) ──
     try {
       const body = await request.json();
-      const { model = 'gpt-5.4', max_tokens = 1500, messages, system } = body;
+      const { model = 'gpt-5.4', max_tokens = 1500, messages, system, response_format } = body;
 
       // Convert Anthropic-style system prompt to OpenAI messages format
       const openAIMessages = [];
@@ -116,6 +140,7 @@ export default {
           model,
           max_completion_tokens: max_tokens,
           messages: openAIMessages,
+          ...(response_format ? { response_format } : {}),
         }),
       });
 
