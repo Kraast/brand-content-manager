@@ -5,7 +5,7 @@ This repository contains the ZeroBubble / SmartOne marketing dashboard app.
 ## Versioning
 
 - The app version source of truth lives in `app-metadata.mjs`
-- The current app version is defined in `app-metadata.mjs` and is currently `v2.03`
+- The current app version is defined in `app-metadata.mjs` and is currently `v2.03_build20260627`
 - `zb-content.api-v2.02/` is a legacy Cloudflare Pages deploy-root folder name, not the current app version
 - Keep the workspace root files and the matching files inside `zb-content.api-v2.02/` in sync when shipping deployable changes
 - Use `node scripts/release-sync.mjs --sync-only` after root-file edits to refresh the legacy deploy-root mirror

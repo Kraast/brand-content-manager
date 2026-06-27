@@ -1,9 +1,10 @@
-// ─── BUMP THESE TWO ON EVERY BUILD ───────────────────────────────────────────
-// APP_VERSION  – semantic app version (move v2.03 → v2.04 → … for each release)
-// APP_BUILD    – build date as YYYYMMDD (set to the day you deploy)
-// DEPLOYED_AT  – human-readable deploy timestamp shown in the footer
+// ─── VERSION SOURCE OF TRUTH ──────────────────────────────────────────────────
+// APP_VERSION  – semantic app version. HAND-BUMP this for each release (v2.03 → v2.04 → …).
+// APP_BUILD    – build date YYYYMMDD. AUTO-STAMPED by `release-sync` on every release run.
+// DEPLOYED_AT  – deploy timestamp shown in the footer. AUTO-STAMPED by `release-sync`.
 // Combined they render as the version label, e.g. "v2.03_build20260627".
-// Keep this in sync with the version recorded in the ZB Marketing Dashboard Notion page.
+// Normal flow: bump APP_VERSION here → `node scripts/release-sync.mjs` (stamps build+time) → deploy.
+// Keep APP_VERSION in sync with the version recorded in the ZB Marketing Dashboard Notion page.
 const APP_VERSION = "v2.03";
 const APP_BUILD = "20260627";
 const DEPLOYED_AT = "2026-06-27 22:53 CEST";
