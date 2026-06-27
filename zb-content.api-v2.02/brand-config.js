@@ -30,8 +30,40 @@ const BRANDS = {
       "Reliable",
       "Driven"
     ],
+    contact: {
+      blockTitle: "Contact ZeroBubble",
+      supportLine: "Talk to ZeroBubble about a retail tech audit or the right setup for your business.",
+      email: "hello@zerobubble.mt",
+      phones: ["+356 7933 7777", "+356 2155 7777"],
+      website: "https://zerobubble.mt",
+      websiteLabel: "zerobubble.mt"
+    },
     imagePromptPrefix: "Photorealistic Malta retail or hospitality marketing image for ZeroBubble.",
-    imageStyleNotes: "Brand colours: dark charcoal background, orange #F47F20 accents, clean white ZeroBubble branding, practical operational feel."
+    imageStyleNotes: "Brand colours: dark charcoal background, orange #F47F20 accents, clean white ZeroBubble branding, practical operational feel.",
+    ui: {
+      pageBackground: "radial-gradient(circle at top left, rgba(244,127,32,0.2), transparent 34%), radial-gradient(circle at top right, rgba(75,175,232,0.16), transparent 28%), linear-gradient(160deg, #111111 0%, #181717 48%, #0c0c0c 100%)",
+      text: "#F3F0EA",
+      muted: "rgba(243,240,234,0.62)",
+      dim: "rgba(243,240,234,0.45)",
+      border: "rgba(255,255,255,0.08)",
+      surface: "rgba(255,255,255,0.05)",
+      surfaceSoft: "rgba(255,255,255,0.04)",
+      surfaceStrong: "rgba(255,255,255,0.08)",
+      panelBg: "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18))",
+      panelFlat: "rgba(255,255,255,0.045)",
+      inputBg: "rgba(8,8,8,0.36)",
+      headerBg: "rgba(8,8,8,0.72)",
+      footerMuted: "rgba(243,240,234,0.34)",
+      toastBg: "rgba(12,12,12,0.92)",
+      navBg: "rgba(255,255,255,0.05)",
+      navHoverBg: "rgba(255,255,255,0.08)",
+      navActiveBg: "color-mix(in srgb, #F47F20 12%, rgba(255,255,255,0.03) 88%)",
+      navActiveText: "#F47F20",
+      glow: "rgba(244,127,32,0.22)",
+      surfaceTint: "rgba(244,127,32,0.08)",
+      shadowSoft: "0 14px 28px rgba(0,0,0,0.12)",
+      shadowStrong: "0 18px 40px rgba(0,0,0,0.22)"
+    }
   },
   smartone: {
     id: "smartone",
@@ -64,8 +96,40 @@ const BRANDS = {
       "Reliable",
       "Driven"
     ],
+    contact: {
+      blockTitle: "Contact SmartOne",
+      supportLine: "Contact SmartOne for a demo, pricing guidance, or help finding the right checkout setup.",
+      email: "hello@zerobubble.mt",
+      phones: ["+356 7933 7777", "+356 2155 7777"],
+      website: "https://zerobubble.mt/pages/smart-fiscal-cash-registers-seamless-payment-solutions-smartone",
+      websiteLabel: "SmartOne on zerobubble.mt"
+    },
     imagePromptPrefix: "Photorealistic SmartOne marketing image in a real Maltese business setting.",
-    imageStyleNotes: "Pure black #000000 and vivid purple #5A17B4 palette, product-first, fintech confidence, payment speed and compliance."
+    imageStyleNotes: "Pure black #000000 and vivid purple #5A17B4 palette, product-first, fintech confidence, payment speed and compliance.",
+    ui: {
+      pageBackground: "radial-gradient(circle at top left, rgba(90,23,180,0.24), transparent 34%), radial-gradient(circle at top right, rgba(196,168,255,0.08), transparent 24%), linear-gradient(160deg, #040406 0%, #0b0710 48%, #000000 100%)",
+      text: "#F5F2FF",
+      muted: "rgba(230,223,250,0.72)",
+      dim: "rgba(230,223,250,0.46)",
+      border: "rgba(160,120,255,0.18)",
+      surface: "rgba(255,255,255,0.05)",
+      surfaceSoft: "rgba(255,255,255,0.04)",
+      surfaceStrong: "rgba(255,255,255,0.08)",
+      panelBg: "linear-gradient(145deg, rgba(23,16,35,0.92), rgba(6,4,12,0.86))",
+      panelFlat: "rgba(20,14,30,0.82)",
+      inputBg: "rgba(10,7,18,0.86)",
+      headerBg: "rgba(6,4,12,0.82)",
+      footerMuted: "rgba(230,223,250,0.4)",
+      toastBg: "rgba(16,10,26,0.96)",
+      navBg: "rgba(90,23,180,0.24)",
+      navHoverBg: "rgba(90,23,180,0.34)",
+      navActiveBg: "rgba(90,23,180,0.46)",
+      navActiveText: "#ffffff",
+      glow: "rgba(90,23,180,0.24)",
+      surfaceTint: "rgba(90,23,180,0.12)",
+      shadowSoft: "0 14px 28px rgba(0,0,0,0.26)",
+      shadowStrong: "0 18px 40px rgba(0,0,0,0.32)"
+    }
   }
 };
 
@@ -171,6 +235,24 @@ const CONTENT = {
         "screens, devices, stock, scanning, receipts, real business operations",
         "busy but controlled environments",
         "avoid vague corporate office scenes that do not reflect POS usage"
+      ],
+      proofRules: [
+        "do not promise growth, savings, or implementation speed unless the prompt gives evidence",
+        "prefer practical outcomes such as faster checkout, clearer reporting, and calmer operations",
+        "if mentioning integrations or support, keep the wording grounded and business-facing"
+      ],
+      exampleHooks: [
+        "If your end-of-day still means checking one system against another, your setup is costing you time.",
+        "The busiest hour in the shop is when weak stock visibility hurts most."
+      ],
+      exampleCtas: [
+        "Book a retail tech audit",
+        "See what fits your setup"
+      ],
+      validationChecklist: [
+        "sounds like an operations-first retail partner, not a generic software vendor",
+        "anchors the message in a real retail or hospitality friction point",
+        "ends with a clear next step that fits an audit or demo conversation"
       ]
     },
     contentPillars: [
@@ -286,7 +368,53 @@ const CONTENT = {
         body: "Hi [First Name],\n\nIf now is not the moment, no problem. The useful next step is still to understand your current setup and the upgrade path.\n\nWhen you are ready, we can review your POS, stock, payments, ecommerce needs, and support gaps in one practical session.\n\nAll the best,\nChris\nZeroBubble",
         cta: "Book When Ready"
       }
-    ]
+    ],
+    websiteContent: {
+      intro: "Website copy for ZeroBubble should feel practical, operationally smart, and grounded in the realities of Malta retail and hospitality.",
+      messagingGoals: [
+        "Turn operational pain into clear commercial value",
+        "Show ZeroBubble as a practical partner, not just a software vendor",
+        "Make demos and audits feel like the natural next step",
+        "Connect POS, stock, ecommerce, payments, and reporting into one business story"
+      ],
+      topicClusters: [
+        {
+          label: "Retail Operations",
+          ideas: [
+            "How disconnected systems slow down retail businesses",
+            "What better reporting changes for store owners",
+            "How to reduce checkout friction in busy trading hours"
+          ]
+        },
+        {
+          label: "POS and Integrations",
+          ideas: [
+            "What to connect to your POS first",
+            "How ecommerce and instore selling should work together",
+            "Questions to ask before upgrading your POS setup"
+          ]
+        },
+        {
+          label: "Local Malta Relevance",
+          ideas: [
+            "Why local support matters when retail systems go down",
+            "What Malta retailers should look for in a POS partner",
+            "How growing hospitality businesses can simplify operations"
+          ]
+        }
+      ],
+      pageAngles: [
+        "Audit-first lead generation for merchants unsure what to fix first",
+        "Operational clarity and control for growing retail businesses",
+        "Local support, integrations, and practical rollout confidence"
+      ],
+      suggestedCTAs: [
+        "Book a demo",
+        "Request a retail tech audit",
+        "Talk to the team",
+        "See what fits your setup"
+      ]
+    }
   },
   smartone: {
     brandKit: {
@@ -409,6 +537,24 @@ const CONTENT = {
         "local Malta cues where useful",
         "polished, practical, commercial visuals",
         "avoid generic crypto / startup / stock-fintech clichés"
+      ],
+      proofRules: [
+        "qualify cost, pricing, and transaction-rate benefits unless merchant-specific proof is provided",
+        "avoid absolute compliance or speed claims unless they are explicitly confirmed",
+        "keep commercial claims confident but realistic"
+      ],
+      exampleHooks: [
+        "Too many counters still run card payments and fiscal receipts as two separate jobs.",
+        "Cleaner checkout is not a luxury when every second at the till changes the feel of the sale."
+      ],
+      exampleCtas: [
+        "Request a demo",
+        "Ask about the right setup for your business"
+      ],
+      validationChecklist: [
+        "keeps the product clearly merchant-facing rather than generic fintech hype",
+        "qualifies sensitive cost or rate claims where needed",
+        "keeps the checkout, payment, or fiscal context obvious"
       ]
     },
     contentPillars: [
@@ -524,7 +670,53 @@ const CONTENT = {
         body: "Hi [First Name],\n\nWhether the timing was not right, you got busy, or you are still weighing options, that is fine.\n\nWhen you are ready, we are here. No pressure.\n\nAll the best,\nChris\nZeroBubble",
         cta: "Book When Ready"
       }
-    ]
+    ],
+    websiteContent: {
+      intro: "Website copy for SmartOne should feel premium, clear, merchant-focused, and commercially smart, with strong emphasis on integrated checkout and compliance confidence.",
+      messagingGoals: [
+        "Make the all-in-one value obvious within seconds",
+        "Reduce confusion around checkout, compliance, and card payments",
+        "Build trust through clarity, practicality, and local relevance",
+        "Turn product curiosity into demo intent"
+      ],
+      topicClusters: [
+        {
+          label: "Integrated Checkout",
+          ideas: [
+            "Why merchants are replacing separate devices with one cleaner setup",
+            "How integrated card payments improve day-to-day checkout flow",
+            "What checkout friction really costs a business"
+          ]
+        },
+        {
+          label: "Compliance and Confidence",
+          ideas: [
+            "What merchants should know about VAT-approved fiscal receipts",
+            "How to choose a compliant payment setup in Malta",
+            "Why compliance confidence matters at the till"
+          ]
+        },
+        {
+          label: "Commercial Value",
+          ideas: [
+            "How an all-in-one setup can reduce operating friction",
+            "Questions to ask before switching payment provider",
+            "What a smarter payment setup looks like for Malta merchants"
+          ]
+        }
+      ],
+      pageAngles: [
+        "Cleaner checkout with less clutter and fewer devices",
+        "VAT-approved confidence without operational drag",
+        "Commercially smarter payment conversations backed by a real demo"
+      ],
+      suggestedCTAs: [
+        "Book a demo",
+        "See SmartOne in action",
+        "Talk to the team",
+        "Find the right setup for your business"
+      ]
+    }
   }
 };
 
@@ -611,6 +803,60 @@ function getBrandDirectionSnapshot(brandId) {
   };
 }
 
+function applySharedBrandTheme(brandOrId) {
+  const brand = typeof brandOrId === "string" ? getBrand(brandOrId) : brandOrId;
+  const theme = brand.ui || {};
+  const root = document.documentElement;
+
+  document.body.classList.remove("smartone-theme", "zerobubble-theme");
+  document.body.classList.add(brand.id === "smartone" ? "smartone-theme" : "zerobubble-theme");
+
+  const cssVars = {
+    "--primary": brand.primary,
+    "--secondary": brand.secondary,
+    "--orange": brand.primary,
+    "--dark": brand.background,
+    "--brand-primary": brand.primary,
+    "--brand-secondary": brand.secondary,
+    "--brand-glow": theme.glow || `${brand.primary}33`,
+    "--brand-surface": theme.surfaceTint || `${brand.primary}16`,
+    "--page-bg": theme.pageBackground,
+    "--light": theme.text,
+    "--text": theme.text,
+    "--muted": theme.muted,
+    "--text-muted": theme.muted,
+    "--text-dim": theme.dim || theme.muted,
+    "--border": theme.border,
+    "--surface": theme.surface,
+    "--surface-2": theme.surfaceSoft,
+    "--surface2": theme.surfaceSoft,
+    "--surface3": theme.surfaceStrong,
+    "--panel-bg": theme.panelBg,
+    "--panel-flat": theme.panelFlat,
+    "--input-bg": theme.inputBg,
+    "--header-bg": theme.headerBg,
+    "--footer-muted": theme.footerMuted,
+    "--toast-bg": theme.toastBg,
+    "--nav-bg": theme.navBg,
+    "--nav-hover-bg": theme.navHoverBg,
+    "--nav-active-bg": theme.navActiveBg,
+    "--nav-active-text": theme.navActiveText,
+    "--orange-dim": theme.surfaceTint || `${brand.primary}1f`,
+    "--orange-glow": theme.glow || `${brand.primary}40`,
+    "--border-orange": theme.surfaceTint || `${brand.primary}59`,
+    "--shadow-soft": theme.shadowSoft || "0 14px 28px rgba(0,0,0,0.12)",
+    "--shadow-strong": theme.shadowStrong || "0 18px 40px rgba(0,0,0,0.22)"
+  };
+
+  Object.entries(cssVars).forEach(([name, value]) => {
+    if (value !== undefined) {
+      root.style.setProperty(name, value);
+    }
+  });
+
+  return brand;
+}
+
 function setBrandDirectionOverride(brandId, overridePayload) {
   const normalized = normalizeBrand(brandId);
   const allOverrides = getStoredBrandDirectionOverrides();
@@ -641,3 +887,4 @@ window.getStoredBrandDirectionOverrides = getStoredBrandDirectionOverrides;
 window.getBrandDirectionSnapshot = getBrandDirectionSnapshot;
 window.setBrandDirectionOverride = setBrandDirectionOverride;
 window.clearBrandDirectionOverride = clearBrandDirectionOverride;
+window.applySharedBrandTheme = applySharedBrandTheme;

@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Generator v2.02</title>
+<title>Content Generator</title>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
   :root {
     --orange: #F47F20;
     --dark: #111111;
@@ -21,54 +22,28 @@
     --brand-secondary: #4BAFE8;
     --brand-glow: rgba(244,127,32,0.22);
     --brand-surface: rgba(244,127,32,0.08);
+    --page-bg: radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%), radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%), linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+    --panel-bg: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    --panel-flat: rgba(255,255,255,0.045);
+    --input-bg: rgba(8,8,8,0.36);
+    --header-bg: rgba(8,8,8,0.72);
+    --footer-muted: rgba(243,240,234,0.34);
+    --control-radius: 12px;
+    --panel-radius: 14px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background:
-      radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%),
-      radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%),
-      linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+    background: var(--page-bg);
     color: var(--light);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     min-height: 100vh;
   }
-  body.smartone-theme {
-    background:
-      radial-gradient(circle at top left, rgba(90,23,180,0.12), transparent 34%),
-      radial-gradient(circle at bottom right, rgba(165,130,255,0.1), transparent 28%),
-      linear-gradient(180deg, #f1edf6 0%, #e9e3f1 54%, #e2dbea 100%);
-    --light: #1f1430;
-    --muted: rgba(31,20,48,0.7);
-    --border: rgba(90,23,180,.16);
-    --mid: rgba(245,241,250,0.76);
-    --panel: rgba(238,233,245,0.66);
-    --brand-glow: rgba(90,23,180,0.1);
-    --brand-surface: rgba(90,23,180,0.06);
-  }
-
-  body.smartone-theme .left,
-  body.smartone-theme .block,
-  body.smartone-theme .img-block,
-  body.smartone-theme .ref-upload-section,
-  body.smartone-theme select,
-  body.smartone-theme textarea,
-  body.smartone-theme .prompt-box {
-    background: linear-gradient(145deg, rgba(244,240,249,0.84), rgba(232,225,241,0.72));
-    box-shadow: 0 14px 28px rgba(90,23,180,0.045);
-  }
-  body.zerobubble-theme {
-    background:
-      radial-gradient(circle at top left, rgba(244,127,32,0.2), transparent 34%),
-      radial-gradient(circle at top right, rgba(75,175,232,0.16), transparent 28%),
-      linear-gradient(160deg, #111111 0%, #181717 48%, #0c0c0c 100%);
-  }
-
   .header {
     border-bottom: 1px solid var(--border);
     padding: 18px 24px;
     display: flex; align-items: center; gap: 12px;
-    background: rgba(8,8,8,0.72);
+    background: var(--header-bg);
     backdrop-filter: blur(18px);
     position: sticky;
     top: 0;
@@ -88,48 +63,108 @@
   .back-link {
     font-size: 11px; font-weight: 700; color: var(--muted); text-decoration: none;
     text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px;
-    border: 1px solid var(--border); border-radius: 999px; transition: all .2s;
+    border: 1px solid var(--border); border-radius: var(--control-radius); transition: all .2s;
     background: rgba(255,255,255,0.04);
   }
   .back-link:hover { color: var(--light); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,0.08); }
   .brand-toggle { display: flex; gap: 6px; }
   .brand-btn {
-    border: 1px solid var(--border); padding: 10px 14px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--border); padding: 10px 14px; border-radius: var(--control-radius); cursor: pointer;
     font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif; transition: all .2s; background: rgba(255,255,255,0.05);
+    font-family: 'Sora', sans-serif; transition: all .2s; background: rgba(255,255,255,0.05);
   }
 
   .layout { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 62px); max-width: 1240px; margin: 0 auto; }
-  @media(max-width:700px){ .layout { grid-template-columns: 1fr; } }
+  @media(max-width:700px){
+    .layout { grid-template-columns: 1fr; }
+    .header { flex-wrap: wrap; padding: 14px 16px; gap: 10px; }
+    .header-sub { display: none; }
+    .header-title { font-size: 16px; }
+    .header-right { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .back-link, .brand-btn { padding: 8px 10px; }
+  }
 
   .left {
-    background: rgba(255,255,255,0.03);
+    background: var(--panel-flat);
     border-right: 1px solid var(--border);
-    padding: 24px; display: flex; flex-direction: column; gap: 18px;
+    padding: 26px 22px; display: flex; flex-direction: column; gap: 22px;
     backdrop-filter: blur(14px);
+  }
+  .sidebar-section {
+    display: grid;
+    gap: 12px;
+    padding: 0 0 22px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+  }
+  .sidebar-section:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .sidebar-section.compact {
+    gap: 10px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .section-copy {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
   }
   .field-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); display: block; margin-bottom: 8px; }
   .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .plat-btn {
-    border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 11px; padding: 10px 8px;
-    transition: all .2s; font-family: 'Space Grotesk', sans-serif; backdrop-filter: blur(10px);
+    border-radius: var(--control-radius); cursor: pointer; font-weight: 600; font-size: 11px; padding: 10px 8px;
+    transition: all .2s; font-family: 'Sora', sans-serif; backdrop-filter: blur(10px);
   }
-  .pillar-btn {
-    border-radius: 14px; cursor: pointer; text-align: left; padding: 12px 14px; transition: all .2s;
-    width: 100%; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; backdrop-filter: blur(10px);
+  .sidebar-select {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 12px 14px;
+    border-radius: var(--panel-radius);
+    font-size: 12px;
+    outline: none;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
   }
-  .pillar-num { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
-  .pillar-desc { font-size: 11px; margin-top: 2px; line-height: 1.4; }
+  .pillar-preview {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+  }
+  .pillar-preview-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+  .pillar-preview-copy {
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
   select, textarea {
-    width: 100%; background: rgba(8,8,8,0.36); border: 1px solid var(--border); color: var(--light);
-    padding: 12px 14px; border-radius: 14px; font-size: 12px; outline: none; font-family: 'Space Grotesk', sans-serif;
+    width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--light);
+    padding: 12px 14px; border-radius: var(--panel-radius); font-size: 12px; outline: none; font-family: 'Sora', sans-serif;
   }
   select { cursor: pointer; }
   textarea { resize: none; line-height: 1.5; }
+  #content-topic { min-height: 132px; font-size: 13px; padding: 14px; }
+  #content-topic-label { font-size: 11px; }
   .gen-btn {
-    border: none; color: #fff; padding: 14px; border-radius: 16px; cursor: pointer; font-weight: 700;
+    border: none; color: #fff; padding: 14px; border-radius: var(--panel-radius); cursor: pointer; font-weight: 700;
     font-size: 12px; text-transform: uppercase; letter-spacing: .08em; transition: all .2s;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     box-shadow: 0 18px 36px var(--brand-glow);
   }
   .gen-btn:disabled { opacity: .5; cursor: not-allowed; }
@@ -146,11 +181,28 @@
 
   .result { max-width: 760px; }
   .meta-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-  .badge { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-  .copy-all-btn { margin-left: auto; padding: 8px 12px; border-radius: 999px; cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+  .badge { padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .copy-all-btn { margin-left: auto; padding: 8px 12px; border-radius: var(--control-radius); cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; transition: all .2s; font-family: 'Sora', sans-serif; }
+  .result-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .result-action-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--control-radius);
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-family: 'Sora', sans-serif;
+    transition: all .2s;
+  }
+  .result-action-btn:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); }
+  .result-action-btn:disabled { opacity: .55; cursor: not-allowed; }
 
   .block {
-    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    background: var(--panel-bg);
     border: 1px solid var(--border);
     border-radius: 18px; padding: 18px 20px; margin-bottom: 12px;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
@@ -158,23 +210,175 @@
   .block-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 8px; }
   .headline-text { font-size: 17px; font-weight: 700; letter-spacing: -.01em; line-height: 1.3; }
   .body-text { font-size: 14px; color: rgba(243,240,234,0.84); line-height: 1.8; white-space: pre-wrap; }
-  .cta-pill { display: inline-block; color: #fff; padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
-  .hashtag { background: rgba(255,255,255,.06); color: var(--light); padding: 4px 10px; border-radius: 20px; font-size: 11px; display: inline-block; margin: 3px; }
+  .cta-pill { display: inline-block; color: #fff; padding: 8px 16px; border-radius: var(--control-radius); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+  .hashtag { background: rgba(255,255,255,.06); color: var(--light); padding: 4px 10px; border-radius: 10px; font-size: 11px; display: inline-block; margin: 3px; }
+  .editable-input,
+  .editable-textarea {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 12px 14px;
+    border-radius: var(--control-radius);
+    font-size: 13px;
+    outline: none;
+    font-family: 'Sora', sans-serif;
+  }
+  .editable-input { min-height: 44px; }
+  .editable-textarea {
+    resize: vertical;
+    line-height: 1.6;
+    min-height: 120px;
+  }
+  .editable-textarea.short { min-height: 88px; }
+  .editable-stack { display: grid; gap: 12px; }
+  .contact-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .contact-toggle-copy {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .contact-toggle-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--control-radius);
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-family: 'Sora', sans-serif;
+    white-space: nowrap;
+  }
+  .contact-lines { display: grid; gap: 6px; }
+  .contact-line { font-size: 13px; line-height: 1.6; color: rgba(243,240,234,0.84); }
+  .prompt-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .prompt-toggle-copy {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .prompt-toggle-copy strong {
+    color: var(--light);
+    font-weight: 700;
+  }
+  .prompt-toggle-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--control-radius);
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-family: 'Sora', sans-serif;
+    white-space: nowrap;
+  }
+  .workspace-launch {
+    display: grid;
+    gap: 10px;
+  }
+  .workspace-launch-btn {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--panel-radius);
+    padding: 12px 14px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-family: 'Sora', sans-serif;
+    transition: all .2s;
+  }
+  .workspace-launch-btn:hover {
+    background: rgba(255,255,255,.1);
+    border-color: rgba(255,255,255,.18);
+  }
+  .workspace-launch-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+  .workspace-summary {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .workspace-card {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    gap: 16px;
+  }
+  .workspace-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .workspace-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+  .workspace-card-copy {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 560px;
+  }
+  .workspace-top-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .workspace-ghost-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--control-radius);
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-family: 'Sora', sans-serif;
+  }
 
   /* ── IMAGE BLOCK ── */
   .img-block {
-    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-    border-top: 3px solid var(--brand-secondary);
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    padding: 18px 0 0;
     margin-bottom: 10px;
   }
   .img-block-header {
     display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
   }
-  .img-block-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--brand-secondary); }
-  .img-block-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .img-block-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(243,240,234,0.92); }
+  .img-block-sub { font-size: 11px; color: rgba(243,240,234,0.72); margin-top: 2px; }
 
   /* Generation steps */
   .img-steps {
@@ -223,13 +427,13 @@
   .img-action-btn {
     flex: 1;
     padding: 8px;
-    border-radius: 999px;
+    border-radius: var(--control-radius);
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .05em;
     cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     transition: all .2s;
     text-align: center;
   }
@@ -284,21 +488,20 @@
     line-height: 1.6;
   }
 
-  .regen-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 14px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; width: 100%; margin-top: 4px; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+  .regen-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 14px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; width: 100%; margin-top: 4px; transition: all .2s; font-family: 'Sora', sans-serif; }
   .regen-btn:hover { color: var(--light); border-color: rgba(255,255,255,.15); background: rgba(255,255,255,0.08); }
   .error-box { background: rgba(224,85,85,.08); border: 1px solid rgba(224,85,85,.25); color: #E05555; padding: 10px 14px; border-radius: 7px; font-size: 12px; }
 
   /* ── REFERENCE IMAGE UPLOAD ── */
   .ref-upload-section {
-    background: rgba(255,255,255,0.045);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 0;
   }
   .ref-upload-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px;
-    background: rgba(255,255,255,.03);
+    padding: 10px 0;
+    background: transparent;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     user-select: none;
@@ -309,7 +512,7 @@
   }
   .ref-upload-toggle { font-size: 10px; color: var(--muted); transition: transform .2s; }
   .ref-upload-toggle.open { transform: rotate(180deg); }
-  .ref-upload-body { padding: 12px; display: none; }
+  .ref-upload-body { padding: 14px 0 0; display: none; }
   .ref-upload-body.open { display: block; }
 
   .aspect-row {
@@ -319,7 +522,7 @@
     flex: 1; padding: 6px 4px; border-radius: 6px; cursor: pointer;
     font-size: 10px; font-weight: 700; text-align: center;
     background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-    color: var(--muted); font-family: 'Space Grotesk', sans-serif; transition: all .2s;
+    color: var(--muted); font-family: 'Sora', sans-serif; transition: all .2s;
     letter-spacing: .03em;
   }
   .aspect-btn.active { border-color: var(--ac,#F47F20); color: var(--ac,#F47F20); background: rgba(244,127,32,.1); }
@@ -346,11 +549,7 @@
     text-align: center;
     font-size: 11px;
     letter-spacing: .08em;
-    color: rgba(243,240,234,0.34);
-  }
-
-  body.smartone-theme .page-footer {
-    color: rgba(31,20,48,0.42);
+    color: var(--footer-muted);
   }
 
   .ref-thumbs {
@@ -374,6 +573,427 @@
     background: rgba(0,0,0,.65); font-size: 8px; color: #ccc;
     text-align: center; padding: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
   }
+  .ref-library-shell {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 10px;
+  }
+  .ref-library-copy {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .ref-library-copy strong { color: var(--light); }
+  .ref-library-top,
+  .ref-library-actions,
+  .ref-library-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .ref-library-filter-row,
+  .ref-library-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ref-library-btn,
+  .ref-library-chip,
+  .ref-library-card-btn,
+  .ref-library-danger-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-family: 'Sora', sans-serif;
+    transition: all .2s;
+  }
+  .ref-library-btn:disabled,
+  .ref-library-card-btn:disabled,
+  .ref-library-danger-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+  .ref-library-chip {
+    padding: 7px 9px;
+    color: var(--muted);
+  }
+  .ref-library-chip.active {
+    color: var(--light);
+    background: var(--brand-surface);
+    border-color: var(--brand-primary);
+  }
+  .ref-library-status {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .ref-library-status.error { color: var(--red); }
+  .ref-library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  .ref-library-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+  }
+  .ref-library-card.active {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 1px var(--brand-primary) inset;
+  }
+  .ref-library-image {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    background: rgba(0,0,0,0.22);
+  }
+  .ref-library-card-body {
+    padding: 10px;
+    display: grid;
+    gap: 8px;
+  }
+  .ref-library-card-name {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--light);
+    word-break: break-word;
+  }
+  .ref-library-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 7px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    background: rgba(255,255,255,0.08);
+    color: var(--muted);
+  }
+  .ref-library-card-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .ref-library-empty {
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .publish-panel {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    overflow: hidden;
+  }
+  .publish-disclosure {
+    display: grid;
+    gap: 0;
+  }
+  .publish-disclosure[open] .publish-summary {
+    border-bottom: 1px solid var(--border);
+  }
+  .publish-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .publish-summary::-webkit-details-marker { display: none; }
+  .publish-summary-copy {
+    display: grid;
+    gap: 4px;
+  }
+  .publish-summary-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .publish-summary-sub {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--light);
+  }
+  .publish-summary-body {
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+  }
+  .publish-row {
+    display: grid;
+    gap: 10px;
+  }
+  .publish-input-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .publish-action-row-top {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .publish-input {
+    width: 100%;
+    min-width: 0;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 11px 12px;
+    border-radius: var(--control-radius);
+    font-size: 12px;
+    outline: none;
+    font-family: 'Sora', sans-serif;
+  }
+  .publish-small-btn,
+  .publish-action-btn {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--light);
+    border-radius: var(--control-radius);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .publish-small-btn {
+    padding: 10px 12px;
+    flex-shrink: 0;
+  }
+  .publish-small-btn.ghost {
+    background: rgba(255,255,255,0.03);
+  }
+  .publish-action-btn {
+    padding: 10px 14px;
+  }
+  .publish-small-btn:hover,
+  .publish-action-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,.18);
+  }
+  .publish-small-btn:disabled,
+  .publish-action-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+  .publish-status-note,
+  .publish-helper {
+    font-size: 11px;
+    line-height: 1.6;
+    color: rgba(243,240,234,0.72);
+  }
+  .publish-issues {
+    margin-top: 8px;
+    display: grid;
+    gap: 6px;
+  }
+  .publish-issue {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+    padding-left: 12px;
+    position: relative;
+  }
+  .publish-issue::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--brand-primary);
+  }
+  .publish-status-grid {
+    display: grid;
+    gap: 8px;
+  }
+  .publish-status-item {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    border-radius: 14px;
+    padding: 10px 12px;
+  }
+  .publish-status-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .publish-status-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .publish-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 6px rgba(232,107,107,.08);
+  }
+  .publish-dot.ready {
+    background: var(--green);
+    box-shadow: 0 0 0 6px rgba(101,186,122,.08);
+  }
+  .publish-result {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.03);
+  }
+  .publish-result-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .publish-action-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .publish-feedback {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+    white-space: pre-wrap;
+  }
+  .publish-validation {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+  }
+  .publish-validation-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .publish-validation-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .publish-validation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: var(--control-radius);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--light);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .publish-validation-badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #868686;
+  }
+  .publish-validation-badge.checking::before {
+    background: #F5C542;
+    box-shadow: 0 0 0 5px rgba(245,197,66,0.12);
+  }
+  .publish-validation-badge.valid::before {
+    background: var(--green);
+    box-shadow: 0 0 0 5px rgba(101,186,122,0.12);
+  }
+  .publish-validation-badge.invalid::before,
+  .publish-validation-badge.backend-missing::before,
+  .publish-validation-badge.connection-error::before {
+    background: var(--red);
+    box-shadow: 0 0 0 5px rgba(232,107,107,0.12);
+  }
+  .publish-validation-copy {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .publish-field-hint {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .publish-summary-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--light);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .quality-review {
+    margin: 12px 0 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+  }
+  .quality-review-title {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .quality-review-item {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--light);
+  }
+  .quality-review-item:first-of-type {
+    margin-top: 0;
+  }
 </style>
 </head>
 <body>
@@ -395,82 +1015,123 @@
 
 <div class="layout">
   <div class="left">
-    <div>
-      <label class="field-label">Platform</label>
+    <div class="sidebar-section compact">
+      <div class="section-head">
+        <label class="field-label" id="channel-label" style="margin-bottom:0">Channel</label>
+      </div>
       <div class="platform-grid" id="platform-grid"></div>
     </div>
-    <div>
-      <label class="field-label">Post Type</label>
-      <select id="post-type"></select>
+    <div class="sidebar-section compact">
+      <label class="field-label" id="type-label" style="margin-bottom:0">Post Type</label>
+      <select id="post-type" class="sidebar-select"></select>
     </div>
-    <div>
-      <label class="field-label">Messaging Pillar</label>
-      <div id="pillar-grid"></div>
+    <div class="sidebar-section">
+      <label class="field-label" style="margin-bottom:0">Messaging Pillar</label>
+      <select id="pillar-select" class="sidebar-select"></select>
+      <div class="pillar-preview" id="pillar-preview"></div>
     </div>
-    <div>
-      <label class="field-label">Topic / Context <span style="color:#333;font-weight:400">(optional)</span></label>
-      <textarea id="topic" rows="3" placeholder="e.g. targeting boutique retailers in Sliema, promoting a free demo offer..."></textarea>
+    <div class="sidebar-section">
+      <label class="field-label" id="content-topic-label" style="margin-bottom:0">Content Prompt <span style="color:rgba(243,240,234,0.58);font-weight:400">(optional)</span></label>
+      <textarea id="content-topic" rows="5" placeholder="e.g. targeting boutique retailers in Sliema, promoting a free demo offer..." oninput="updateContentPromptState(this.value)"></textarea>
     </div>
-    <!-- REFERENCE IMAGE UPLOAD -->
-    <div class="ref-upload-section" id="ref-upload-section">
-      <div class="ref-upload-header" onclick="toggleRefUpload()">
-        <span class="ref-upload-label">Reference Images <span id="ref-count-badge" style="display:none;background:rgba(244,127,32,.2);color:#F47F20;padding:1px 7px;border-radius:10px;font-size:9px;margin-left:4px"></span></span>
-        <span class="ref-upload-toggle" id="ref-toggle-icon">▼</span>
-      </div>
-      <div class="ref-upload-body" id="ref-upload-body">
-        <label class="field-label" style="margin-bottom:6px">Aspect Ratio</label>
-        <div class="aspect-row" id="aspect-row">
-          <button class="aspect-btn active" data-ratio="1:1" onclick="setAspect(this,'1024x1024')">1:1</button>
-          <button class="aspect-btn" data-ratio="Landscape" onclick="setAspect(this,'1536x1024')">Landscape</button>
-          <button class="aspect-btn" data-ratio="Portrait" onclick="setAspect(this,'1024x1536')">Portrait</button>
-          <button class="aspect-btn" data-ratio="Auto" onclick="setAspect(this,'auto')">Auto</button>
-        </div>
-        <label class="field-label" style="margin-bottom:6px">Upload References <span style="color:#333;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-        <div class="drop-zone" id="drop-zone"
-          ondragover="event.preventDefault();this.classList.add('drag-over')"
-          ondragleave="this.classList.remove('drag-over')"
-          ondrop="handleDrop(event)">
-          <input type="file" id="ref-file-input" accept="image/*" multiple onchange="handleFileSelect(event)" />
-          <div class="drop-zone-icon">+</div>
-          <div class="drop-zone-text">Drop images here or <span>browse</span><br>Device · Background · Logo</div>
-        </div>
-        <div class="ref-thumbs" id="ref-thumbs"></div>
+    <div class="sidebar-section" id="image-setup-launch">
+      <label class="field-label" style="margin-bottom:0">Image Setup</label>
+      <div class="workspace-launch">
+        <button class="workspace-launch-btn" type="button" onclick="openImageWorkspace()">Open Image Setup</button>
+        <div class="workspace-summary" id="image-setup-summary">Prompt, references, and saved library open in the main workspace.</div>
       </div>
     </div>
 
     <button class="gen-btn" id="gen-btn" onclick="generate()">Generate Content</button>
+    <div id="ts-widget" style="margin-top:10px; display:flex; justify-content:center;"></div>
     <div id="error-box" style="display:none" class="error-box"></div>
+    <div class="publish-panel" id="publish-panel"></div>
   </div>
 
   <div class="right" id="right">
     <div class="empty-state">
       <div class="empty-icon">AI</div>
       <div class="empty-title">Select your options and generate</div>
-      <div class="empty-sub">Pick platform, post type, and pillar. Add optional context. Hit Generate.</div>
+      <div class="empty-sub">Pick a channel, content type, and pillar. Add optional context. Hit Generate.</div>
     </div>
   </div>
 </div>
-<div class="page-footer">Copyright © Chris Ellul · v2.02 · Deployed 2026-05-03 17:11 CEST</div>
+<div class="page-footer" data-app-footer>Copyright © Chris Ellul</div>
 
+<script type="module">
+import { applyAppMetadata } from "./app-metadata.mjs";
+
+applyAppMetadata({ pageKey: "contentGenerator", footerSelector: ".page-footer[data-app-footer]" });
+</script>
 <script src="./brand-config.js"></script>
 <script>
 const WORKER_URL = "https://zb-content-api.chris-ellul-personal.workers.dev";
+const GENERATE_WORKER_URL = `${WORKER_URL}/generate`;
 const IMAGE_WORKER_URL = "https://zb-content-api.chris-ellul-personal.workers.dev/image";
-const IMAGE_MODEL_LABEL = "GPT Image";
-const IMAGE_MODEL_ID = "gpt-image-1";
+const TEXT_MODEL_ID = "gpt-5.5";
+const IMAGE_MODEL_LABEL = "GPT Image 2";
+const IMAGE_MODEL_ID = "gpt-image-2";
+const PUBLISHING_STATUS_URL = `${WORKER_URL}/publishing/status`;
+const SHOPIFY_PUBLISH_URL = `${WORKER_URL}/publishing/shopify/publish`;
+const META_PUBLISH_URL = `${WORKER_URL}/publishing/meta/publish`;
+const PUBLISH_ADMIN_TOKEN_KEY = "zbPublishAdminToken";
+const REFERENCE_LIBRARY_URL = `${WORKER_URL}/references`;
+const REFERENCE_LIBRARY_UPLOAD_URL = `${WORKER_URL}/references/upload`;
+const REFERENCE_LIBRARY_DELETE_URL = `${WORKER_URL}/references/delete`;
+const REFERENCE_LIBRARY_UPDATE_TAGS_URL = `${WORKER_URL}/references/update-tags`;
 
-const PLATFORMS = [
+// ── Cloudflare Turnstile (bot protection for credit-spending Worker calls) ──
+const TURNSTILE_SITEKEY = "0x4AAAAAADp4gjoiGbjbobNL";
+let __tsWidgetId = null;
+const __tsResolvers = [];
+function onTurnstileLoad() {
+  try {
+    __tsWidgetId = turnstile.render("#ts-widget", {
+      sitekey: TURNSTILE_SITEKEY,
+      action: "turnstile-spin-v1",
+      callback: (token) => { const fn = __tsResolvers.shift(); if (fn) fn(token); },
+    });
+  } catch (e) { /* widget will be retried on demand */ }
+}
+window.onTurnstileLoad = onTurnstileLoad;
+// Returns a fresh single-use Turnstile token. Each Worker call needs its own.
+function getFreshTurnstileToken() {
+  return new Promise((resolve, reject) => {
+    if (typeof turnstile === "undefined" || __tsWidgetId === null) {
+      reject(new Error("Verification is still loading. Please wait a moment and try again."));
+      return;
+    }
+    __tsResolvers.push(resolve);
+    try { turnstile.reset(__tsWidgetId); } catch (e) {}
+    setTimeout(() => {
+      const idx = __tsResolvers.indexOf(resolve);
+      if (idx !== -1) { __tsResolvers.splice(idx, 1); reject(new Error("Verification timed out. Please try again.")); }
+    }, 20000);
+  });
+}
+const REFERENCE_LIBRARY_TAGS = [
+  "device",
+  "logo",
+  "environment",
+  "style-guide",
+  "campaign-reference",
+  "do-not-deviate"
+];
+
+const CHANNELS = [
   { id:"facebook", label:"Facebook", color:"#4B9EF5" },
   { id:"instagram", label:"Instagram", color:"#E1306C" },
   { id:"linkedin", label:"LinkedIn", color:"#4BAFE8" },
-  { id:"email", label:"Email", color:"#65BA7A" }
+  { id:"email", label:"Email", color:"#65BA7A" },
+  { id:"website", label:"Website", color:"#F5C542" }
 ];
 
-const POST_TYPES = {
-  facebook: ["Carousel","Static Image + Copy","Video Script","Poll / Engagement","Lead Gen Post"],
-  instagram: ["Reel Script","Static Image","Carousel","Story","Quote Graphic"],
-  linkedin: ["Thought Leadership","List Post","Case Study","Direct CTA","Personal Story"],
-  email: ["Newsletter","Nurture Email","Promotional Email","Re-engagement"]
+const CONTENT_TYPES = {
+  facebook: ["Page Like Campaign","Call / Message Campaign","Website Traffic Campaign","Lead Form Offer","Poll / Engagement"],
+  instagram: ["Profile Visit Campaign","DM / Message Campaign","Offer Highlight","Story Poll / Question","Social Proof Post"],
+  linkedin: ["Thought Leadership","Authority List Post","Case Study","Direct CTA","Lead Magnet"],
+  email: ["Newsletter","Nurture Email","Promotional Email","Re-engagement"],
+  website: ["Blog Post","Service Page Section","Homepage Section","Landing Page Copy","FAQ Block","Case Study"]
 };
 
 const BASE_WRITING_RULES = `Tone: Direct, confident, data-driven, business casual. No jargon. Active voice. Short sharp sentences.
@@ -520,45 +1181,107 @@ const POS_IMAGE_STYLES = [
   "candid customer paying at counter, natural retail environment"
 ];
 
+const WEBSITE_FIELD_HINTS = {
+  "Blog Post": "e.g. blog for Malta retailers on disconnected POS systems, targeting owners searching for better reporting",
+  "Service Page Section": "e.g. service-page section about POS integrations, stock control, or local support",
+  "Homepage Section": "e.g. homepage hero for SmartOne merchants who want a cleaner checkout setup",
+  "Landing Page Copy": "e.g. demo landing page for merchants considering a switch from separate card terminals",
+  "FAQ Block": "e.g. FAQs around VAT compliance, demos, setup, pricing conversations, or support",
+  "Case Study": "e.g. case study about a Malta merchant improving checkout flow or reporting clarity"
+};
+
+const SOCIAL_FIELD_HINTS = {
+  "Page Like Campaign": "e.g. Malta retailers who do not know the brand yet, focusing on why they should follow the page for practical merchant tips and offers",
+  "Call / Message Campaign": "e.g. push shop owners to call or send a message for a quick demo, audit, or product question",
+  "Website Traffic Campaign": "e.g. send merchants to a landing page, demo page, product page, or audit booking page with a strong reason to click",
+  "Lead Form Offer": "e.g. free demo, free retail tech audit, callback request, or product consultation for Malta businesses",
+  "Poll / Engagement": "e.g. ask merchants about their biggest checkout, reporting, stock, or compliance frustration and start comments or DMs",
+  "Profile Visit Campaign": "e.g. get local business owners to visit the Instagram profile and discover the offer in bio",
+  "DM / Message Campaign": "e.g. invite business owners to send a DM for pricing, setup advice, or a quick product walkthrough",
+  "Offer Highlight": "e.g. spotlight a demo, launch offer, free audit, or practical business win with a direct CTA",
+  "Story Poll / Question": "e.g. quick Instagram story prompt around merchant pain points that drives replies or profile taps",
+  "Social Proof Post": "e.g. testimonial, merchant win, or trust-building proof that makes the next click or message feel safer",
+  "Thought Leadership": "e.g. operator insight about payments, POS friction, VAT compliance, or retail growth in Malta",
+  "Authority List Post": "e.g. 3-5 sharp points that help a merchant diagnose whether their current setup is costing time or sales",
+  "Direct CTA": "e.g. direct invitation to book a demo, request an audit, or speak to the team this week",
+  "Lead Magnet": "e.g. checklist, audit, consultation, or guide that captures interest from serious business owners"
+};
+
+const SOCIAL_POST_TYPE_GUIDANCE = {
+  "Page Like Campaign": "Aim for awareness and page follows. Give the audience a clear reason to like or follow the page, such as practical tips, offers, demos, updates, or merchant advice. Keep the CTA focused on following the page rather than making an immediate purchase.",
+  "Call / Message Campaign": "Write for high-intent direct response. Make it easy for the audience to call or send a message now. Mention the kind of help they will get when they reach out, such as pricing clarity, setup advice, a demo, or a quick recommendation.",
+  "Website Traffic Campaign": "Optimise for clicks to a website or landing page. Create enough curiosity and business value to earn the click. The CTA should clearly point the user toward visiting the page.",
+  "Lead Form Offer": "Write like a lead-generation ad or post. Present one clear offer, reduce friction, and explain what the user gets when they submit their details.",
+  "Poll / Engagement": "Use a short, punchy hook and make the interaction easy. Ask one concrete question that reveals a pain point or buying signal and encourages comments, votes, or messages.",
+  "Profile Visit Campaign": "Encourage profile visits by teasing the value on the profile or in the bio. Make the audience curious enough to tap through and explore.",
+  "DM / Message Campaign": "Write to trigger direct messages. Be conversational, low-friction, and clear about what the person can ask or request in a DM.",
+  "Offer Highlight": "Lead with one concrete offer or commercial win. Make the value obvious fast and keep the CTA action-oriented.",
+  "Story Poll / Question": "Write with short story-style rhythm. Use a simple question, decision point, or friction point that invites a fast tap or reply.",
+  "Social Proof Post": "Use credibility, merchant proof, or trust signals. Show why the brand is a safe next step without sounding overhyped.",
+  "Thought Leadership": "Write with authority and a clear point of view. Teach something useful, challenge weak habits, or reframe a common merchant mistake.",
+  "Authority List Post": "Structure the post around a short list of practical insights, checks, or mistakes. Keep each point commercially relevant and easy to scan.",
+  "Direct CTA": "Be direct about the next step. The post should move a warm prospect toward booking, calling, messaging, or requesting more information.",
+  "Lead Magnet": "Offer a clear asset or consultation that feels worth exchanging contact details for. Explain the practical value, not just the title of the offer."
+};
+
 function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function isWebsiteChannel() { return state.platform === "website"; }
+function supportsImageGeneration() { return !isWebsiteChannel(); }
 
-function buildSmartOneImagePrompt(topic, platform, postType, hasRef, strategy) {
-  const style = getRandom(SMARTONE_IMAGE_STYLES);
-  const topicLower = (topic || '').toLowerCase();
-  let scene = '';
-  if (!topic) {
-    scene = getRandom(SMARTONE_DEFAULT_SCENES);
-  } else if (topicLower.includes("salon") || topicLower.includes("hair") || topicLower.includes("beauty")) {
-    scene = "modern hair salon or beauty studio in Malta, stylish interior, professional setting";
-  } else if (topicLower.includes("flower") || topicLower.includes("florist")) {
-    scene = "vibrant flower shop or florist in Malta, colourful floral displays, fresh blooms";
-  } else if (topicLower.includes("restaurant") || topicLower.includes("cafe") || topicLower.includes("hospitality") || topicLower.includes("bar")) {
-    scene = "busy Maltese restaurant, cafe or bar setting, warm hospitality atmosphere, local feel";
-  } else if (topicLower.includes("pharmacy") || topicLower.includes("chemist")) {
-    scene = "clean professional pharmacy interior in Malta, organised shelving, clinical yet approachable";
-  } else if (topicLower.includes("retail") || topicLower.includes("shop") || topicLower.includes("store") || topicLower.includes("boutique")) {
-    scene = "stylish retail boutique or shop in Malta, modern interior, welcoming shopfront";
-  } else if (topicLower.includes("supermarket") || topicLower.includes("grocery") || topicLower.includes("food")) {
-    scene = "Maltese supermarket or grocery store, busy checkout area, everyday shopping environment";
-  } else if (topicLower.includes("valletta") || topicLower.includes("sliema") || topicLower.includes("malta")) {
-    scene = "authentic Maltese setting — limestone architecture, warm Mediterranean light, local urban atmosphere";
-  } else {
-    scene = `Malta retail business environment relevant to: ${topic}. Authentic local setting, Mediterranean cues`;
+function buildImagePromptFromUserBrief(topic, platform, postType, hasRef, brandId) {
+  const subject = brandId === "smartone"
+    ? "SmartOne fiscal cash register terminal"
+    : "ZeroBubble cloud POS setup";
+  const trimmedTopic = String(topic || "").trim();
+  const baseBrief = trimmedTopic || `Create a photorealistic marketing image featuring the ${subject}.`;
+  const lines = [
+    `Create a photorealistic marketing image for ${platform} ${postType}.`,
+    `Primary subject: ${subject}.`,
+    `User brief: ${baseBrief}`,
+    "Follow the user's brief as closely as possible.",
+    "Keep the composition commercially polished and realistic.",
+    "No text overlays, no watermarks, no distorted hands, and no extra unrelated hardware."
+  ];
+
+  if (hasRef) {
+    lines.push("The provided reference images are the source of truth for product appearance, brand marks, colours, proportions, hardware layout, and overall fidelity.");
+    lines.push("Keep the output faithful to the reference images while following the user's requested scene, angle, lighting, and composition whenever possible.");
   }
-  const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, colours, and branding — reproduce the device accurately." : "";
-  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
-  return `${strategy.brand.imagePromptPrefix} Malta setting: ${scene}. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. ${strategy.content.brandKit.visualRule || ""}${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""} A SmartOne fiscal cash register terminal is prominently featured in the scene.${refNote} Local Maltese people interacting naturally in the environment. Commercial photography quality. No text overlays. Platform context: ${platform} ${postType}.`;
+
+  return lines.join("\n");
 }
 
-
-function buildZeroBubbleImagePrompt(topic, platform, postType, hasRef, strategy) {
-  const style = getRandom(POS_IMAGE_STYLES);
-  const refNote = hasRef ? " Refer to the attached reference image(s) for exact device appearance, ZeroBubble logo, and brand colours — reproduce them accurately." : "";
-  const brainImageGuidance = (strategy.content.brandBrain?.imageGuidance || []).join("; ");
-  return `${strategy.brand.imagePromptPrefix} Cloud POS system on retail counter in a Malta retail or hospitality setting. Style: ${style}. ${strategy.brand.imageStyleNotes} Visual system: ${strategy.content.brandKit.framework.visualSystem}. Brand story cue: ${strategy.content.brandKit.story}.${brainImageGuidance ? ` Brand Brain image guidance: ${brainImageGuidance}.` : ""}${refNote} Commercial photography quality. No text overlays. Aspect ratio suited for ${platform}.`;
-}
-
-let state = { brand:getSelectedBrand(), platform:"facebook", postType:"Carousel", pillar:"p1", result:null, imageB64:null, imagePrompt:null, refImages:[], aspectSize:"1024x1024" };
+let state = {
+  brand:getSelectedBrand(),
+  platform:"facebook",
+  postType:"Page Like Campaign",
+  pillar:"p1",
+  contentTopic:"",
+  imageTopic:"",
+  useSamePromptForImage:true,
+  result:null,
+  originalResult:null,
+  resultWarnings:[],
+  imageB64:null,
+  imagePrompt:null,
+  refImages:[],
+  referenceLibraryItems:[],
+  referenceLibraryLoading:false,
+  referenceLibraryError:"",
+  referenceLibraryFilter:"all",
+  referenceLibraryTagDrafts:{},
+  referenceLibraryBusyKeys:[],
+  aspectSize:"1024x1024",
+  publishingStatus:null,
+  publishingBusy:false,
+  publishingFeedback:"",
+  publishingValidation:"not_checked",
+  publishingValidationMessage:"",
+  publishTokenVisible:false,
+  publishingPanelOpen:false,
+  mainPanelMode:"empty",
+  includeContactBlock:true,
+};
 
 function getBrandConfig(brandId) {
   const brand = getBrand(brandId);
@@ -579,7 +1302,8 @@ function getBrandConfig(brandId) {
     visualRule: content.brandKit.visualRule || "",
     doList: content.brandKit.doList,
     dontList: content.brandKit.dontList,
-    brandBrain: content.brandBrain || null
+    brandBrain: content.brandBrain || null,
+    websiteContent: content.websiteContent || null
   };
 }
 
@@ -594,6 +1318,147 @@ function formatBrainItems(items) {
   return Array.isArray(items) ? items.join(" | ") : "";
 }
 
+function cloneResult(value) {
+  return value ? JSON.parse(JSON.stringify(value)) : null;
+}
+
+function isReferenceLibraryBusy(key) {
+  return state.referenceLibraryBusyKeys.includes(key);
+}
+
+function isLibraryItemSelected(key) {
+  return state.refImages.some((img) => img.libraryKey === key);
+}
+
+function queueReferenceLibraryBusy(key) {
+  if (!isReferenceLibraryBusy(key)) {
+    state.referenceLibraryBusyKeys = [...state.referenceLibraryBusyKeys, key];
+  }
+}
+
+function clearReferenceLibraryBusy(key) {
+  state.referenceLibraryBusyKeys = state.referenceLibraryBusyKeys.filter((entry) => entry !== key);
+}
+
+function getReferenceLibraryPrimaryTag(item) {
+  return Array.isArray(item?.tags) && item.tags.length ? item.tags[0] : "";
+}
+
+function syncReferenceLibraryTagDrafts() {
+  const nextDrafts = {};
+  for (const item of state.referenceLibraryItems) {
+    const existingDraft = state.referenceLibraryTagDrafts[item.key];
+    nextDrafts[item.key] = typeof existingDraft === "string" ? existingDraft : getReferenceLibraryPrimaryTag(item);
+  }
+  state.referenceLibraryTagDrafts = nextDrafts;
+}
+
+function getReferenceLibraryTagDraft(key) {
+  return state.referenceLibraryTagDrafts[key] || "";
+}
+
+function updateReferenceLibraryTagDraft(encodedKey, value) {
+  const key = decodeURIComponent(encodedKey);
+  state.referenceLibraryTagDrafts = {
+    ...state.referenceLibraryTagDrafts,
+    [key]: value,
+  };
+  renderReferenceLibrary();
+}
+
+function hasReferenceLibraryTagChange(item) {
+  return getReferenceLibraryTagDraft(item.key) !== getReferenceLibraryPrimaryTag(item);
+}
+
+function resetGeneratedState() {
+  state.result = null;
+  state.originalResult = null;
+  state.resultWarnings = [];
+  state.imageB64 = null;
+  state.imagePrompt = null;
+  state.publishingFeedback = "";
+  state.includeContactBlock = true;
+}
+
+function getBrandContact() {
+  return getBrand(state.brand).contact || null;
+}
+
+function buildContactLines() {
+  const contact = getBrandContact();
+  if (!contact) return [];
+  const lines = [];
+  if (contact.supportLine) lines.push(contact.supportLine);
+  if (contact.email) lines.push(`Email: ${contact.email}`);
+  if (Array.isArray(contact.phones) && contact.phones.length) lines.push(`Phone: ${contact.phones.join(" / ")}`);
+  if (contact.websiteLabel || contact.website) lines.push(`Website: ${contact.websiteLabel || contact.website}`);
+  return lines;
+}
+
+function buildContactBlockText() {
+  const contact = getBrandContact();
+  if (!contact || !state.includeContactBlock) return "";
+  return [contact.blockTitle || "Contact", ...buildContactLines()].filter(Boolean).join("\n");
+}
+
+function appendContactBlock(text) {
+  const contactText = buildContactBlockText();
+  if (!contactText) return text;
+  return [text, contactText].filter(Boolean).join("\n\n");
+}
+
+function updateDraftWarnings() {
+  state.resultWarnings = state.result ? evaluateGeneratedContent(state.result, state.brand) : [];
+}
+
+function updateDraftField(path, value) {
+  if (!state.result) return;
+  const parts = path.split(".");
+  let cursor = state.result;
+  for (let i = 0; i < parts.length - 1; i += 1) {
+    const key = /^\d+$/.test(parts[i]) ? Number(parts[i]) : parts[i];
+    cursor = cursor?.[key];
+    if (cursor == null) return;
+  }
+  const last = parts[parts.length - 1];
+  cursor[/^\d+$/.test(last) ? Number(last) : last] = value;
+  updateDraftWarnings();
+}
+
+function updateDraftList(path, value) {
+  const items = String(value || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  updateDraftField(path, items);
+}
+
+function updateDraftHashtags(value) {
+  const tags = String(value || "")
+    .split(/[\n, ]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => item.replace(/^#/, ""));
+  updateDraftField("hashtags", tags);
+}
+
+function restoreOriginalResult() {
+  if (!state.originalResult) return;
+  state.result = cloneResult(state.originalResult);
+  updateDraftWarnings();
+  rerenderCurrentResult();
+}
+
+function toggleContactBlock() {
+  state.includeContactBlock = !state.includeContactBlock;
+  rerenderCurrentResult();
+}
+
+function getEditedDraftContext() {
+  if (!state.result) return "";
+  return isWebsiteChannel() ? formatWebsiteCopy(state.result) : getSocialPublishCaption(false);
+}
+
 function buildBrandBrainPrompt(brandBrain) {
   if (!brandBrain) return "";
   return [
@@ -605,10 +1470,14 @@ function buildBrandBrainPrompt(brandBrain) {
     `Objections to address: ${formatBrainItems(brandBrain.objections)}`,
     `Approved messaging themes: ${formatBrainItems(brandBrain.approvedMessagingThemes)}`,
     `Claims to avoid: ${formatBrainItems(brandBrain.claimsToAvoid)}`,
+    `Proof and qualification rules: ${formatBrainItems(brandBrain.proofRules)}`,
     `Tone of voice: ${formatBrainItems(brandBrain.toneOfVoice)}`,
     `CTA styles: ${formatBrainItems(brandBrain.ctaStyles)}`,
     `Useful content angles: ${formatBrainItems(brandBrain.contentAngles)}`,
-    `Image guidance: ${formatBrainItems(brandBrain.imageGuidance)}`
+    `Image guidance: ${formatBrainItems(brandBrain.imageGuidance)}`,
+    `Approved example hooks: ${formatBrainItems(brandBrain.exampleHooks)}`,
+    `Approved example CTAs: ${formatBrainItems(brandBrain.exampleCtas)}`,
+    `Validation checklist: ${formatBrainItems(brandBrain.validationChecklist)}`
   ].filter((line) => !line.endsWith(": ")).join("\n");
 }
 
@@ -638,6 +1507,124 @@ function buildBrandFrameworkPrompt(brandId) {
   ].join("\n");
 }
 
+function buildWebsiteStrategyPrompt(websiteContent) {
+  if (!websiteContent) return "";
+  const clusters = (websiteContent.topicClusters || []).map((cluster) => {
+    return `${cluster.label}: ${(cluster.ideas || []).join(" | ")}`;
+  }).join("\n");
+
+  return [
+    `Website content intro: ${websiteContent.intro || ""}`,
+    `Website messaging goals: ${(websiteContent.messagingGoals || []).join(" | ")}`,
+    `Website page angles: ${(websiteContent.pageAngles || []).join(" | ")}`,
+    `Website topic clusters:\n${clusters}`,
+    `Suggested website CTAs: ${(websiteContent.suggestedCTAs || []).join(" | ")}`
+  ].filter(Boolean).join("\n");
+}
+
+function getTopicPlaceholder() {
+  return WEBSITE_FIELD_HINTS[state.postType]
+    || SOCIAL_FIELD_HINTS[state.postType]
+    || "e.g. targeting boutique retailers in Sliema, promoting a free demo offer...";
+}
+
+function getImageTopicPlaceholder() {
+  if (state.brand === "smartone") {
+    return "e.g. premium SmartOne hero image, exact device focus, black-and-purple styling, Malta merchant setting, clean commercial lighting...";
+  }
+  return "e.g. practical ZeroBubble POS setup on a real Malta retail counter, operational feel, orange accents, realistic checkout moment...";
+}
+
+function getContentPromptValue() {
+  const value = document.getElementById("content-topic")?.value?.trim() || state.contentTopic || "";
+  state.contentTopic = value;
+  return value;
+}
+
+function getImagePromptValue() {
+  const contentPrompt = getContentPromptValue();
+  const imagePrompt = document.getElementById("image-topic")?.value?.trim() || state.imageTopic || "";
+  state.imageTopic = imagePrompt;
+  return state.useSamePromptForImage ? contentPrompt : imagePrompt;
+}
+
+function updateContentPromptState(value) {
+  state.contentTopic = String(value || "");
+}
+
+function updateImagePromptState(value) {
+  state.imageTopic = String(value || "");
+}
+
+function getEmptyStateCopy() {
+  if (isWebsiteChannel()) {
+    return "Pick a website content type, choose a messaging pillar, add optional context, and generate structured copy.";
+  }
+  return "Pick platform, post type, and pillar. Add your content brief. Open Image Setup when you want to work on visuals.";
+}
+
+function refreshFormContext() {
+  document.getElementById("channel-label").textContent = "Channel";
+  document.getElementById("type-label").textContent = isWebsiteChannel() ? "Content Type" : "Post Type";
+  const contentField = document.getElementById("content-topic");
+  if (contentField) {
+    contentField.placeholder = getTopicPlaceholder();
+    contentField.value = state.contentTopic || "";
+  }
+  const launch = document.getElementById("image-setup-launch");
+  if (launch) {
+    launch.style.display = supportsImageGeneration() ? "grid" : "none";
+  }
+  updateImageWorkspaceSummary();
+  syncImagePromptControls();
+  const button = document.getElementById("gen-btn");
+  if (button) {
+    button.textContent = isWebsiteChannel() ? "Generate Website Content" : "Generate Content";
+  }
+}
+
+function updateImageWorkspaceSummary() {
+  const summary = document.getElementById("image-setup-summary");
+  if (!summary) return;
+  const refCount = state.refImages.length;
+  const separate = !state.useSamePromptForImage;
+  if (isWebsiteChannel()) {
+    summary.textContent = "Image setup is hidden for website content.";
+    return;
+  }
+  summary.textContent = `${refCount} reference${refCount === 1 ? "" : "s"} selected${separate ? " · Separate image brief on" : ""}`;
+}
+
+function syncImagePromptControls() {
+  const toggleRow = document.getElementById("image-prompt-toggle-row");
+  const wrap = document.getElementById("image-topic-wrap");
+  const toggle = document.getElementById("same-image-prompt-btn");
+  const status = document.getElementById("same-image-prompt-status");
+  const imagePromptField = document.getElementById("image-topic");
+  if (toggleRow) {
+    toggleRow.style.display = isWebsiteChannel() ? "none" : "flex";
+  }
+  if (wrap) {
+    wrap.style.display = state.useSamePromptForImage || isWebsiteChannel() ? "none" : "block";
+  }
+  if (toggle) {
+    toggle.textContent = state.useSamePromptForImage ? "Turn On" : "Turn Off";
+  }
+  if (status) {
+    status.textContent = state.useSamePromptForImage ? "Off" : "On";
+  }
+  if (imagePromptField) {
+    imagePromptField.placeholder = getImageTopicPlaceholder();
+    imagePromptField.value = state.imageTopic || "";
+  }
+  updateImageWorkspaceSummary();
+}
+
+function toggleSeparateImagePrompt() {
+  state.useSamePromptForImage = !state.useSamePromptForImage;
+  syncImagePromptControls();
+}
+
 function getActivePillars() {
   return getBrandContent(state.brand).contentPillars;
 }
@@ -648,18 +1635,112 @@ function init() {
   renderPillars();
   renderPostTypes();
   renderBrandToggle();
+  refreshFormContext();
+  primePublishingValidationState();
+  renderPublishingPanel();
+  renderReferenceLibrary();
+  loadReferenceLibrary();
+}
+
+function getImageWorkspaceMarkup() {
+  return `
+    <div class="workspace-card">
+      <div class="workspace-card-head">
+        <div>
+          <div class="workspace-card-title">Image Setup</div>
+          <div class="workspace-card-copy">Build your visual brief and references here.</div>
+        </div>
+        <div class="workspace-top-actions">
+          <button class="workspace-ghost-btn" type="button" onclick="generateImageOnly()" ${supportsImageGeneration() ? "" : "disabled"}>Generate Image</button>
+          ${state.result ? `<button class="workspace-ghost-btn" type="button" onclick="rerenderCurrentResult()">Back to Result</button>` : ""}
+          <button class="workspace-ghost-btn" type="button" onclick="resetRight()">Close</button>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="prompt-toggle-row" id="image-prompt-toggle-row">
+          <div class="prompt-toggle-copy">Separate image brief: <strong id="same-image-prompt-status">Off</strong></div>
+          <button class="prompt-toggle-btn" id="same-image-prompt-btn" type="button" onclick="toggleSeparateImagePrompt()">Turn On</button>
+        </div>
+        <div id="image-topic-wrap" style="display:none">
+          <label class="field-label" style="margin-bottom:6px">Image Prompt <span style="color:rgba(243,240,234,0.58);font-weight:400">(optional)</span></label>
+          <textarea id="image-topic" rows="4" placeholder="e.g. hero shot of SmartOne on a premium black counter with exact product focus and clean Malta retail lighting..." oninput="updateImagePromptState(this.value)"></textarea>
+        </div>
+      </div>
+      <div class="ref-upload-section" id="ref-upload-section">
+        <div class="ref-upload-header" onclick="toggleRefUpload()">
+          <span class="ref-upload-label">Image References <span id="ref-count-badge" style="display:none;background:rgba(244,127,32,.2);color:#F47F20;padding:1px 7px;border-radius:10px;font-size:9px;margin-left:4px"></span></span>
+          <span class="ref-upload-toggle" id="ref-toggle-icon">▼</span>
+        </div>
+        <div class="ref-upload-body open" id="ref-upload-body">
+          <label class="field-label" style="margin-bottom:6px">Aspect Ratio</label>
+          <div class="aspect-row" id="aspect-row">
+            <button class="aspect-btn ${state.aspectSize==='1024x1024'?'active':''}" data-ratio="1:1" onclick="setAspect(this,'1024x1024')">1:1</button>
+            <button class="aspect-btn ${state.aspectSize==='1536x1024'?'active':''}" data-ratio="Landscape" onclick="setAspect(this,'1536x1024')">Landscape</button>
+            <button class="aspect-btn ${state.aspectSize==='1024x1536'?'active':''}" data-ratio="Portrait" onclick="setAspect(this,'1024x1536')">Portrait</button>
+            <button class="aspect-btn ${state.aspectSize==='auto'?'active':''}" data-ratio="Auto" onclick="setAspect(this,'auto')">Auto</button>
+          </div>
+          <label class="field-label" style="margin-bottom:6px">Upload References <span style="color:rgba(243,240,234,0.58);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <div class="drop-zone" id="drop-zone"
+            ondragover="event.preventDefault();this.classList.add('drag-over')"
+            ondragleave="this.classList.remove('drag-over')"
+            ondrop="handleDrop(event)">
+            <input type="file" id="ref-file-input" accept="image/*" multiple onchange="handleFileSelect(event)" />
+            <div class="drop-zone-icon">+</div>
+            <div class="drop-zone-text">Drop images here or <span>browse</span><br>Device · Background · Logo</div>
+          </div>
+          <div class="ref-library-copy" style="margin-top:8px">Quick uploads apply to this generation only and are auto-tagged. To tag and reuse images, use the saved library below.</div>
+          <div class="ref-thumbs" id="ref-thumbs"></div>
+          <div class="ref-library-shell">
+            <div class="ref-library-top">
+              <label class="field-label" style="margin-bottom:0">Saved Library</label>
+              <button class="ref-library-btn" type="button" onclick="loadReferenceLibrary()" id="ref-library-refresh-btn">Refresh</button>
+            </div>
+            <div class="ref-library-copy">Click any saved <strong id="ref-library-brand-label">ZeroBubble</strong> reference to use it.</div>
+            <div id="ref-library-toolbar"></div>
+            <div id="ref-library-upload"></div>
+            <div class="ref-library-status" id="ref-library-status"></div>
+            <div class="ref-library-grid" id="ref-library-grid"></div>
+          </div>
+        </div>
+      </div>
+      <div class="img-block" id="img-block">
+        <div class="img-block-header">
+          <div>
+            <div class="img-block-title">Generated Image</div>
+            <div class="img-block-sub">Set your visual brief, then use Generate Image.</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function openImageWorkspace() {
+  if (!supportsImageGeneration()) return;
+  state.mainPanelMode = "image_setup";
+  document.getElementById("right").innerHTML = getImageWorkspaceMarkup();
+  scrollRightToTop();
+  syncImagePromptControls();
+  renderRefThumbs();
+  renderReferenceLibrary();
+  updateImageWorkspaceSummary();
+  updateAspectColour();
+}
+
+function scrollRightToTop() {
+  const right = document.getElementById("right");
+  if (right) right.scrollTop = 0;
+}
+
+function primePublishingValidationState() {
+  if (getPublishAdminToken()) {
+    setPublishingValidationState("not_checked", "Token found in this browser. Use Validate connection to confirm the Worker accepts it.");
+    return;
+  }
+  setPublishingValidationState("not_checked", "Save the internal publish token in this browser, then validate the connection.");
 }
 
 function applyBrandTheme() {
-  const brand = getBrandConfig(state.brand);
-  document.body.classList.remove("smartone-theme", "zerobubble-theme");
-  document.body.classList.add(state.brand === "smartone" ? "smartone-theme" : "zerobubble-theme");
-  document.documentElement.style.setProperty("--orange", brand.color);
-  document.documentElement.style.setProperty("--dark", brand.background);
-  document.documentElement.style.setProperty("--brand-primary", brand.color);
-  document.documentElement.style.setProperty("--brand-secondary", brand.secondary);
-  document.documentElement.style.setProperty("--brand-glow", `${brand.color}33`);
-  document.documentElement.style.setProperty("--brand-surface", `${brand.color}16`);
+  applySharedBrandTheme(state.brand);
 }
 
 // ── Aspect Ratio ──
@@ -706,11 +1787,21 @@ function handleFileSelect(e) {
 
 function addFiles(files) {
   files.forEach(file => {
+    const inferredTags = inferReferenceTagsFromFile(file, state.refImages.length);
     const reader = new FileReader();
     reader.onload = ev => {
-      const entry = { name: file.name, base64: ev.target.result.split(',')[1], dataUrl: ev.target.result, type: file.type };
+      const entry = {
+        name: file.name,
+        base64: ev.target.result.split(',')[1],
+        dataUrl: ev.target.result,
+        type: file.type,
+        source: "upload",
+        tags: inferredTags,
+        label: inferredTags[0] || "upload"
+      };
       state.refImages.push(entry);
       renderRefThumbs();
+      updateImageWorkspaceSummary();
     };
     reader.readAsDataURL(file);
   });
@@ -719,11 +1810,14 @@ function addFiles(files) {
 function removeRef(idx) {
   state.refImages.splice(idx, 1);
   renderRefThumbs();
+  renderReferenceLibrary();
+  updateImageWorkspaceSummary();
 }
 
 function renderRefThumbs() {
   const wrap = document.getElementById('ref-thumbs');
   const badge = document.getElementById('ref-count-badge');
+  if (!wrap || !badge) return;
   if (!state.refImages.length) {
     wrap.innerHTML = '';
     badge.style.display = 'none';
@@ -736,13 +1830,515 @@ function renderRefThumbs() {
     <div class="ref-thumb">
       <img src="${img.dataUrl}" alt="ref ${i+1}" />
       <button class="ref-thumb-remove" onclick="removeRef(${i})">✕</button>
-      <div class="ref-thumb-label">${labels[i] || 'Ref'}</div>
+      <div class="ref-thumb-label">${esc(img.label || (img.tags && img.tags[0]) || labels[i] || 'Ref')}</div>
+      ${(img.tags && img.tags.length) ? `<div class="ref-library-tag-row" style="padding:4px 6px 0">${img.tags.map((tag) => `<span class="ref-library-tag">${esc(tag)}</span>`).join('')}</div>` : ""}
     </div>`).join('');
+}
+
+function setReferenceLibraryFilter(filter) {
+  state.referenceLibraryFilter = filter;
+  renderReferenceLibrary();
+}
+
+function getReferenceLibraryFilterLabel() {
+  return state.referenceLibraryFilter === "all" ? "All" : state.referenceLibraryFilter;
+}
+
+function getFilteredReferenceLibraryItems() {
+  if (state.referenceLibraryFilter === "all") {
+    return state.referenceLibraryItems;
+  }
+  return state.referenceLibraryItems.filter((item) => (item.tags || []).includes(state.referenceLibraryFilter));
+}
+
+function renderReferenceLibrary() {
+  const brandLabel = document.getElementById("ref-library-brand-label");
+  const toolbar = document.getElementById("ref-library-toolbar");
+  const upload = document.getElementById("ref-library-upload");
+  const status = document.getElementById("ref-library-status");
+  const grid = document.getElementById("ref-library-grid");
+  if (!brandLabel || !toolbar || !upload || !status || !grid) return;
+
+  const tokenSaved = Boolean(getPublishAdminToken());
+  const items = getFilteredReferenceLibraryItems();
+
+  brandLabel.textContent = getBrand(state.brand).name;
+  toolbar.innerHTML = `
+    <div class="ref-library-copy" style="margin-bottom:8px">Filter saved images by tag:</div>
+    <div class="ref-library-filter-row">
+      <button class="ref-library-chip ${state.referenceLibraryFilter === "all" ? "active" : ""}" type="button" onclick="setReferenceLibraryFilter('all')">All</button>
+      ${REFERENCE_LIBRARY_TAGS.map((tag) => `
+        <button class="ref-library-chip ${state.referenceLibraryFilter === tag ? "active" : ""}" type="button" onclick="setReferenceLibraryFilter('${tag}')">${esc(tag)}</button>
+      `).join("")}
+    </div>`;
+
+  upload.innerHTML = `
+    <div class="ref-library-actions">
+      <div style="flex:1">
+        <div class="ref-library-copy" style="margin-bottom:8px">Upload, then tag each image on its card below.</div>
+      </div>
+      <div>
+        <button class="ref-library-btn" type="button" onclick="triggerReferenceLibraryUpload()" ${tokenSaved ? "" : "disabled"}>Upload To ${esc(getBrand(state.brand).name)}</button>
+        <input type="file" id="ref-library-upload-input" accept="image/*" multiple style="display:none" onchange="handleReferenceLibraryUpload(event)" />
+      </div>
+    </div>
+    <div class="ref-library-copy">${tokenSaved ? "Choose a tag per image, then Save Tag to commit it." : "Save your internal token to upload or edit references."}</div>`;
+
+  status.className = `ref-library-status${state.referenceLibraryError ? " error" : ""}`;
+  if (state.referenceLibraryLoading) {
+    status.textContent = `Loading ${getBrand(state.brand).name} references...`;
+  } else if (state.referenceLibraryError) {
+    status.textContent = state.referenceLibraryError;
+  } else if (!state.referenceLibraryItems.length) {
+    status.textContent = `No saved ${getBrand(state.brand).name} references yet. Manual uploads still work exactly as before.`;
+  } else if (!items.length) {
+    status.textContent = `${state.referenceLibraryItems.length} saved references available for ${getBrand(state.brand).name}, but none match the current "${getReferenceLibraryFilterLabel()}" filter.`;
+  } else {
+    status.textContent = `${items.length} of ${state.referenceLibraryItems.length} saved reference${state.referenceLibraryItems.length === 1 ? "" : "s"} shown for ${getBrand(state.brand).name}.`;
+  }
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="ref-library-empty">No saved references match the <strong>${esc(getReferenceLibraryFilterLabel())}</strong> filter yet. <button class="ref-library-btn" type="button" onclick="setReferenceLibraryFilter('all')" style="margin-left:8px">Show All</button></div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map((item) => {
+    const selected = isLibraryItemSelected(item.key);
+    const busy = isReferenceLibraryBusy(item.key);
+    const draftTag = getReferenceLibraryTagDraft(item.key);
+    const hasTagChange = hasReferenceLibraryTagChange(item);
+    return `
+      <div class="ref-library-card ${selected ? "active" : ""}">
+        <img class="ref-library-image" src="${esc(item.url)}" alt="${esc(item.name)}" />
+        <div class="ref-library-card-body">
+          <div class="ref-library-card-name">${esc(item.name)}</div>
+          <div class="ref-library-tag-row">
+            ${(item.tags || []).length
+              ? (item.tags || []).map((tag) => `<span class="ref-library-tag">${esc(tag)}</span>`).join("")
+              : `<span class="ref-library-tag">untagged</span>`}
+          </div>
+          <div style="margin-top:10px">
+            <label class="field-label" style="margin-bottom:6px">Tag</label>
+            <select onchange="updateReferenceLibraryTagDraft('${encodeURIComponent(item.key)}', this.value)" ${tokenSaved ? "" : "disabled"}>
+              <option value="">Select a tag</option>
+              ${REFERENCE_LIBRARY_TAGS.map((tag) => `
+                <option value="${esc(tag)}" ${draftTag === tag ? "selected" : ""}>${esc(tag)}</option>
+              `).join("")}
+            </select>
+          </div>
+          <div class="ref-library-card-actions">
+            <button class="ref-library-card-btn" type="button" onclick="toggleLibraryReferenceSelection('${encodeURIComponent(item.key)}')" ${busy ? "disabled" : ""}>${selected ? "Remove" : "Use"}</button>
+            <button class="ref-library-card-btn" type="button" onclick="saveReferenceLibraryTag('${encodeURIComponent(item.key)}')" ${(tokenSaved && hasTagChange && draftTag && !busy) ? "" : "disabled"}>${busy && hasTagChange ? "Saving..." : "Save Tag"}</button>
+            <button class="ref-library-danger-btn" type="button" onclick="deleteReferenceLibraryItem('${encodeURIComponent(item.key)}')" ${tokenSaved ? "" : "disabled"}>${busy ? "Working..." : "Delete"}</button>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+async function loadReferenceLibrary() {
+  state.referenceLibraryLoading = true;
+  state.referenceLibraryError = "";
+  renderReferenceLibrary();
+
+  try {
+    const res = await fetch(`${REFERENCE_LIBRARY_URL}?brand=${encodeURIComponent(state.brand)}`);
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "Unable to load the saved reference library.");
+    }
+    state.referenceLibraryItems = data.items || [];
+    syncReferenceLibraryTagDrafts();
+  } catch (error) {
+    state.referenceLibraryItems = [];
+    state.referenceLibraryTagDrafts = {};
+    state.referenceLibraryError = error.message || "Unable to load the saved reference library.";
+  } finally {
+    state.referenceLibraryLoading = false;
+    renderReferenceLibrary();
+  }
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error(`Unable to read ${file.name}`));
+    reader.readAsDataURL(file);
+  });
+}
+
+function triggerReferenceLibraryUpload() {
+  document.getElementById("ref-library-upload-input")?.click();
+}
+
+async function handleReferenceLibraryUpload(event) {
+  const files = Array.from(event.target.files || []).filter((file) => file.type.startsWith("image/"));
+  event.target.value = "";
+  if (!files.length) return;
+
+  const token = getPublishAdminToken();
+  if (!token) {
+    state.referenceLibraryError = "Save the internal publish token first, then upload library references.";
+    renderReferenceLibrary();
+    return;
+  }
+
+  state.referenceLibraryLoading = true;
+  state.referenceLibraryError = "";
+  renderReferenceLibrary();
+
+  try {
+    for (const file of files) {
+      const dataUrl = await readFileAsDataUrl(file);
+      const res = await fetch(REFERENCE_LIBRARY_UPLOAD_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Token": token,
+        },
+        body: JSON.stringify({
+          brand: state.brand,
+          filename: file.name,
+          contentType: file.type,
+          base64: String(dataUrl).split(",")[1],
+          tags: [],
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `Unable to upload ${file.name}`);
+      }
+    }
+    state.referenceLibraryFilter = "all";
+    await loadReferenceLibrary();
+  } catch (error) {
+    state.referenceLibraryLoading = false;
+    state.referenceLibraryError = error.message || "Unable to upload the saved reference.";
+    renderReferenceLibrary();
+  }
+}
+
+async function saveReferenceLibraryTag(encodedKey) {
+  const key = decodeURIComponent(encodedKey);
+  const item = state.referenceLibraryItems.find((entry) => entry.key === key);
+  const token = getPublishAdminToken();
+  const nextTag = getReferenceLibraryTagDraft(key);
+
+  if (!item) return;
+  if (!token) {
+    state.referenceLibraryError = "Save the internal publish token first, then update saved reference tags.";
+    renderReferenceLibrary();
+    return;
+  }
+  if (!nextTag) {
+    state.referenceLibraryError = "Choose a tag before saving.";
+    renderReferenceLibrary();
+    return;
+  }
+  if (!hasReferenceLibraryTagChange(item)) {
+    return;
+  }
+
+  queueReferenceLibraryBusy(key);
+  state.referenceLibraryError = "";
+  renderReferenceLibrary();
+
+  try {
+    const res = await fetch(REFERENCE_LIBRARY_UPDATE_TAGS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Token": token,
+      },
+      body: JSON.stringify({
+        key,
+        tags: [nextTag],
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || `Unable to update ${item.name}`);
+    }
+
+    state.referenceLibraryItems = state.referenceLibraryItems.map((entry) => (
+      entry.key === key ? (data.item || entry) : entry
+    ));
+    syncReferenceLibraryTagDrafts();
+    state.refImages = state.refImages.map((img) => (
+      img.libraryKey === key
+        ? {
+            ...img,
+            tags: data.item?.tags || [nextTag],
+            label: data.item?.tags?.[0] || nextTag || img.label,
+          }
+        : img
+    ));
+    renderRefThumbs();
+    updateImageWorkspaceSummary();
+  } catch (error) {
+    state.referenceLibraryError = error.message || "Unable to save the reference tag.";
+  } finally {
+    clearReferenceLibraryBusy(key);
+    renderReferenceLibrary();
+  }
+}
+
+async function toggleLibraryReferenceSelection(encodedKey) {
+  const key = decodeURIComponent(encodedKey);
+  if (isLibraryItemSelected(key)) {
+    state.refImages = state.refImages.filter((img) => img.libraryKey !== key);
+    renderRefThumbs();
+    renderReferenceLibrary();
+    return;
+  }
+
+  const item = state.referenceLibraryItems.find((entry) => entry.key === key);
+  if (!item) return;
+
+  queueReferenceLibraryBusy(key);
+  renderReferenceLibrary();
+
+  try {
+    const res = await fetch(item.url);
+    if (!res.ok) {
+      throw new Error(`Unable to fetch ${item.name}`);
+    }
+    const blob = await res.blob();
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error(`Unable to load ${item.name}`));
+      reader.readAsDataURL(blob);
+    });
+    state.refImages.push({
+      name: item.name,
+      base64: String(dataUrl).split(",")[1],
+      dataUrl,
+      type: item.contentType || blob.type,
+      source: "library",
+      libraryKey: item.key,
+      tags: item.tags || [],
+      label: item.tags?.[0] || "Saved"
+    });
+    renderRefThumbs();
+    updateImageWorkspaceSummary();
+  } catch (error) {
+    state.referenceLibraryError = error.message || "Unable to add the saved reference.";
+  } finally {
+    clearReferenceLibraryBusy(key);
+    renderReferenceLibrary();
+  }
+}
+
+async function deleteReferenceLibraryItem(encodedKey) {
+  const key = decodeURIComponent(encodedKey);
+  const item = state.referenceLibraryItems.find((entry) => entry.key === key);
+  if (!item) return;
+
+  const token = getPublishAdminToken();
+  if (!token) {
+    state.referenceLibraryError = "Save the internal publish token first, then delete saved references.";
+    renderReferenceLibrary();
+    return;
+  }
+
+  if (!window.confirm(`Delete ${item.name} from the ${getBrand(state.brand).name} library?`)) {
+    return;
+  }
+
+  queueReferenceLibraryBusy(key);
+  state.referenceLibraryError = "";
+  renderReferenceLibrary();
+
+  try {
+    const res = await fetch(REFERENCE_LIBRARY_DELETE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Token": token,
+      },
+      body: JSON.stringify({ key }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || `Unable to delete ${item.name}`);
+    }
+    state.refImages = state.refImages.filter((img) => img.libraryKey !== key);
+    clearReferenceLibraryBusy(key);
+    await loadReferenceLibrary();
+    renderRefThumbs();
+    updateImageWorkspaceSummary();
+  } catch (error) {
+    state.referenceLibraryError = error.message || "Unable to delete the saved reference.";
+    clearReferenceLibraryBusy(key);
+    renderReferenceLibrary();
+  }
+}
+
+function buildSelectedReferenceSummary() {
+  return state.refImages.map((img, index) => {
+    const label = img.name || `Reference ${index + 1}`;
+    const tags = Array.isArray(img.tags) && img.tags.length ? ` [${img.tags.join(", ")}]` : "";
+    const instruction = getReferenceInstructionForTags(img.tags);
+    return `- ${label}${tags}${instruction ? ` — ${instruction}` : ""}`;
+  }).join("\n");
+}
+
+function inferReferenceTagsFromFile(file, index) {
+  const name = String(file?.name || "").toLowerCase();
+  if (/(logo|wordmark|brandmark|icon)/.test(name)) return ["logo"];
+  if (/(style|guide|palette|brand|colour|color)/.test(name)) return ["style-guide"];
+  if (/(device|terminal|hardware|register|pos|smartone)/.test(name)) return ["device"];
+  if (/(store|shop|counter|interior|environment|scene|background)/.test(name)) return ["environment"];
+  if (index === 0) return ["device"];
+  if (index === 1) return ["environment"];
+  if (index === 2) return ["logo"];
+  return ["campaign-reference"];
+}
+
+function getReferenceInstructionForTags(tags) {
+  const normalized = Array.isArray(tags) ? tags : [];
+  if (normalized.includes("do-not-deviate")) {
+    return "highest priority reference, treat as a visual lock";
+  }
+  if (normalized.includes("device")) {
+    return "match the product shape, proportions, buttons, screen layout, and finish as closely as possible";
+  }
+  if (normalized.includes("logo")) {
+    return "keep logo placement, treatment, and brand marks accurate";
+  }
+  if (normalized.includes("style-guide")) {
+    return "follow this for palette, materials, and brand styling";
+  }
+  if (normalized.includes("environment")) {
+    return "use mainly for setting, context, and scene realism rather than changing the product";
+  }
+  if (normalized.includes("campaign-reference")) {
+    return "use for composition or mood only when it does not conflict with product accuracy";
+  }
+  return "";
+}
+
+function buildReferencePriorityGuide() {
+  const selected = state.refImages || [];
+  const hasTagged = selected.some((img) => Array.isArray(img.tags) && img.tags.length);
+  if (!selected.length) return "";
+
+  const lines = [
+    "Reference priority rules:",
+    "1. Any do-not-deviate or device reference is the source of truth for product appearance.",
+    "2. Logo references control brand marks and logo treatment.",
+    "3. Style-guide references control colour palette, materials, and presentation style.",
+    "4. Environment references influence the setting only and must not change the product itself.",
+    "5. Campaign-reference images may influence framing or mood, but only if they do not conflict with higher-priority references."
+  ];
+
+  if (!hasTagged) {
+    lines.push("If the uploaded images feel ambiguous, assume the first reference is the main product reference and keep it visually faithful.");
+  }
+
+  return lines.join("\n");
+}
+
+async function refineImagePromptWithReferences(basePrompt) {
+  const visionContent = [
+    ...state.refImages.map((img) => ({
+      type: "image_url",
+      image_url: { url: `data:${img.type};base64,${img.base64}`, detail: "high" }
+    })),
+    {
+      type: "text",
+      text: `You are preparing a locked commercial image prompt for GPT Image 2.
+
+Base prompt:
+${basePrompt}
+
+Selected references:
+${buildSelectedReferenceSummary() || "- Unlabelled reference images"}
+
+${buildReferencePriorityGuide()}
+
+Your job:
+- Identify which visual details must be preserved exactly from the references.
+- Prioritise product accuracy and brand fidelity over novelty.
+- When references conflict, follow the priority rules above.
+- Never let an environment or mood reference override the true product appearance.
+- Produce a final prompt that keeps the original marketing intent but makes the reference constraints explicit and hard to ignore.
+
+Return structured JSON only.`
+    }
+  ];
+
+  const responseFormat = {
+    type: "json_schema",
+    json_schema: {
+      name: "reference_locked_image_prompt",
+      strict: true,
+      schema: {
+        type: "object",
+        additionalProperties: false,
+        required: ["locked_elements", "allowed_flex", "final_prompt"],
+        properties: {
+          locked_elements: {
+            type: "array",
+            minItems: 2,
+            items: { type: "string" }
+          },
+          allowed_flex: {
+            type: "array",
+            minItems: 1,
+            items: { type: "string" }
+          },
+          final_prompt: { type: "string" }
+        }
+      }
+    }
+  };
+
+  const visionToken = await getFreshTurnstileToken();
+  const visionRes = await fetch(GENERATE_WORKER_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: TEXT_MODEL_ID,
+      max_tokens: 900,
+      response_format: responseFormat,
+      turnstileToken: visionToken,
+      messages: [{ role: "user", content: visionContent }]
+    })
+  });
+
+  const visionData = await visionRes.json();
+  if (visionData.error) {
+    throw new Error(visionData.error);
+  }
+
+  const raw = visionData.content?.[0]?.text?.trim();
+  if (!raw) {
+    throw new Error("Reference analysis returned no prompt.");
+  }
+
+  const parsed = JSON.parse(raw);
+  const locked = Array.isArray(parsed.locked_elements) ? parsed.locked_elements.filter(Boolean) : [];
+  const flex = Array.isArray(parsed.allowed_flex) ? parsed.allowed_flex.filter(Boolean) : [];
+  const finalPrompt = String(parsed.final_prompt || "").trim();
+
+  if (!finalPrompt) {
+    throw new Error("Reference analysis returned an empty final prompt.");
+  }
+
+  return [
+    finalPrompt,
+    locked.length ? `Locked reference details: ${locked.join("; ")}.` : "",
+    flex.length ? `Allowed creative variation: ${flex.join("; ")}.` : "",
+    "Do not invent a different product design, different logo treatment, or different hardware layout from the provided references."
+  ].filter(Boolean).join("\n\n");
 }
 
 function renderPlatforms() {
   const g = document.getElementById("platform-grid");
-  g.innerHTML = PLATFORMS.map(p => `
+  g.innerHTML = CHANNELS.map(p => `
     <button class="plat-btn" onclick="setPlatform('${p.id}')"
       style="background:${state.platform===p.id?`${p.color}22`:'rgba(255,255,255,0.04)'};
              border:1px solid ${state.platform===p.id?p.color:'rgba(255,255,255,0.08)'};
@@ -752,25 +2348,28 @@ function renderPlatforms() {
 }
 
 function renderPillars() {
-  const g = document.getElementById("pillar-grid");
+  const select = document.getElementById("pillar-select");
+  const preview = document.getElementById("pillar-preview");
   const pillars = getActivePillars();
-  const ac = getBrandConfig(state.brand).color;
-  g.innerHTML = pillars.map((p,i) => `
-    <button class="pillar-btn" onclick="setPillar('${p.id}')"
-      style="background:${state.pillar===p.id?`${ac}18`:'rgba(255,255,255,0.04)'};
-             border:1px solid ${state.pillar===p.id?ac:'rgba(255,255,255,0.08)'};
-             color:${state.pillar===p.id?ac:'#777'}">
-      <div class="pillar-num">0${i+1} · ${p.label}</div>
-      <div class="pillar-desc" style="color:${state.pillar===p.id?'#bbb':'#444'}">${p.desc}</div>
-    </button>`).join("");
+  if (!select || !preview) return;
+  select.innerHTML = pillars.map((p, i) => `
+    <option value="${p.id}" ${state.pillar===p.id?'selected':''}>0${i+1} · ${p.label}</option>
+  `).join("");
+  select.onchange = (e) => setPillar(e.target.value);
+  const active = pillars.find((p) => p.id === state.pillar) || pillars[0];
+  preview.innerHTML = active ? `
+    <div class="pillar-preview-title">${esc(active.label)}</div>
+    <div class="pillar-preview-copy">${esc(active.desc)}</div>
+  ` : "";
 }
 
 function renderPostTypes() {
   const s = document.getElementById("post-type");
-  const types = POST_TYPES[state.platform];
+  const types = CONTENT_TYPES[state.platform];
   s.innerHTML = types.map(t=>`<option value="${t}"${t===state.postType?' selected':''}>${t}</option>`).join("");
-  s.onchange = e => { state.postType = e.target.value; };
+  s.onchange = e => { state.postType = e.target.value; resetGeneratedState(); refreshMainPanelForSidebarChange(); };
   if (!types.includes(state.postType)) state.postType = types[0];
+  refreshFormContext();
 }
 
 function renderBrandToggle() {
@@ -782,48 +2381,545 @@ function renderBrandToggle() {
   updateAspectColour();
 }
 
+function refreshMainPanelForSidebarChange() {
+  if (state.mainPanelMode === "image_setup" && supportsImageGeneration()) {
+    openImageWorkspace();
+    return;
+  }
+  resetRight();
+}
+
 function setBrand(b) {
   state.brand = setSelectedBrand(b);
-  state.result = null;
-  state.imageB64 = null;
+  resetGeneratedState();
+  state.refImages = [];
   const firstPillar = getActivePillars()[0];
   state.pillar = firstPillar ? firstPillar.id : "p1";
   applyBrandTheme();
   renderBrandToggle();
   renderPillars();
-  resetRight();
+  refreshFormContext();
+  loadReferenceLibrary();
+  refreshMainPanelForSidebarChange();
 }
-function setPlatform(p) { state.platform=p; state.postType=POST_TYPES[p][0]; state.result=null; state.imageB64=null; renderPlatforms(); renderPostTypes(); resetRight(); }
-function setPillar(p) { state.pillar=p; state.result=null; state.imageB64=null; renderPillars(); resetRight(); }
+function setPlatform(p) { state.platform=p; state.postType=CONTENT_TYPES[p][0]; resetGeneratedState(); renderPlatforms(); renderPostTypes(); refreshFormContext(); refreshMainPanelForSidebarChange(); }
+function setPillar(p) { state.pillar=p; resetGeneratedState(); renderPillars(); refreshMainPanelForSidebarChange(); }
 
 function resetRight() {
+  state.mainPanelMode = "empty";
+  state.publishingFeedback = "";
+  state.resultWarnings = [];
   document.getElementById("right").innerHTML = `
     <div class="empty-state">
       <div class="empty-icon" style="opacity:.4">AI</div>
       <div class="empty-title">Select your options and generate</div>
-      <div class="empty-sub">Pick platform, post type, and pillar. Add optional context. Hit Generate.</div>
+      <div class="empty-sub">${esc(getEmptyStateCopy())}</div>
+      ${supportsImageGeneration() ? `<button class="workspace-ghost-btn" type="button" onclick="openImageWorkspace()">Open Image Setup</button>` : ""}
+    </div>`;
+  scrollRightToTop();
+}
+
+function getPublishAdminToken() {
+  return window.localStorage.getItem(PUBLISH_ADMIN_TOKEN_KEY) || "";
+}
+
+function togglePublishTokenVisibility() {
+  state.publishTokenVisible = !state.publishTokenVisible;
+  renderPublishingPanel();
+}
+
+function setPublishingPanelOpen(open) {
+  state.publishingPanelOpen = Boolean(open);
+}
+
+function setPublishingValidationState(status, message) {
+  state.publishingValidation = status;
+  state.publishingValidationMessage = message;
+}
+
+function isPublishingValidated() {
+  return state.publishingValidation === "valid";
+}
+
+function getPublishingValidationMeta() {
+  switch (state.publishingValidation) {
+    case "checking":
+      return {
+        badgeClass: "checking",
+        label: "Checking",
+        copy: state.publishingValidationMessage || "Checking the saved token against the live Worker.",
+      };
+    case "valid":
+      return {
+        badgeClass: "valid",
+        label: "Valid and accepted",
+        copy: state.publishingValidationMessage || "The Worker accepted this token and returned the live publishing status.",
+      };
+    case "invalid":
+      return {
+        badgeClass: "invalid",
+        label: "Invalid",
+        copy: state.publishingValidationMessage || "The Worker rejected this token. Save the correct token, then validate again.",
+      };
+    case "backend_missing":
+      return {
+        badgeClass: "backend-missing",
+        label: "Backend token not configured",
+        copy: state.publishingValidationMessage || "The Worker does not currently have PUBLISH_ADMIN_TOKEN configured.",
+      };
+    case "connection_error":
+      return {
+        badgeClass: "connection-error",
+        label: "Connection or network error",
+        copy: state.publishingValidationMessage || "The dashboard could not confirm the token because the Worker request failed.",
+      };
+    default:
+      return {
+        badgeClass: "",
+        label: "Not checked",
+        copy: state.publishingValidationMessage || "Saving a token does not validate it. Use Validate connection to test it deliberately.",
+      };
+  }
+}
+
+function savePublishAdminToken() {
+  const value = document.getElementById("publish-admin-token")?.value?.trim() || "";
+  if (value) {
+    window.localStorage.setItem(PUBLISH_ADMIN_TOKEN_KEY, value);
+    setPublishingValidationState("not_checked", "Token saved locally. Use Validate connection to confirm the Worker accepts it.");
+  } else {
+    window.localStorage.removeItem(PUBLISH_ADMIN_TOKEN_KEY);
+    setPublishingValidationState("not_checked", "No token saved in this browser yet.");
+  }
+  state.publishingStatus = null;
+  renderPublishingPanel();
+  rerenderCurrentResult();
+}
+
+function renderPublishingPanel() {
+  const panel = document.getElementById("publish-panel");
+  if (!panel) return;
+
+  const status = state.publishingStatus;
+  const validation = getPublishingValidationMeta();
+  const summaryLabel = isPublishingValidated()
+    ? "Ready"
+    : getPublishAdminToken()
+      ? "Check"
+      : "Locked";
+  const statusMarkup = status ? `
+    <div class="publish-status-grid">
+      <div class="publish-status-item">
+        <div class="publish-status-top">
+          <span class="publish-status-name">Shopify</span>
+          <span class="publish-dot ${status.shopify?.ready ? "ready" : ""}"></span>
+        </div>
+        <div class="publish-status-note">${status.shopify?.ready ? `Ready · ${esc(status.shopify.storeDomain)}` : "Not ready yet"}</div>
+        ${renderPublishIssues(status.shopify?.issues)}
+      </div>
+      <div class="publish-status-item">
+        <div class="publish-status-top">
+          <span class="publish-status-name">Meta</span>
+          <span class="publish-dot ${status.meta?.ready ? "ready" : ""}"></span>
+        </div>
+        <div class="publish-status-note">${status.meta?.facebookReady ? "Facebook ready" : "Facebook not ready"} · ${status.meta?.instagramReady ? "Instagram token side ready" : "Instagram not ready"}</div>
+        ${renderPublishIssues([
+          ...(status.meta?.facebookReady ? [] : status.meta?.facebookIssues || []),
+          ...(status.meta?.instagramIssues || [])
+        ])}
+      </div>
+    </div>` : `<div class="publish-helper">Validate the connection to see the live Worker publishing setup.</div>`;
+
+  panel.innerHTML = `
+    <details class="publish-disclosure" ${state.publishingPanelOpen ? "open" : ""} ontoggle="setPublishingPanelOpen(this.open)">
+      <summary class="publish-summary">
+        <div class="publish-summary-copy">
+          <span class="publish-summary-title">Publishing Access</span>
+          <span class="publish-summary-sub">${isPublishingValidated() ? "Connected and ready to use" : "Save and validate your internal token when needed"}</span>
+        </div>
+        <span class="publish-summary-badge">${summaryLabel}</span>
+      </summary>
+      <div class="publish-summary-body">
+      <div class="publish-row">
+        <div class="publish-input-row">
+          <input class="publish-input" id="publish-admin-token" type="${state.publishTokenVisible ? "text" : "password"}" placeholder="Paste the internal publish token here" value="${esc(getPublishAdminToken())}" />
+          <button class="publish-small-btn ghost" onclick="togglePublishTokenVisibility()">${state.publishTokenVisible ? "Hide" : "Show"}</button>
+        </div>
+        <div class="publish-field-hint">Saved only in this browser. Validate checks the live Worker.</div>
+        <div class="publish-action-row-top">
+          <button class="publish-small-btn" onclick="savePublishAdminToken()">Save token</button>
+          <button class="publish-small-btn" onclick="loadPublishingStatus()" ${state.publishingBusy ? "disabled" : ""}>Validate connection</button>
+        </div>
+      </div>
+      <div class="publish-validation">
+        <div class="publish-validation-top">
+          <span class="publish-validation-label">Token status</span>
+          <span class="publish-validation-badge ${validation.badgeClass}">${validation.label}</span>
+        </div>
+        <div class="publish-validation-copy">${esc(validation.copy)}</div>
+      </div>
+      </div>
+    ${statusMarkup}
+      <div class="publish-summary-body" style="padding-top:0">
+        <div class="publish-helper">Shopify and Meta tokens stay in the Worker.</div>
+      </div>
+    </details>
+  `;
+}
+
+function renderPublishIssues(issues) {
+  if (!Array.isArray(issues) || !issues.length) return "";
+  return `<div class="publish-issues">${issues.map((issue) => `<div class="publish-issue">${esc(issue)}</div>`).join("")}</div>`;
+}
+
+async function loadPublishingStatus() {
+  const token = getPublishAdminToken();
+  state.publishingBusy = true;
+  setPublishingValidationState("checking", "Checking the saved token and current publishing configuration...");
+  renderPublishingPanel();
+  rerenderCurrentResult();
+
+  if (!token) {
+    state.publishingStatus = null;
+    state.publishingBusy = false;
+    setPublishingValidationState("not_checked", "Save the internal publish token in this browser, then validate the connection.");
+    renderPublishingPanel();
+    rerenderCurrentResult();
+    return;
+  }
+
+  try {
+    const res = await fetch(PUBLISHING_STATUS_URL, {
+      headers: {
+        "X-Admin-Token": token,
+      },
+    });
+    const raw = await res.text();
+    const data = raw ? JSON.parse(raw) : {};
+    if (!res.ok || data.error) {
+      if (data.authStatus === "invalid_token") {
+        state.publishingStatus = null;
+        setPublishingValidationState("invalid", "The Worker rejected this token. Save the correct token, then validate again.");
+        return;
+      }
+      if (data.authStatus === "backend_token_missing") {
+        state.publishingStatus = null;
+        setPublishingValidationState("backend_missing", "The Worker does not have PUBLISH_ADMIN_TOKEN configured yet.");
+        return;
+      }
+      throw new Error(data.error || "Unable to load publishing status");
+    }
+    state.publishingStatus = data;
+    setPublishingValidationState("valid", "The Worker accepted this token and returned the live publishing status.");
+  } catch (error) {
+    state.publishingStatus = null;
+    setPublishingValidationState("connection_error", error.message || "Unable to reach the publishing backend right now.");
+  } finally {
+    state.publishingBusy = false;
+    renderPublishingPanel();
+    rerenderCurrentResult();
+  }
+}
+
+function getGenerationResponseFormat() {
+  if (!isWebsiteChannel()) {
+    return {
+      type: "json_schema",
+      json_schema: {
+        name: "social_post",
+        strict: true,
+        schema: {
+          type: "object",
+          additionalProperties: false,
+          required: ["headline", "body", "cta", "hashtags"],
+          properties: {
+            headline: { type: "string" },
+            body: { type: "string" },
+            cta: { type: "string" },
+            hashtags: {
+              type: "array",
+              minItems: 3,
+              maxItems: 8,
+              items: { type: "string" }
+            }
+          }
+        }
+      }
+    };
+  }
+
+  const schema = {
+    type: "json_schema",
+    json_schema: {
+      name: "website_content",
+      strict: true,
+      schema: {
+        type: "object",
+        additionalProperties: false,
+        required: [],
+        properties: {},
+      }
+    }
+  };
+
+  const shape = schema.json_schema.schema;
+  switch (state.postType) {
+    case "Blog Post":
+      shape.required = ["title", "slug", "meta_description", "intro", "outline", "sections", "cta"];
+      shape.properties = {
+        title: { type: "string" },
+        slug: { type: "string" },
+        meta_description: { type: "string" },
+        intro: { type: "string" },
+        outline: { type: "array", minItems: 3, items: { type: "string" } },
+        sections: {
+          type: "array",
+          minItems: 3,
+          items: {
+            type: "object",
+            additionalProperties: false,
+            required: ["heading", "body"],
+            properties: {
+              heading: { type: "string" },
+              body: { type: "string" }
+            }
+          }
+        },
+        cta: { type: "string" }
+      };
+      break;
+    case "Service Page Section":
+      shape.required = ["headline", "subheadline", "body", "bullets", "cta"];
+      shape.properties = {
+        headline: { type: "string" },
+        subheadline: { type: "string" },
+        body: { type: "string" },
+        bullets: { type: "array", minItems: 3, items: { type: "string" } },
+        cta: { type: "string" }
+      };
+      break;
+    case "Homepage Section":
+      shape.required = ["headline", "subheadline", "body", "value_points", "cta"];
+      shape.properties = {
+        headline: { type: "string" },
+        subheadline: { type: "string" },
+        body: { type: "string" },
+        value_points: { type: "array", minItems: 3, items: { type: "string" } },
+        cta: { type: "string" }
+      };
+      break;
+    case "Landing Page Copy":
+      shape.required = ["headline", "subheadline", "problem", "solution", "proof_points", "cta"];
+      shape.properties = {
+        headline: { type: "string" },
+        subheadline: { type: "string" },
+        problem: { type: "string" },
+        solution: { type: "string" },
+        proof_points: { type: "array", minItems: 3, items: { type: "string" } },
+        cta: { type: "string" }
+      };
+      break;
+    case "FAQ Block":
+      shape.required = ["intro", "faqs", "cta"];
+      shape.properties = {
+        intro: { type: "string" },
+        faqs: {
+          type: "array",
+          minItems: 3,
+          items: {
+            type: "object",
+            additionalProperties: false,
+            required: ["question", "answer"],
+            properties: {
+              question: { type: "string" },
+              answer: { type: "string" }
+            }
+          }
+        },
+        cta: { type: "string" }
+      };
+      break;
+    default:
+      shape.required = ["title", "client_type", "challenge", "solution", "outcomes", "cta"];
+      shape.properties = {
+        title: { type: "string" },
+        client_type: { type: "string" },
+        challenge: { type: "string" },
+        solution: { type: "string" },
+        outcomes: { type: "array", minItems: 3, items: { type: "string" } },
+        cta: { type: "string" }
+      };
+      break;
+  }
+
+  return schema;
+}
+
+function normalizeGeneratedResult(result) {
+  if (!result || typeof result !== "object") return result;
+  const clone = JSON.parse(JSON.stringify(result));
+
+  if (!isWebsiteChannel()) {
+    clone.headline = String(clone.headline || "").trim();
+    clone.body = String(clone.body || "").trim();
+    clone.cta = String(clone.cta || "").trim();
+    clone.hashtags = Array.isArray(clone.hashtags)
+      ? clone.hashtags.map((tag) => String(tag || "").trim().replace(/^#/, "")).filter(Boolean)
+      : [];
+    return clone;
+  }
+
+  Object.keys(clone).forEach((key) => {
+    if (typeof clone[key] === "string") {
+      clone[key] = clone[key].trim();
+    }
+  });
+  return clone;
+}
+
+function evaluateGeneratedContent(result, brandId) {
+  const warnings = [];
+  const serialised = JSON.stringify(result || {});
+  const lower = serialised.toLowerCase();
+
+  if (/\b(guaranteed|risk-free|best\b|cheapest|fastest|always)\b/i.test(serialised)) {
+    warnings.push("Review absolute or guaranteed claims before publishing. Keep the copy commercially confident without unsupported superlatives.");
+  }
+
+  if (brandId === "smartone") {
+    const sensitiveClaim = /(lower transaction rates|lower operating costs|save money|cost savings|cheaper rates)/i.test(serialised);
+    const hasQualifier = /\b(can|could|may|might|depending|potential|where applicable|when suitable)\b/i.test(serialised);
+    if (sensitiveClaim && !hasQualifier) {
+      warnings.push("SmartOne cost or transaction-rate claims should be qualified. Add context such as 'can', 'may', or 'depending on merchant setup' before publishing.");
+    }
+    if (!/(merchant|checkout|card|payment|receipt|counter|till|fiscal)/i.test(serialised)) {
+      warnings.push("This SmartOne draft reads a little generic. Consider adding stronger merchant, checkout, or fiscal-payment context.");
+    }
+  }
+
+  if (brandId === "zerobubble" && !/(pos|stock|checkout|retail|hospitality|reporting|inventory|support|integration)/i.test(serialised)) {
+    warnings.push("This ZeroBubble draft may be too broad. Consider reinforcing the operational angle with POS, stock, reporting, integrations, or support language.");
+  }
+
+  if (!isWebsiteChannel()) {
+    const hashtagCount = Array.isArray(result?.hashtags) ? result.hashtags.length : 0;
+    if (hashtagCount < 3 || hashtagCount > 8) {
+      warnings.push("Keep social hashtags tight. Three to eight relevant tags is the current target range for this generator.");
+    }
+  }
+
+  if (!String(result?.cta || "").trim()) {
+    warnings.push("The CTA is missing. Add a clear next step before publishing.");
+  }
+
+  if (lower.includes("lorem ipsum")) {
+    warnings.push("Placeholder copy was detected. Replace it before using this draft.");
+  }
+
+  return warnings;
+}
+
+function buildQualityReviewMarkup() {
+  if (!state.resultWarnings?.length) return "";
+  return `
+    <div class="quality-review">
+      <div class="quality-review-title">Review before publishing</div>
+      ${state.resultWarnings.map((warning) => `<div class="quality-review-item">${esc(warning)}</div>`).join("")}
     </div>`;
 }
 
-async function generate() {
-  const topic = document.getElementById("topic").value.trim();
+async function generate(options = {}) {
+  const contentTopic = getContentPromptValue();
+  const imageTopic = getImagePromptValue();
   const b = getBrandConfig(state.brand);
   const strategy = getBrandStrategy(state.brand);
   const pillar = getActivePillars().find(p=>p.id===state.pillar) || getActivePillars()[0];
   const btn = document.getElementById("gen-btn");
   const variationSeed = getRandom(VARIATION_SEEDS);
+  const regenerateFromEdited = Boolean(options.regenerateFromEdited && state.result);
 
   document.getElementById("error-box").style.display = "none";
   btn.disabled = true;
-  btn.textContent = "Generating...";
+  btn.textContent = regenerateFromEdited ? "Refining..." : "Generating...";
+  state.mainPanelMode = "loading";
 
   document.getElementById("right").innerHTML = `
     <div class="spinner-wrap">
       <div class="spinner" style="border-top-color:${b.color}"></div>
-      <div style="color:#555;font-size:13px">Writing your post...</div>
+      <div style="color:#555;font-size:13px">${isWebsiteChannel() ? "Writing your website content..." : "Writing your post..."}</div>
     </div>`;
+  scrollRightToTop();
 
-  const prompt = `You are a social media copywriter for ZeroBubble Ltd in Malta, writing for one selected brand.
+  const prompt = isWebsiteChannel()
+    ? buildWebsitePrompt(b, pillar, contentTopic, variationSeed, { regenerateFromEdited })
+    : buildCampaignPrompt(b, pillar, contentTopic, variationSeed, { regenerateFromEdited });
+
+  try {
+    // Step 1: Generate caption
+    const captionToken = await getFreshTurnstileToken();
+    const res = await fetch(GENERATE_WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: TEXT_MODEL_ID,
+        max_tokens: 1000,
+        response_format: getGenerationResponseFormat(),
+        turnstileToken: captionToken,
+        messages: [{ role:"user", content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    const text = data.content?.[0]?.text || "";
+    const clean = text.replace(/```json|```/g,"").trim();
+    const result = normalizeGeneratedResult(JSON.parse(clean));
+    state.originalResult = cloneResult(result);
+    state.result = cloneResult(result);
+    updateDraftWarnings();
+    state.includeContactBlock = true;
+
+    if (isWebsiteChannel()) {
+      state.imagePrompt = null;
+      state.imageB64 = null;
+      renderResult(result, b, pillar);
+    } else {
+      const { prompt: imgPrompt } = buildCurrentImagePrompt({ regenerateFromEdited });
+      renderResult(result, b, pillar);
+      await generateImage(imgPrompt, b);
+    }
+
+  } catch(e) {
+    document.getElementById("right").innerHTML = `<div style="padding:24px"><div class="error-box">Generation failed: ${esc(e.message)}</div></div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = isWebsiteChannel() ? "Generate Website Content" : "Generate Content";
+}
+
+function buildCurrentImagePrompt(options = {}) {
+  const contentTopic = getContentPromptValue();
+  const imageTopic = getImagePromptValue();
+  const hasRef = state.refImages.length > 0;
+  const imageBaseContext = imageTopic || contentTopic;
+  const imageContext = options.regenerateFromEdited ? `${imageBaseContext}\n${getEditedDraftContext()}`.trim() : imageBaseContext;
+  const prompt = buildImagePromptFromUserBrief(imageContext, state.platform, state.postType, hasRef, state.brand);
+  state.imagePrompt = prompt;
+  return { prompt, hasRef };
+}
+
+function buildCampaignPrompt(b, pillar, topic, variationSeed, options = {}) {
+  const refinementPrompt = options.regenerateFromEdited ? `
+
+Current edited draft to improve:
+${getEditedDraftContext()}
+
+Refinement instructions:
+- Improve the current edited draft rather than starting from scratch.
+- Preserve the user's intentional edits, positioning choices, and business details unless they clearly conflict with the brand guidance.
+- Tighten clarity, flow, and commercial usefulness while keeping the same JSON structure.
+` : "";
+
+  return `You are a social media copywriter for ZeroBubble Ltd in Malta, writing for one selected brand.
 
 ${BASE_WRITING_RULES}
 
@@ -845,10 +2941,19 @@ ${buildBrandBrainPrompt(b.brandBrain)}
 Messaging Pillar: ${pillar.label} — ${pillar.desc}
 Platform: ${state.platform}
 Post Type: ${state.postType}
+Post-type objective: ${SOCIAL_POST_TYPE_GUIDANCE[state.postType] || "Write a strong social post with a clear business angle and CTA."}
 ${topic?`Additional context: ${topic}`:""}
+${refinementPrompt}
 
 CREATIVE DIRECTION FOR THIS POST: ${variationSeed}
 Be original. Do not reuse phrases, structures, or hooks from typical posts about this topic. Every generation must feel fresh and distinct. Avoid clichés. Avoid starting with "Are you" or "Is your". Keep the writing engaging, clear, and easy to skim. Use short paragraphs, clean rhythm, and specific business language. Do not repeat the same phrase more than once unless necessary. Make the copy feel aligned to the selected brand strategy above.
+
+Success criteria:
+- Make the copy feel useful for a real Malta business audience, not generic social filler.
+- Keep the business benefit concrete and commercially believable.
+- If mentioning savings, rates, or performance improvements, qualify them unless the prompt includes proof.
+- Choose hashtags that are relevant to the brand, sector, and Malta context rather than generic growth tags.
+- Internally check the draft against the brand's claims to avoid before returning the final JSON.
 
 Generate a complete ${state.postType} post for ${state.platform} for the ${b.name} brand.
 
@@ -859,44 +2964,116 @@ Respond ONLY in this JSON format (no markdown, no backticks):
   "cta": "call to action text",
   "hashtags": ["#tag1","#tag2","#tag3","#tag4","#tag5"]
 }`;
+}
 
-  try {
-    // Step 1: Generate caption
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "gpt-5.4",
-        max_tokens: 1000,
-        messages: [{ role:"user", content: prompt }]
-      })
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    const text = data.content?.[0]?.text || "";
-    const clean = text.replace(/```json|```/g,"").trim();
-    const result = JSON.parse(clean);
-    state.result = result;
+function buildWebsitePrompt(b, pillar, topic, variationSeed, options = {}) {
+  const schema = getWebsiteResponseSchema(state.postType);
+  const refinementPrompt = options.regenerateFromEdited ? `
 
-    // Build image prompt
-    const hasRef = state.refImages.length > 0;
-    const imgPrompt = state.brand === 'smartone'
-      ? buildSmartOneImagePrompt(topic, state.platform, state.postType, hasRef, strategy)
-      : buildZeroBubbleImagePrompt(topic, state.platform, state.postType, hasRef, strategy);
-    state.imagePrompt = imgPrompt;
+Current edited draft to improve:
+${getEditedDraftContext()}
 
-    // Render caption immediately, image section in loading state
-    renderResult(result, b, pillar, null, 'loading');
+Refinement instructions:
+- Improve the current edited draft rather than replacing it wholesale.
+- Preserve the user's intentional edits, business specifics, and structure unless they conflict with the brand rules above.
+- Return a cleaner, stronger version in the exact same JSON shape.
+` : "";
+  return `You are a senior website copywriter and content strategist for ZeroBubble Ltd in Malta, writing for one selected brand.
 
-    // Step 2: Generate image
-    await generateImage(imgPrompt, b);
+Tone: Direct, commercially smart, clear, helpful, and easy to scan. No jargon for its own sake. Active voice. Short paragraphs. Concrete language. No filler. No em dashes.
 
-  } catch(e) {
-    document.getElementById("right").innerHTML = `<div style="padding:24px"><div class="error-box">Generation failed: ${esc(e.message)}</div></div>`;
+Brand: ${b.name}
+Brand focus: ${b.focus}
+Positioning: ${b.positioning}
+Audience: ${b.framework.audience}
+Promise: ${b.framework.promise}
+Content angle: ${b.framework.angle}
+Visual system: ${b.framework.visualSystem}
+Brand story: ${b.story}
+Visual rule: ${b.visualRule || "No extra visual rule supplied."}
+Voice traits: ${b.voice.join(", ")}
+Keywords: ${b.keywords.join(", ")}
+Do this: ${b.doList.join(" | ")}
+Avoid this: ${b.dontList.join(" | ")}
+${buildBrandFrameworkPrompt(state.brand)}
+${buildBrandBrainPrompt(b.brandBrain)}
+${buildWebsiteStrategyPrompt(b.websiteContent)}
+Messaging Pillar: ${pillar.label} — ${pillar.desc}
+Channel: Website
+Content Type: ${state.postType}
+${topic?`Additional context: ${topic}`:""}
+${refinementPrompt}
+
+CREATIVE DIRECTION FOR THIS PIECE: ${variationSeed}
+Make the writing feel aligned to the selected brand and useful for a real business website. Keep the copy specific, persuasive, and structurally clean. Do not write in a generic AI tone. Do not include markdown, notes, or explanations.
+
+Success criteria:
+- Anchor the copy in practical business value, not generic marketing language.
+- Keep claims commercially believable and qualified where needed.
+- Make the CTA feel like a natural next step for this brand.
+- Internally check the draft against the brand guidance before returning the final JSON.
+
+Respond ONLY in this JSON format (no markdown, no backticks):
+${schema}`;
+}
+
+function getWebsiteResponseSchema(type) {
+  switch (type) {
+    case "Blog Post":
+      return `{
+  "title": "SEO-friendly title",
+  "slug": "suggested-url-slug",
+  "meta_description": "155-character style meta description",
+  "intro": "opening paragraph",
+  "outline": ["H2 idea 1", "H2 idea 2", "H2 idea 3"],
+  "sections": [
+    { "heading": "section heading", "body": "section copy" }
+  ],
+  "cta": "final call to action"
+}`;
+    case "Service Page Section":
+      return `{
+  "headline": "section headline",
+  "subheadline": "supporting subheadline",
+  "body": "main section copy",
+  "bullets": ["benefit 1", "benefit 2", "benefit 3"],
+  "cta": "call to action"
+}`;
+    case "Homepage Section":
+      return `{
+  "headline": "homepage headline",
+  "subheadline": "homepage subheadline",
+  "body": "main homepage copy",
+  "value_points": ["point 1", "point 2", "point 3"],
+  "cta": "call to action"
+}`;
+    case "Landing Page Copy":
+      return `{
+  "headline": "landing page headline",
+  "subheadline": "supporting subheadline",
+  "problem": "problem statement",
+  "solution": "solution copy",
+  "proof_points": ["proof point 1", "proof point 2", "proof point 3"],
+  "cta": "call to action"
+}`;
+    case "FAQ Block":
+      return `{
+  "intro": "short FAQ intro",
+  "faqs": [
+    { "question": "question", "answer": "answer" }
+  ],
+  "cta": "call to action"
+}`;
+    default:
+      return `{
+  "title": "case study title",
+  "client_type": "type of business",
+  "challenge": "challenge summary",
+  "solution": "solution summary",
+  "outcomes": ["outcome 1", "outcome 2", "outcome 3"],
+  "cta": "call to action"
+}`;
   }
-
-  btn.disabled = false;
-  btn.textContent = "Generate Content";
 }
 
 async function generateImage(imgPrompt, b) {
@@ -920,40 +3097,10 @@ async function generateImage(imgPrompt, b) {
 
   let finalPrompt = imgPrompt;
 
-  // If ref images provided, use GPT-5.4 vision to build a richer prompt
+  // If ref images are provided, turn them into explicit constraints before generation.
   if (hasRef) {
     try {
-      const visionContent = [
-        ...state.refImages.map(img => ({
-          type: "image_url",
-          image_url: { url: `data:${img.type};base64,${img.base64}`, detail: "high" }
-        })),
-        {
-          type: "text",
-          text: `You are an expert image prompt engineer for GPT Image. Study the attached reference image(s) carefully.
-
-Base prompt: ${imgPrompt}
-
-Your task: Rewrite this prompt incorporating precise visual details from the reference images — exact device shape, colour, screen layout, button placement, logo treatment, and any brand visual elements. The rewritten prompt must guide GPT Image to reproduce those elements faithfully in the final scene while keeping the composition marketing-ready.
-
-Return ONLY the rewritten prompt text. No preamble, no explanation.`
-        }
-      ];
-
-      const visionRes = await fetch(WORKER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "gpt-5.4",
-          max_tokens: 600,
-          messages: [{ role: "user", content: visionContent }]
-        })
-      });
-      const visionData = await visionRes.json();
-      if (!visionData.error) {
-        const refined = visionData.content?.[0]?.text?.trim();
-        if (refined) finalPrompt = refined;
-      }
+      finalPrompt = await refineImagePromptWithReferences(imgPrompt);
     } catch(e) { /* fallback to base prompt */ }
 
     const stepVision = document.getElementById("step-vision");
@@ -966,6 +3113,7 @@ Return ONLY the rewritten prompt text. No preamble, no explanation.`
   await new Promise(r => setTimeout(r, 300));
 
   try {
+    const imageToken = await getFreshTurnstileToken();
     const imgRes = await fetch(IMAGE_WORKER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -973,7 +3121,14 @@ Return ONLY the rewritten prompt text. No preamble, no explanation.`
         prompt: finalPrompt,
         size: state.aspectSize,
         quality: "high",
-        model: IMAGE_MODEL_ID
+        model: IMAGE_MODEL_ID,
+        turnstileToken: imageToken,
+        references: state.refImages.map((img) => ({
+          name: img.name || "reference-image",
+          contentType: img.type || "image/png",
+          base64: img.base64,
+          tags: Array.isArray(img.tags) ? img.tags : [],
+        })),
       })
     });
 
@@ -1059,6 +3214,16 @@ async function regenImage() {
   await generateImage(state.imagePrompt, b);
 }
 
+async function generateImageOnly() {
+  if (!supportsImageGeneration()) return;
+  if (state.mainPanelMode !== "image_setup") {
+    openImageWorkspace();
+  }
+  const b = getBrandConfig(state.brand);
+  const { prompt } = buildCurrentImagePrompt();
+  await generateImage(prompt, b);
+}
+
 function toggleImgPrompt() {
   const box = document.getElementById("img-prompt-box");
   if (box) box.style.display = box.style.display === 'none' || !box.style.display ? 'block' : 'none';
@@ -1072,7 +3237,239 @@ function downloadImage() {
   a.click();
 }
 
-function renderResult(r, b, pillar, imgB64, imgState) {
+function buildPublishResultMarkup() {
+  if (!state.result) return "";
+
+  if (isWebsiteChannel()) {
+    const disabled = !isPublishingValidated() || !state.publishingStatus?.shopify?.ready || state.publishingBusy;
+    return `
+      <div class="publish-result">
+        <div class="publish-result-title">Publish</div>
+        <div class="publish-action-row">
+          <button class="publish-action-btn" onclick="publishCurrentToShopify()" ${disabled ? "disabled" : ""}>Publish to Shopify</button>
+        </div>
+        <div class="publish-feedback">${esc(getPublishFeedbackText("shopify"))}</div>
+      </div>`;
+  }
+
+  if (state.platform === "facebook" || state.platform === "instagram") {
+    const canFacebook = Boolean(isPublishingValidated() && state.publishingStatus?.meta?.facebookReady) && !state.publishingBusy;
+    const canInstagram = Boolean(isPublishingValidated() && state.publishingStatus?.meta?.instagramDirectReady) && !state.publishingBusy;
+    return `
+      <div class="publish-result">
+        <div class="publish-result-title">Publish</div>
+        <div class="publish-action-row">
+          <button class="publish-action-btn" onclick="publishCurrentToMeta('facebook')" ${canFacebook ? "" : "disabled"}>Publish to Facebook</button>
+          <button class="publish-action-btn" onclick="publishCurrentToMeta('instagram')" ${canInstagram ? "" : "disabled"}>Publish to Instagram</button>
+        </div>
+        <div class="publish-feedback">${esc(getPublishFeedbackText("meta"))}</div>
+      </div>`;
+  }
+
+  return "";
+}
+
+function getPublishFeedbackText(kind) {
+  if (state.publishingFeedback) return state.publishingFeedback;
+  if (!getPublishAdminToken()) {
+    return "Save the internal publish token, then validate the connection to unlock publishing.";
+  }
+  if (!isPublishingValidated()) {
+    return getPublishingValidationMeta().copy;
+  }
+  if (kind === "shopify") {
+    const shopifyIssues = state.publishingStatus?.shopify?.issues || [];
+    return shopifyIssues.length ? `Shopify is blocked right now.\n${shopifyIssues[0]}` : "Shopify publishing is available here once the Worker is configured.";
+  }
+  const meta = state.publishingStatus?.meta;
+  const metaIssue = !meta?.facebookReady
+    ? meta?.facebookIssues?.[0]
+    : meta?.instagramIssues?.[0];
+  return metaIssue ? `Meta is partially blocked right now.\n${metaIssue}` : "Facebook can publish the generated image directly. Instagram currently also needs a public image URL on the Worker side.";
+}
+
+function getSocialPublishCaption(includeContact = state.includeContactBlock) {
+  const r = state.result || {};
+  const hashtags = (r.hashtags || []).map((tag) => `#${String(tag).replace(/^#/, "")}`).join(" ");
+  const base = [r.headline || "", r.body || "", r.cta || "", hashtags].filter(Boolean).join("\n\n");
+  return includeContact ? appendContactBlock(base) : base;
+}
+
+function rerenderCurrentResult() {
+  if (!state.result) return;
+  const b = getBrandConfig(state.brand);
+  const pillar = getActivePillars().find((entry) => entry.id === state.pillar) || getActivePillars()[0];
+  renderResult(state.result, b, pillar);
+}
+
+function buildResultActionMarkup() {
+  return `
+    <div class="result-actions">
+      <button class="result-action-btn" onclick="restoreOriginalResult()" ${state.originalResult ? "" : "disabled"}>Restore AI version</button>
+      <button class="result-action-btn" onclick="generate({ regenerateFromEdited: true })" ${state.result ? "" : "disabled"}>Regenerate from edited draft</button>
+    </div>`;
+}
+
+function buildEditableSocialMarkup(r, b) {
+  return `
+    <div class="block" style="border-left:3px solid ${b.color}">
+      <div class="block-label">Headline / Hook</div>
+      <input class="editable-input" value="${esc(r.headline)}" oninput="updateDraftField('headline', this.value)" />
+    </div>
+
+    <div class="block">
+      <div class="block-label">Post Copy</div>
+      <textarea class="editable-textarea" oninput="updateDraftField('body', this.value)">${esc(r.body)}</textarea>
+    </div>
+
+    <div class="block">
+      <div class="block-label">CTA</div>
+      <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+    </div>
+
+    <div class="block">
+      <div class="block-label">Hashtags</div>
+      <textarea class="editable-textarea short" oninput="updateDraftHashtags(this.value)">${esc((r.hashtags || []).map((tag) => `#${String(tag).replace(/^#/, "")}`).join(" "))}</textarea>
+    </div>`;
+}
+
+function buildContactBlockMarkup() {
+  const contact = getBrandContact();
+  if (!contact) return "";
+  const lines = buildContactLines();
+  return `
+    <div class="block">
+      <div class="contact-toggle-row">
+        <div>
+          <div class="block-label" style="margin-bottom:4px">${esc(contact.blockTitle || "Contact details")}</div>
+          <div class="contact-toggle-copy">This block stays separate from the AI draft and can be included or excluded from copy and publish output.</div>
+        </div>
+        <button class="contact-toggle-btn" onclick="toggleContactBlock()">${state.includeContactBlock ? "Included" : "Excluded"}</button>
+      </div>
+      <div class="contact-lines">
+        ${lines.map((line) => `<div class="contact-line">${esc(line)}</div>`).join("")}
+      </div>
+    </div>`;
+}
+
+function getWebsiteListPath(label) {
+  switch (label) {
+    case "Key Benefits":
+      return "bullets";
+    case "Value Points":
+      return "value_points";
+    case "Proof Points":
+      return "proof_points";
+    case "Outcomes":
+      return "outcomes";
+    default:
+      return "outline";
+  }
+}
+
+function getShopifyPublishPayload() {
+  const payload = cloneResult(state.result) || {};
+  const contactText = buildContactBlockText();
+  if (!contactText) return payload;
+
+  switch (state.postType) {
+    case "Blog Post":
+      payload.sections = [...(payload.sections || []), { heading: getBrandContact()?.blockTitle || "Contact", body: contactText }];
+      return payload;
+    case "Landing Page Copy":
+      payload.solution = [payload.solution || "", contactText].filter(Boolean).join("\n\n");
+      return payload;
+    case "FAQ Block":
+      payload.faqs = [...(payload.faqs || []), { question: getBrandContact()?.blockTitle || "Contact", answer: contactText }];
+      return payload;
+    case "Case Study":
+      payload.solution = [payload.solution || "", contactText].filter(Boolean).join("\n\n");
+      return payload;
+    default:
+      payload.body = [payload.body || "", contactText].filter(Boolean).join("\n\n");
+      return payload;
+  }
+}
+
+async function publishCurrentToShopify() {
+  const token = getPublishAdminToken();
+  if (!token || !state.result) return;
+
+  state.publishingBusy = true;
+  state.publishingFeedback = "Publishing to Shopify...";
+  rerenderCurrentResult();
+
+  try {
+    const res = await fetch(SHOPIFY_PUBLISH_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Token": token,
+      },
+      body: JSON.stringify({
+        brand: state.brand,
+        contentType: state.postType,
+        payload: getShopifyPublishPayload(),
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "Shopify publish failed");
+    }
+    const result = data.result || {};
+    state.publishingFeedback = `Published to Shopify.\n${result.title || ""}${result.url ? `\n${result.url}` : ""}`.trim();
+  } catch (error) {
+    state.publishingFeedback = `Shopify publish failed.\n${error.message}`;
+  } finally {
+    state.publishingBusy = false;
+    rerenderCurrentResult();
+  }
+}
+
+async function publishCurrentToMeta(target) {
+  const token = getPublishAdminToken();
+  if (!token || !state.result) return;
+
+  state.publishingBusy = true;
+  state.publishingFeedback = `Publishing to ${target === "facebook" ? "Facebook" : "Instagram"}...`;
+  rerenderCurrentResult();
+
+  try {
+    const res = await fetch(META_PUBLISH_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Token": token,
+      },
+      body: JSON.stringify({
+        target,
+        brand: state.brand,
+        platform: state.platform,
+        postType: state.postType,
+        caption: getSocialPublishCaption(),
+        imageBase64: state.imageB64,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "Meta publish failed");
+    }
+    state.publishingFeedback = `Published to ${target === "facebook" ? "Facebook" : "Instagram"}.\nPost ID: ${data.result?.postId || data.result?.publishId || data.result?.id || "created"}`;
+  } catch (error) {
+    state.publishingFeedback = `${target === "facebook" ? "Facebook" : "Instagram"} publish failed.\n${error.message}`;
+  } finally {
+    state.publishingBusy = false;
+    rerenderCurrentResult();
+  }
+}
+
+function renderResult(r, b, pillar) {
+  state.mainPanelMode = "result";
+  if (isWebsiteChannel()) {
+    renderWebsiteResult(r, b, pillar);
+    return;
+  }
+
   document.getElementById("right").innerHTML = `
     <div class="result">
       <div class="meta-bar">
@@ -1086,25 +3483,10 @@ function renderResult(r, b, pillar, imgB64, imgState) {
         </button>
       </div>
 
-      <div class="block" style="border-left:3px solid ${b.color}">
-        <div class="block-label">Headline / Hook</div>
-        <div class="headline-text">${esc(r.headline)}</div>
-      </div>
-
-      <div class="block">
-        <div class="block-label">Post Copy</div>
-        <div class="body-text">${esc(r.body)}</div>
-      </div>
-
-      <div class="block" style="display:flex;align-items:center;gap:14px">
-        <div class="block-label" style="margin-bottom:0;white-space:nowrap">CTA</div>
-        <span class="cta-pill" style="background:${b.color}">${esc(r.cta)}</span>
-      </div>
-
-      <div class="block">
-        <div class="block-label">Hashtags</div>
-        ${r.hashtags.map(h=>`<span class="hashtag">#${esc(h)}</span>`).join("")}
-      </div>
+      ${buildResultActionMarkup()}
+      ${buildQualityReviewMarkup()}
+      ${buildEditableSocialMarkup(r, b)}
+      ${buildContactBlockMarkup()}
 
       <div class="img-block" id="img-block">
         <div class="img-block-header">
@@ -1120,20 +3502,296 @@ function renderResult(r, b, pillar, imgB64, imgState) {
         </div>
       </div>
 
+      ${buildPublishResultMarkup()}
       <button class="regen-btn" onclick="resetRight()">Generate Another</button>
     </div>`;
+  scrollRightToTop();
+}
+
+function renderWebsiteResult(r, b, pillar) {
+  state.mainPanelMode = "result";
+  document.getElementById("right").innerHTML = `
+    <div class="result">
+      <div class="meta-bar">
+        <span class="badge" style="background:${b.color}22;color:${b.color}">${b.name}</span>
+        <span class="badge" style="background:rgba(255,255,255,.06);color:#999">Website</span>
+        <span class="badge" style="background:rgba(255,255,255,.06);color:#999">${state.postType}</span>
+        <span class="badge" style="background:rgba(255,255,255,.06);color:#777">${pillar.label}</span>
+        <button class="copy-all-btn" id="copy-btn" onclick="copyAll()"
+          style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#666">
+          Copy All
+        </button>
+      </div>
+      ${buildResultActionMarkup()}
+      ${buildQualityReviewMarkup()}
+      ${buildWebsiteMarkup(r, b)}
+      ${buildContactBlockMarkup()}
+      ${buildPublishResultMarkup()}
+      <button class="regen-btn" onclick="resetRight()">Generate Another</button>
+    </div>`;
+  scrollRightToTop();
+}
+
+function buildWebsiteMarkup(r, b) {
+  switch (state.postType) {
+    case "Blog Post":
+      return `
+        <div class="block" style="border-left:3px solid ${b.color}">
+          <div class="block-label">Title</div>
+          <input class="editable-input" value="${esc(r.title)}" oninput="updateDraftField('title', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Slug</div>
+          <input class="editable-input" value="${esc(r.slug)}" oninput="updateDraftField('slug', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Meta Description</div>
+          <textarea class="editable-textarea short" oninput="updateDraftField('meta_description', this.value)">${esc(r.meta_description)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Intro</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('intro', this.value)">${esc(r.intro)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Outline (one line per item)</div>
+          <textarea class="editable-textarea short" oninput="updateDraftList('outline', this.value)">${esc((r.outline || []).join("\n"))}</textarea>
+        </div>
+        ${renderWebsiteSections(r.sections)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+    case "Service Page Section":
+      return `
+        <div class="block" style="border-left:3px solid ${b.color}">
+          <div class="block-label">Headline</div>
+          <input class="editable-input" value="${esc(r.headline)}" oninput="updateDraftField('headline', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Subheadline</div>
+          <textarea class="editable-textarea short" oninput="updateDraftField('subheadline', this.value)">${esc(r.subheadline)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Section Copy</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('body', this.value)">${esc(r.body)}</textarea>
+        </div>
+        ${renderWebsiteBulletBlock("Key Benefits", r.bullets)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+    case "Homepage Section":
+      return `
+        <div class="block" style="border-left:3px solid ${b.color}">
+          <div class="block-label">Headline</div>
+          <input class="editable-input" value="${esc(r.headline)}" oninput="updateDraftField('headline', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Subheadline</div>
+          <textarea class="editable-textarea short" oninput="updateDraftField('subheadline', this.value)">${esc(r.subheadline)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Section Copy</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('body', this.value)">${esc(r.body)}</textarea>
+        </div>
+        ${renderWebsiteBulletBlock("Value Points", r.value_points)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+    case "Landing Page Copy":
+      return `
+        <div class="block" style="border-left:3px solid ${b.color}">
+          <div class="block-label">Headline</div>
+          <input class="editable-input" value="${esc(r.headline)}" oninput="updateDraftField('headline', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Subheadline</div>
+          <textarea class="editable-textarea short" oninput="updateDraftField('subheadline', this.value)">${esc(r.subheadline)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Problem</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('problem', this.value)">${esc(r.problem)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Solution</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('solution', this.value)">${esc(r.solution)}</textarea>
+        </div>
+        ${renderWebsiteBulletBlock("Proof Points", r.proof_points)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+    case "FAQ Block":
+      return `
+        <div class="block">
+          <div class="block-label">Intro</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('intro', this.value)">${esc(r.intro)}</textarea>
+        </div>
+        ${renderFaqBlocks(r.faqs)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+    default:
+      return `
+        <div class="block" style="border-left:3px solid ${b.color}">
+          <div class="block-label">Case Study Title</div>
+          <input class="editable-input" value="${esc(r.title)}" oninput="updateDraftField('title', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Client Type</div>
+          <input class="editable-input" value="${esc(r.client_type)}" oninput="updateDraftField('client_type', this.value)" />
+        </div>
+        <div class="block">
+          <div class="block-label">Challenge</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('challenge', this.value)">${esc(r.challenge)}</textarea>
+        </div>
+        <div class="block">
+          <div class="block-label">Solution</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('solution', this.value)">${esc(r.solution)}</textarea>
+        </div>
+        ${renderWebsiteBulletBlock("Outcomes", r.outcomes)}
+        <div class="block">
+          <div class="block-label">CTA</div>
+          <input class="editable-input" value="${esc(r.cta)}" oninput="updateDraftField('cta', this.value)" />
+        </div>`;
+  }
+}
+
+function renderWebsiteSections(sections) {
+  return (sections || []).map((section, index) => `
+    <div class="block">
+      <div class="editable-stack">
+        <div>
+          <div class="block-label">Section ${index + 1} Heading</div>
+          <input class="editable-input" value="${esc(section.heading)}" oninput="updateDraftField('sections.${index}.heading', this.value)" />
+        </div>
+        <div>
+          <div class="block-label">Section ${index + 1} Body</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('sections.${index}.body', this.value)">${esc(section.body)}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderWebsiteBulletBlock(label, items) {
+  return `
+    <div class="block">
+      <div class="block-label">${esc(label)} (one line per item)</div>
+      <textarea class="editable-textarea short" oninput="updateDraftList('${getWebsiteListPath(label)}', this.value)">${esc((items || []).join("\n"))}</textarea>
+    </div>`;
+}
+
+function renderFaqBlocks(faqs) {
+  return (faqs || []).map((faq, index) => `
+    <div class="block">
+      <div class="editable-stack">
+        <div>
+          <div class="block-label">FAQ ${index + 1} Question</div>
+          <input class="editable-input" value="${esc(faq.question)}" oninput="updateDraftField('faqs.${index}.question', this.value)" />
+        </div>
+        <div>
+          <div class="block-label">FAQ ${index + 1} Answer</div>
+          <textarea class="editable-textarea" oninput="updateDraftField('faqs.${index}.answer', this.value)">${esc(faq.answer)}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join("");
 }
 
 function copyAll() {
   if (!state.result) return;
   const r = state.result;
-  const text = `${r.headline}\n\n${r.body}\n\n${r.cta}\n\n${r.hashtags.map(h=>'#'+h).join(' ')}`;
+  const text = isWebsiteChannel() ? formatWebsiteCopy(r) : getSocialPublishCaption();
   navigator.clipboard.writeText(text);
   const btn = document.getElementById("copy-btn");
   btn.textContent = "✓ Copied!";
   btn.style.color = "var(--green)";
   btn.style.borderColor = "var(--green)";
   setTimeout(()=>{ btn.textContent="Copy All"; btn.style.color="#666"; btn.style.borderColor="rgba(255,255,255,.08)"; }, 2000);
+}
+
+function formatWebsiteCopy(r) {
+  const withContact = (parts) => {
+    const contactText = buildContactBlockText();
+    return [...parts, ...(contactText ? ["", contactText] : [])].join("\n");
+  };
+  switch (state.postType) {
+    case "Blog Post":
+      return withContact([
+        `Title: ${r.title || ""}`,
+        `Slug: ${r.slug || ""}`,
+        `Meta Description: ${r.meta_description || ""}`,
+        "",
+        r.intro || "",
+        "",
+        ...(r.outline || []).map((item, index) => `${index + 1}. ${item}`),
+        "",
+        ...(r.sections || []).flatMap((section) => [section.heading || "", section.body || "", ""]),
+        `CTA: ${r.cta || ""}`
+      ]);
+    case "FAQ Block":
+      return withContact([
+        r.intro || "",
+        "",
+        ...(r.faqs || []).flatMap((faq) => [`Q: ${faq.question || ""}`, `A: ${faq.answer || ""}`, ""]),
+        `CTA: ${r.cta || ""}`
+      ]);
+    case "Case Study":
+      return withContact([
+        `Title: ${r.title || ""}`,
+        `Client Type: ${r.client_type || ""}`,
+        "",
+        `Challenge: ${r.challenge || ""}`,
+        "",
+        `Solution: ${r.solution || ""}`,
+        "",
+        "Outcomes:",
+        ...(r.outcomes || []).map((item) => `- ${item}`),
+        "",
+        `CTA: ${r.cta || ""}`
+      ]);
+    case "Landing Page Copy":
+      return withContact([
+        r.headline || "",
+        r.subheadline || "",
+        "",
+        `Problem: ${r.problem || ""}`,
+        "",
+        `Solution: ${r.solution || ""}`,
+        "",
+        "Proof Points:",
+        ...(r.proof_points || []).map((item) => `- ${item}`),
+        "",
+        `CTA: ${r.cta || ""}`
+      ]);
+    case "Homepage Section":
+      return withContact([
+        r.headline || "",
+        r.subheadline || "",
+        "",
+        r.body || "",
+        "",
+        "Value Points:",
+        ...(r.value_points || []).map((item) => `- ${item}`),
+        "",
+        `CTA: ${r.cta || ""}`
+      ]);
+    default:
+      return withContact([
+        r.headline || "",
+        r.subheadline || "",
+        "",
+        r.body || "",
+        "",
+        "Key Benefits:",
+        ...(r.bullets || []).map((item) => `- ${item}`),
+        "",
+        `CTA: ${r.cta || ""}`
+      ]);
+  }
 }
 
 function esc(str) {

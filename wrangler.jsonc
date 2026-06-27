@@ -1,12 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "zb-content-api",
-  "main": "worker.js",
-  "compatibility_date": "2026-05-03",
-  "observability": {
-    "enabled": true
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  // Dedicated Cloudflare Pages config for repo-root Pages deploys.
+  // The Worker config source of truth now lives in wrangler.worker.jsonc.
+  "name": "brand-content-manager",
+  "pages_build_output_dir": "zb-content.api-v2.02"
 }

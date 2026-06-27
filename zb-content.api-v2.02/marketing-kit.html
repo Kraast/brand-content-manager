@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketing Kit v2.02</title>
+<title>Marketing Kit</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -17,97 +17,27 @@
     --border: rgba(255,255,255,.08);
     --brand-glow: rgba(244,127,32,0.22);
     --brand-surface: rgba(244,127,32,0.08);
+    --page-bg: radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%), radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%), linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+    --panel-bg: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18));
+    --panel-flat: rgba(255,255,255,0.045);
+    --input-bg: rgba(8,8,8,0.36);
+    --footer-muted: rgba(243,240,234,0.34);
+    --toast-bg: rgba(12,12,12,0.9);
+    --nav-bg: rgba(255,255,255,0.05);
+    --nav-active-bg: color-mix(in srgb, var(--primary) 12%, rgba(255,255,255,0.03) 88%);
+    --shadow-soft: 0 14px 28px rgba(0,0,0,0.12);
+    --shadow-strong: 0 18px 40px rgba(0,0,0,0.18);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%),
-      radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%),
-      linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+    background: var(--page-bg);
     color: var(--text);
     font-family: 'Space Grotesk', sans-serif;
     font-size: 14px;
     line-height: 1.6;
-  }
-
-  body.smartone-theme {
-    background:
-      radial-gradient(circle at top left, rgba(90,23,180,0.12), transparent 34%),
-      radial-gradient(circle at bottom right, rgba(165,130,255,0.1), transparent 28%),
-      linear-gradient(180deg, #f1edf6 0%, #e9e3f1 54%, #e2dbea 100%);
-    --text: #1f1430;
-    --muted: rgba(31,20,48,0.7);
-    --border: rgba(90,23,180,.16);
-    --surface: rgba(245,241,250,0.76);
-    --surface-2: rgba(236,231,243,0.64);
-    --brand-glow: rgba(90,23,180,0.1);
-    --brand-surface: rgba(90,23,180,0.06);
-  }
-
-  body.smartone-theme .hero-logo {
-    background: transparent;
-    border: none;
-    filter: invert(1);
-    box-shadow: none;
-  }
-
-  body.smartone-theme .card,
-  body.smartone-theme .framework-panel,
-  body.smartone-theme .pillar-panel,
-  body.smartone-theme .post-row,
-  body.smartone-theme .ad-card,
-  body.smartone-theme .email-card,
-  body.smartone-theme .positioning-box,
-  body.smartone-theme .story-box,
-  body.smartone-theme .editor-field input,
-  body.smartone-theme .editor-field textarea,
-  body.smartone-theme nav a,
-  body.smartone-theme nav button {
-    background: linear-gradient(145deg, rgba(244,240,249,0.84), rgba(232,225,241,0.72));
-    box-shadow: 0 14px 28px rgba(90,23,180,0.045);
-  }
-
-  body.smartone-theme .section-icon {
-    color: #ffffff;
-    background: linear-gradient(135deg, #7a39d6, #5a17b4);
-  }
-
-  body.smartone-theme .framework-panel ul,
-  body.smartone-theme .copy-list,
-  body.smartone-theme .notes-list,
-  body.smartone-theme .post-copy,
-  body.smartone-theme .email-subject,
-  body.smartone-theme .tag,
-  body.smartone-theme .editor-status,
-  body.smartone-theme .hint,
-  body.smartone-theme .ad-copy,
-  body.smartone-theme .email-body {
-    color: #1f1430;
-  }
-
-  body.smartone-theme .week-title {
-    color: #ffffff;
-    background: linear-gradient(90deg, #7a39d6, #5a17b4);
-  }
-
-  body.smartone-theme .post-hook,
-  body.smartone-theme .hero-tag,
-  body.smartone-theme .email-title,
-  body.smartone-theme .ad-label,
-  body.smartone-theme .framework-panel h4,
-  body.smartone-theme .pillar-panel h4,
-  body.smartone-theme .card h3 {
-    color: #5a17b4;
-  }
-
-  body.zerobubble-theme {
-    background:
-      radial-gradient(circle at top left, rgba(244,127,32,0.2), transparent 34%),
-      radial-gradient(circle at top right, rgba(75,175,232,0.16), transparent 28%),
-      linear-gradient(160deg, #111111 0%, #181717 48%, #0c0c0c 100%);
   }
 
   .hero {
@@ -120,7 +50,7 @@
     border: 1px solid var(--border);
     background:
       radial-gradient(circle at top right, var(--brand-glow), transparent 38%),
-      linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.18));
+      var(--panel-bg);
     border-radius: 28px;
     padding: 28px;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 60px rgba(0,0,0,0.16);
@@ -197,7 +127,7 @@
 
   nav a,
   nav button {
-    background: rgba(255,255,255,0.05);
+    background: var(--nav-bg);
     border: 1px solid var(--border);
     color: var(--muted);
     font-family: 'Space Grotesk', sans-serif;
@@ -222,8 +152,8 @@
   nav button.active {
     color: var(--primary);
     border-color: color-mix(in srgb, var(--primary) 50%, rgba(255,255,255,.08) 50%);
-    background: color-mix(in srgb, var(--primary) 12%, rgba(255,255,255,0.03) 88%);
-    box-shadow: 0 14px 30px var(--brand-glow);
+    background: var(--nav-active-bg);
+    box-shadow: var(--shadow-soft);
   }
 
   .divider {
@@ -296,7 +226,7 @@
 
   .framework-panel,
   .pillar-panel {
-    background: rgba(255,255,255,0.045);
+    background: var(--panel-flat);
     border-radius: 18px;
     padding: 20px;
     border: 1px solid var(--border);
@@ -384,8 +314,8 @@
   .editor-brand-btn.active {
     color: var(--primary);
     border-color: color-mix(in srgb, var(--primary) 50%, rgba(255,255,255,.08) 50%);
-    background: color-mix(in srgb, var(--primary) 12%, rgba(255,255,255,0.03) 88%);
-    box-shadow: 0 14px 30px var(--brand-glow);
+    background: var(--panel-bg);
+    box-shadow: var(--shadow-soft);
   }
 
   .editor-grid {
@@ -544,13 +474,9 @@
     padding: 14px 16px;
     border-radius: 18px;
     border: 1px solid var(--border);
-    background: rgba(12,12,12,0.9);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    background: var(--toast-bg);
+    box-shadow: var(--shadow-strong);
     backdrop-filter: blur(18px);
-  }
-
-  body.smartone-theme .toast {
-    background: rgba(242,237,248,0.92);
   }
 
   .toast-title {
@@ -576,7 +502,7 @@
   }
 
   .brain-panel {
-    background: rgba(255,255,255,0.045);
+    background: var(--panel-flat);
     border-radius: 18px;
     padding: 18px;
     border: 1px solid var(--border);
@@ -601,11 +527,7 @@
     text-align: center;
     font-size: 11px;
     letter-spacing: .08em;
-    color: rgba(243,240,234,0.34);
-  }
-
-  body.smartone-theme .page-footer {
-    color: rgba(31,20,48,0.42);
+    color: var(--footer-muted);
   }
 
   .week-block {
@@ -623,7 +545,7 @@
   }
 
   .post-row {
-    background: rgba(255,255,255,0.045);
+    background: var(--panel-flat);
     border-radius: 18px;
     border: 1px solid var(--border);
     padding: 16px 18px;
@@ -1161,9 +1083,14 @@
   </div>
 </section>
 
-<div class="page-footer">Copyright © Chris Ellul · v2.02 · Deployed 2026-05-03 17:11 CEST</div>
+<div class="page-footer" data-app-footer>Copyright © Chris Ellul</div>
 <div class="toast-stack" id="toast-stack"></div>
 
+<script type="module">
+  import { applyAppMetadata } from "./app-metadata.mjs";
+
+  applyAppMetadata({ pageKey: "marketingKit", footerSelector: ".page-footer[data-app-footer]" });
+</script>
 <script src="./brand-config.js"></script>
 <script>
   const DIRECTION_KEY = "brandDirectionOverridesV201";
@@ -1173,13 +1100,7 @@
   let editorBrandId = viewBrandId;
 
   function applyTheme(brand) {
-    document.documentElement.style.setProperty("--primary", brand.primary);
-    document.documentElement.style.setProperty("--secondary", brand.secondary);
-    document.documentElement.style.setProperty("--bg", brand.background);
-    document.documentElement.style.setProperty("--brand-glow", `${brand.primary}33`);
-    document.documentElement.style.setProperty("--brand-surface", `${brand.primary}16`);
-    document.body.classList.remove("smartone-theme", "zerobubble-theme");
-    document.body.classList.add(brand.id === "smartone" ? "smartone-theme" : "zerobubble-theme");
+    applySharedBrandTheme(brand.id);
   }
 
   function renderList(targetId, items) {

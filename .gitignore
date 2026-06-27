@@ -5,3 +5,6 @@
 
 # Archive artifacts
 *.zip
+
+# Local editor / agent config
+.claude/

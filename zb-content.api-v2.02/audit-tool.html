@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audit Tool v2.02</title>
+  <title>Audit Tool</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,69 +26,23 @@
       --red: #e86b6b;
       --yellow: #f5c542;
       --brand-secondary: #4BAFE8;
+      --page-bg: radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%), radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%), linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+      --header-bg: rgba(8,8,8,0.72);
+      --footer-muted: rgba(243,240,234,0.34);
+      --nav-bg: rgba(255,255,255,0.04);
+      --nav-hover-bg: rgba(255,255,255,0.08);
+      --nav-active-bg: rgba(244,127,32,0.18);
+      --nav-active-text: #ffffff;
     }
 
     body {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 14px;
-      background:
-        radial-gradient(circle at top left, rgba(244,127,32,0.18), transparent 34%),
-        radial-gradient(circle at top right, rgba(75,175,232,0.14), transparent 30%),
-        linear-gradient(160deg, #0f0f10 0%, #171717 45%, #0b0b0b 100%);
+      background: var(--page-bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    body.smartone-theme {
-      background:
-        radial-gradient(circle at top left, rgba(90,23,180,0.12), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(165,130,255,0.1), transparent 28%),
-        linear-gradient(180deg, #f1edf6 0%, #e9e3f1 54%, #e2dbea 100%);
-      --text: #1f1430;
-      --text-muted: rgba(31,20,48,0.7);
-      --text-dim: rgba(31,20,48,0.52);
-      --border: rgba(90,23,180,.16);
-      --surface: rgba(245,241,250,0.76);
-      --surface2: rgba(236,231,243,0.66);
-      --surface3: rgba(240,235,247,0.8);
-      --orange-glow: rgba(90,23,180,0.11);
-    }
-
-    body.smartone-theme .left-panel,
-    body.smartone-theme .score-card,
-    body.smartone-theme .audit-section,
-    body.smartone-theme .quick-wins,
-    body.smartone-theme .input-row,
-    body.smartone-theme .form-textarea,
-    body.smartone-theme .url-input-wrap,
-    body.smartone-theme .raw-output {
-      box-shadow: 0 14px 28px rgba(90,23,180,0.045);
-    }
-
-    body.smartone-theme .page-label,
-    body.smartone-theme .nav-btn,
-    body.smartone-theme .nav-btn.active {
-      color: #ffffff;
-    }
-
-    body.smartone-theme .nav-btn {
-      background: rgba(90,23,180,0.28);
-      border-color: rgba(90,23,180,0.28);
-    }
-
-    body.smartone-theme .nav-btn:hover,
-    body.smartone-theme .nav-btn.active {
-      background: rgba(90,23,180,0.42);
-      border-color: rgba(90,23,180,0.34);
-    }
-
-    body.zerobubble-theme {
-      background:
-        radial-gradient(circle at top left, rgba(244,127,32,0.2), transparent 34%),
-        radial-gradient(circle at top right, rgba(75,175,232,0.16), transparent 28%),
-        linear-gradient(160deg, #111111 0%, #181717 48%, #0c0c0c 100%);
     }
 
     /* ── HEADER ── */
@@ -98,7 +52,7 @@
       justify-content: space-between;
       padding: 16px 32px;
       border-bottom: 1px solid var(--border);
-      background: rgba(8,8,8,0.72);
+      background: var(--header-bg);
       backdrop-filter: blur(18px);
       position: sticky;
       top: 0;
@@ -155,18 +109,19 @@
       transition: all 0.2s;
       font-family: 'Space Grotesk', sans-serif;
       cursor: pointer;
-      background: rgba(255,255,255,0.04);
+      background: var(--nav-bg);
     }
 
     .nav-btn:hover {
       color: var(--text);
-      background: rgba(255,255,255,0.08);
+      background: var(--nav-hover-bg);
       border-color: rgba(255,255,255,0.14);
     }
 
     .nav-btn.active {
       color: var(--orange);
-      background: var(--orange-dim);
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
       border-color: var(--border-orange);
       box-shadow: 0 12px 28px var(--orange-glow);
     }
@@ -872,11 +827,7 @@
       text-align: center;
       font-size: 11px;
       letter-spacing: .08em;
-      color: rgba(243,240,234,0.34);
-    }
-
-    body.smartone-theme .page-footer {
-      color: rgba(31,20,48,0.42);
+      color: var(--footer-muted);
     }
   </style>
 </head>
@@ -1100,8 +1051,13 @@
 
   </div>
 </main>
-<div class="page-footer">Copyright © Chris Ellul · v2.02 · Deployed 2026-05-03 17:11 CEST</div>
+<div class="page-footer" data-app-footer>Copyright © Chris Ellul</div>
 
+<script type="module">
+  import { applyAppMetadata } from "./app-metadata.mjs";
+
+  applyAppMetadata({ pageKey: "auditTool", footerSelector: ".page-footer[data-app-footer]" });
+</script>
 <script src="./brand-config.js"></script>
 <script>
   // ── State ──
@@ -1126,14 +1082,7 @@
 
   function applyAuditTheme(selected) {
     const brandId = selected === 'sm' ? 'smartone' : 'zerobubble';
-    const brand = BRANDS[brandId];
-    document.body.classList.remove('smartone-theme', 'zerobubble-theme');
-    document.body.classList.add(brandId === 'smartone' ? 'smartone-theme' : 'zerobubble-theme');
-    document.documentElement.style.setProperty('--orange', brand.primary);
-    document.documentElement.style.setProperty('--orange-dim', `${brand.primary}1f`);
-    document.documentElement.style.setProperty('--orange-glow', `${brand.primary}40`);
-    document.documentElement.style.setProperty('--border-orange', `${brand.primary}59`);
-    document.documentElement.style.setProperty('--brand-secondary', brand.secondary);
+    applySharedBrandTheme(brandId);
   }
 
   // ── Tab Switch ──
@@ -1251,7 +1200,7 @@ Only include platforms that were provided. Be specific to Malta B2B context. Qui
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-5.4',
+          model: 'gpt-5.5',
           max_tokens: 1500,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
@@ -1340,7 +1289,7 @@ Quick wins should be specific Shopify/Liquid actions where applicable. Be brutal
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-5.4',
+          model: 'gpt-5.5',
           max_tokens: 2500,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
@@ -1572,7 +1521,7 @@ Format the output clearly. Label each item if you're providing multiple variants
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-5.4',
+          model: 'gpt-5.5',
           max_tokens: 1500,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
