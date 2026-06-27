@@ -366,6 +366,19 @@ async function fetchReferenceObject(key, env, baseHeaders = {}) {
   return new Response(object.body, { headers });
 }
 
+async function hostImageForPublishing(base64, env, requestUrl) {
+  if (!env.REFERENCE_LIBRARY) {
+    throw new Error("Image hosting requires the REFERENCE_LIBRARY R2 binding.");
+  }
+  const bytes = decodeBase64ToBytes(base64);
+  const key = `published/${crypto.randomUUID()}.png`;
+  await env.REFERENCE_LIBRARY.put(key, bytes, {
+    httpMetadata: { contentType: "image/png" },
+    customMetadata: { createdAt: new Date().toISOString(), purpose: "publish" },
+  });
+  return buildReferenceObjectUrl(requestUrl, key);
+}
+
 function paragraphHtml(text) {
   const trimmed = String(text || "").trim();
   if (!trimmed) return "";
@@ -427,22 +440,23 @@ function getMetaStatus(env) {
   if (!META_CONFIG.instagramBusinessAccountId || META_CONFIG.instagramBusinessAccountId.includes("1784140")) {
     instagramIssues.push("Replace the placeholder Instagram Business Account ID in worker.js.");
   }
-  instagramIssues.push("Instagram direct publishing still needs a public image URL from the app backend.");
+  if (!env.REFERENCE_LIBRARY) {
+    instagramIssues.push("Instagram image hosting requires the REFERENCE_LIBRARY R2 binding.");
+  }
 
   const facebookReady = facebookIssues.length === 0;
-  const instagramTokenReady = instagramIssues.length === 1 && instagramIssues[0].includes("public image URL");
-  const instagramDirectReady = false;
+  const instagramReady = instagramIssues.length === 0;
 
   return {
-    ready: facebookReady || instagramTokenReady,
+    ready: facebookReady || instagramReady,
     facebookReady,
-    instagramReady: instagramTokenReady,
-    instagramDirectReady,
+    instagramReady,
+    instagramDirectReady: instagramReady,
     facebookIssues,
     instagramIssues,
     facebookPageId: META_CONFIG.facebookPageId,
     instagramBusinessAccountId: META_CONFIG.instagramBusinessAccountId,
-    instagramRequiresPublicImageUrl: true,
+    instagramRequiresPublicImageUrl: false,
   };
 }
 
@@ -1129,6 +1143,9 @@ export default {
         if (body.target === "facebook") {
           result = await publishToFacebook(body, env);
         } else if (body.target === "instagram") {
+          if (!body.imageUrl && body.imageBase64) {
+            body.imageUrl = await hostImageForPublishing(body.imageBase64, env, request.url);
+          }
           result = await publishToInstagram(body, env);
         } else {
           return errorResponse("Unsupported Meta target", 400, headers);

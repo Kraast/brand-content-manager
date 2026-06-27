@@ -6,7 +6,7 @@
 <title>Content Generator</title>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
   :root {
     --orange: #F47F20;
     --dark: #111111;
@@ -35,7 +35,7 @@
   body {
     background: var(--page-bg);
     color: var(--light);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     min-height: 100vh;
   }
@@ -71,29 +71,39 @@
   .brand-btn {
     border: 1px solid var(--border); padding: 10px 14px; border-radius: var(--control-radius); cursor: pointer;
     font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif; transition: all .2s; background: rgba(255,255,255,0.05);
+    font-family: 'Sora', sans-serif; transition: all .2s; background: rgba(255,255,255,0.05);
   }
 
   .layout { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 62px); max-width: 1240px; margin: 0 auto; }
-  @media(max-width:700px){ .layout { grid-template-columns: 1fr; } }
+  @media(max-width:700px){
+    .layout { grid-template-columns: 1fr; }
+    .header { flex-wrap: wrap; padding: 14px 16px; gap: 10px; }
+    .header-sub { display: none; }
+    .header-title { font-size: 16px; }
+    .header-right { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .back-link, .brand-btn { padding: 8px 10px; }
+  }
 
   .left {
     background: var(--panel-flat);
     border-right: 1px solid var(--border);
-    padding: 22px; display: flex; flex-direction: column; gap: 14px;
+    padding: 26px 22px; display: flex; flex-direction: column; gap: 22px;
     backdrop-filter: blur(14px);
   }
   .sidebar-section {
     display: grid;
-    gap: 10px;
-    padding: 14px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: rgba(255,255,255,0.03);
+    gap: 12px;
+    padding: 0 0 22px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+  }
+  .sidebar-section:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
   }
   .sidebar-section.compact {
-    gap: 8px;
-    padding: 12px 14px;
+    gap: 10px;
   }
   .section-head {
     display: flex;
@@ -110,7 +120,7 @@
   .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .plat-btn {
     border-radius: var(--control-radius); cursor: pointer; font-weight: 600; font-size: 11px; padding: 10px 8px;
-    transition: all .2s; font-family: 'Space Grotesk', sans-serif; backdrop-filter: blur(10px);
+    transition: all .2s; font-family: 'Sora', sans-serif; backdrop-filter: blur(10px);
   }
   .sidebar-select {
     width: 100%;
@@ -121,7 +131,7 @@
     border-radius: var(--panel-radius);
     font-size: 12px;
     outline: none;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     cursor: pointer;
   }
   .pillar-preview {
@@ -145,14 +155,16 @@
   }
   select, textarea {
     width: 100%; background: var(--input-bg); border: 1px solid var(--border); color: var(--light);
-    padding: 12px 14px; border-radius: var(--panel-radius); font-size: 12px; outline: none; font-family: 'Space Grotesk', sans-serif;
+    padding: 12px 14px; border-radius: var(--panel-radius); font-size: 12px; outline: none; font-family: 'Sora', sans-serif;
   }
   select { cursor: pointer; }
   textarea { resize: none; line-height: 1.5; }
+  #content-topic { min-height: 132px; font-size: 13px; padding: 14px; }
+  #content-topic-label { font-size: 11px; }
   .gen-btn {
     border: none; color: #fff; padding: 14px; border-radius: var(--panel-radius); cursor: pointer; font-weight: 700;
     font-size: 12px; text-transform: uppercase; letter-spacing: .08em; transition: all .2s;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     box-shadow: 0 18px 36px var(--brand-glow);
   }
   .gen-btn:disabled { opacity: .5; cursor: not-allowed; }
@@ -170,7 +182,7 @@
   .result { max-width: 760px; }
   .meta-bar { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
   .badge { padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-  .copy-all-btn { margin-left: auto; padding: 8px 12px; border-radius: var(--control-radius); cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+  .copy-all-btn { margin-left: auto; padding: 8px 12px; border-radius: var(--control-radius); cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; transition: all .2s; font-family: 'Sora', sans-serif; }
   .result-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .result-action-btn {
     border: 1px solid var(--border);
@@ -183,7 +195,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     transition: all .2s;
   }
   .result-action-btn:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); }
@@ -210,7 +222,7 @@
     border-radius: var(--control-radius);
     font-size: 13px;
     outline: none;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
   }
   .editable-input { min-height: 44px; }
   .editable-textarea {
@@ -243,7 +255,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     white-space: nowrap;
   }
   .contact-lines { display: grid; gap: 6px; }
@@ -274,7 +286,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     white-space: nowrap;
   }
   .workspace-launch {
@@ -293,7 +305,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     transition: all .2s;
   }
   .workspace-launch-btn:hover {
@@ -350,16 +362,16 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .08em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
   }
 
   /* ── IMAGE BLOCK ── */
   .img-block {
-    background: var(--panel-bg);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-    border-top: 3px solid var(--brand-secondary);
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    padding: 18px 0 0;
     margin-bottom: 10px;
   }
   .img-block-header {
@@ -421,7 +433,7 @@
     text-transform: uppercase;
     letter-spacing: .05em;
     cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     transition: all .2s;
     text-align: center;
   }
@@ -476,21 +488,20 @@
     line-height: 1.6;
   }
 
-  .regen-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 14px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; width: 100%; margin-top: 4px; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+  .regen-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); padding: 12px; border-radius: 14px; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; width: 100%; margin-top: 4px; transition: all .2s; font-family: 'Sora', sans-serif; }
   .regen-btn:hover { color: var(--light); border-color: rgba(255,255,255,.15); background: rgba(255,255,255,0.08); }
   .error-box { background: rgba(224,85,85,.08); border: 1px solid rgba(224,85,85,.25); color: #E05555; padding: 10px 14px; border-radius: 7px; font-size: 12px; }
 
   /* ── REFERENCE IMAGE UPLOAD ── */
   .ref-upload-section {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 0;
   }
   .ref-upload-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px;
-    background: rgba(255,255,255,.03);
+    padding: 10px 0;
+    background: transparent;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     user-select: none;
@@ -501,7 +512,7 @@
   }
   .ref-upload-toggle { font-size: 10px; color: var(--muted); transition: transform .2s; }
   .ref-upload-toggle.open { transform: rotate(180deg); }
-  .ref-upload-body { padding: 12px; display: none; }
+  .ref-upload-body { padding: 14px 0 0; display: none; }
   .ref-upload-body.open { display: block; }
 
   .aspect-row {
@@ -511,7 +522,7 @@
     flex: 1; padding: 6px 4px; border-radius: 6px; cursor: pointer;
     font-size: 10px; font-weight: 700; text-align: center;
     background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-    color: var(--muted); font-family: 'Space Grotesk', sans-serif; transition: all .2s;
+    color: var(--muted); font-family: 'Sora', sans-serif; transition: all .2s;
     letter-spacing: .03em;
   }
   .aspect-btn.active { border-color: var(--ac,#F47F20); color: var(--ac,#F47F20); background: rgba(244,127,32,.1); }
@@ -604,7 +615,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .06em;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     transition: all .2s;
   }
   .ref-library-btn:disabled,
@@ -755,7 +766,7 @@
     border-radius: var(--control-radius);
     font-size: 12px;
     outline: none;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
   }
   .publish-small-btn,
   .publish-action-btn {
@@ -767,7 +778,7 @@
     font-weight: 700;
     letter-spacing: .08em;
     text-transform: uppercase;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Sora', sans-serif;
     cursor: pointer;
     transition: all .2s;
   }
@@ -1021,7 +1032,7 @@
     </div>
     <div class="sidebar-section">
       <label class="field-label" id="content-topic-label" style="margin-bottom:0">Content Prompt <span style="color:rgba(243,240,234,0.58);font-weight:400">(optional)</span></label>
-      <textarea id="content-topic" rows="3" placeholder="e.g. targeting boutique retailers in Sliema, promoting a free demo offer..." oninput="updateContentPromptState(this.value)"></textarea>
+      <textarea id="content-topic" rows="5" placeholder="e.g. targeting boutique retailers in Sliema, promoting a free demo offer..." oninput="updateContentPromptState(this.value)"></textarea>
     </div>
     <div class="sidebar-section" id="image-setup-launch">
       <label class="field-label" style="margin-bottom:0">Image Setup</label>
@@ -1637,7 +1648,7 @@ function getImageWorkspaceMarkup() {
       <div class="workspace-card-head">
         <div>
           <div class="workspace-card-title">Image Setup</div>
-          <div class="workspace-card-copy">Work on the visual brief, references, and saved image library here without crowding the sidebar.</div>
+          <div class="workspace-card-copy">Build your visual brief and references here.</div>
         </div>
         <div class="workspace-top-actions">
           <button class="workspace-ghost-btn" type="button" onclick="generateImageOnly()" ${supportsImageGeneration() ? "" : "disabled"}>Generate Image</button>
@@ -1677,14 +1688,14 @@ function getImageWorkspaceMarkup() {
             <div class="drop-zone-icon">+</div>
             <div class="drop-zone-text">Drop images here or <span>browse</span><br>Device · Background · Logo</div>
           </div>
-          <div class="ref-library-copy" style="margin-top:8px">Quick uploads are for this generation only and get inferred tags from the filename or upload order. To save images under explicit tags for this brand, use the saved library uploader below.</div>
+          <div class="ref-library-copy" style="margin-top:8px">Quick uploads apply to this generation only and are auto-tagged. To tag and reuse images, use the saved library below.</div>
           <div class="ref-thumbs" id="ref-thumbs"></div>
           <div class="ref-library-shell">
             <div class="ref-library-top">
               <label class="field-label" style="margin-bottom:0">Saved Library</label>
               <button class="ref-library-btn" type="button" onclick="loadReferenceLibrary()" id="ref-library-refresh-btn">Refresh</button>
             </div>
-            <div class="ref-library-copy">Saved <strong id="ref-library-brand-label">ZeroBubble</strong> references. Click any image to use it in this generation.</div>
+            <div class="ref-library-copy">Click any saved <strong id="ref-library-brand-label">ZeroBubble</strong> reference to use it.</div>
             <div id="ref-library-toolbar"></div>
             <div id="ref-library-upload"></div>
             <div class="ref-library-status" id="ref-library-status"></div>
@@ -1699,7 +1710,6 @@ function getImageWorkspaceMarkup() {
             <div class="img-block-sub">Set your visual brief, then use Generate Image.</div>
           </div>
         </div>
-        <div class="publish-helper">This workspace lets you test the image setup before or after generating the content draft.</div>
       </div>
     </div>`;
 }
@@ -1865,14 +1875,14 @@ function renderReferenceLibrary() {
   upload.innerHTML = `
     <div class="ref-library-actions">
       <div style="flex:1">
-        <div class="ref-library-copy" style="margin-bottom:8px">Upload first, then set or correct the tag on each saved image card below.</div>
+        <div class="ref-library-copy" style="margin-bottom:8px">Upload, then tag each image on its card below.</div>
       </div>
       <div>
         <button class="ref-library-btn" type="button" onclick="triggerReferenceLibraryUpload()" ${tokenSaved ? "" : "disabled"}>Upload To ${esc(getBrand(state.brand).name)}</button>
         <input type="file" id="ref-library-upload-input" accept="image/*" multiple style="display:none" onchange="handleReferenceLibraryUpload(event)" />
       </div>
     </div>
-    <div class="ref-library-copy">${tokenSaved ? "Uploads are saved under this brand first. Then choose a tag per image and click Save Tag to commit it." : "Save your internal token to upload, retag, or delete saved references."}</div>`;
+    <div class="ref-library-copy">${tokenSaved ? "Choose a tag per image, then Save Tag to commit it." : "Save your internal token to upload or edit references."}</div>`;
 
   status.className = `ref-library-status${state.referenceLibraryError ? " error" : ""}`;
   if (state.referenceLibraryLoading) {
