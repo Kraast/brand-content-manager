@@ -5,9 +5,9 @@
 // Combined they render as the version label, e.g. "v2.03_build20260627".
 // Normal flow: bump APP_VERSION here → `node scripts/release-sync.mjs` (stamps build+time) → deploy.
 // Keep APP_VERSION in sync with the version recorded in the ZB Marketing Dashboard Notion page.
-const APP_VERSION = "v2.03";
+const APP_VERSION = "v2.04";
 const APP_BUILD = "20260627";
-const DEPLOYED_AT = "2026-06-27 22:53 CEST";
+const DEPLOYED_AT = "2026-06-27 23:39 CEST";
 
 export const APP_METADATA = Object.freeze({
   appName: "ZeroBubble App",

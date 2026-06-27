@@ -2862,7 +2862,11 @@ async function generate(options = {}) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: TEXT_MODEL_ID,
-        max_tokens: 1000,
+        // Website content (esp. Blog Post) is long-form structured JSON; the 1000-token
+        // cap truncated it mid-string. Give the website path more headroom; social posts
+        // stay lean. Budget covers reasoning + output on the gpt-5.5 Responses API.
+        max_tokens: isWebsiteChannel() ? 4000 : 1000,
+        reasoning: { effort: "low" },
         response_format: getGenerationResponseFormat(),
         turnstileToken: captionToken,
         messages: [{ role:"user", content: prompt }]

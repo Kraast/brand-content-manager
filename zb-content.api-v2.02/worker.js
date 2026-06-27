@@ -969,6 +969,7 @@ async function handleGenerate(body, env, headers) {
     messages,
     system,
     response_format,
+    reasoning,
   } = body;
   const textConfig = normalizeResponsesTextConfig(response_format);
 
@@ -982,6 +983,9 @@ async function handleGenerate(body, env, headers) {
       model,
       input: buildResponsesInput(messages, system),
       max_output_tokens: max_tokens,
+      // Lower reasoning effort frees more of the token budget for visible output
+      // (prevents long-form blog JSON from truncating). Passed through from the client.
+      ...(reasoning ? { reasoning } : {}),
       ...(textConfig ? { text: textConfig } : {}),
     }),
   });
