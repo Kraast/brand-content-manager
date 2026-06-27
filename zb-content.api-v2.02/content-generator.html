@@ -1226,7 +1226,7 @@ const SOCIAL_POST_TYPE_GUIDANCE = {
 
 function getRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function isWebsiteChannel() { return state.platform === "website"; }
-function supportsImageGeneration() { return !isWebsiteChannel(); }
+function supportsImageGeneration() { return true; }
 
 function buildImagePromptFromUserBrief(topic, platform, postType, hasRef, brandId) {
   const subject = brandId === "smartone"
@@ -1558,7 +1558,7 @@ function updateImagePromptState(value) {
 
 function getEmptyStateCopy() {
   if (isWebsiteChannel()) {
-    return "Pick a website content type, choose a messaging pillar, add optional context, and generate structured copy.";
+    return "Pick a website content type, choose a messaging pillar, add optional context, and generate structured copy. You can add an optional featured image after generating.";
   }
   return "Pick platform, post type, and pillar. Add your content brief. Open Image Setup when you want to work on visuals.";
 }
@@ -1588,10 +1588,6 @@ function updateImageWorkspaceSummary() {
   if (!summary) return;
   const refCount = state.refImages.length;
   const separate = !state.useSamePromptForImage;
-  if (isWebsiteChannel()) {
-    summary.textContent = "Image setup is hidden for website content.";
-    return;
-  }
   summary.textContent = `${refCount} reference${refCount === 1 ? "" : "s"} selected${separate ? " · Separate image brief on" : ""}`;
 }
 
@@ -1602,10 +1598,10 @@ function syncImagePromptControls() {
   const status = document.getElementById("same-image-prompt-status");
   const imagePromptField = document.getElementById("image-topic");
   if (toggleRow) {
-    toggleRow.style.display = isWebsiteChannel() ? "none" : "flex";
+    toggleRow.style.display = "flex";
   }
   if (wrap) {
-    wrap.style.display = state.useSamePromptForImage || isWebsiteChannel() ? "none" : "block";
+    wrap.style.display = state.useSamePromptForImage ? "none" : "block";
   }
   if (toggle) {
     toggle.textContent = state.useSamePromptForImage ? "Turn On" : "Turn Off";
@@ -3530,10 +3526,63 @@ function renderWebsiteResult(r, b, pillar) {
       ${buildQualityReviewMarkup()}
       ${buildWebsiteMarkup(r, b)}
       ${buildContactBlockMarkup()}
+      ${buildWebsiteImageMarkup()}
       ${buildPublishResultMarkup()}
       <button class="regen-btn" onclick="resetRight()">Generate Another</button>
     </div>`;
   scrollRightToTop();
+}
+
+// Featured-image block for website/blog results. On-demand: shows a generate button
+// until an image exists, then the rendered image (persists across result re-renders via
+// state.imageB64). Reuses the shared generateImage pipeline, so references / aspect ratio
+// / separate image brief from Image Setup all apply.
+function buildWebsiteImageMarkup() {
+  if (state.imageB64) {
+    const src = `data:image/png;base64,${state.imageB64}`;
+    const aspectLabel = document.querySelector('.aspect-btn.active')?.dataset?.ratio || state.aspectSize;
+    return `
+      <div class="img-block" id="img-block">
+        <div class="img-block-header">
+          <div>
+            <div class="img-block-title">Featured Image</div>
+            <div class="img-block-sub">${IMAGE_MODEL_LABEL} High · ${aspectLabel} · Click to view full size</div>
+          </div>
+          <button class="show-prompt-btn" onclick="toggleImgPrompt()">View Prompt</button>
+        </div>
+        <div class="generated-image-wrap">
+          <img src="${src}" alt="Generated featured image" onclick="window.open(this.src)" style="cursor:zoom-in" />
+        </div>
+        <div class="img-actions">
+          <button class="img-action-btn btn-download" onclick="downloadImage()">Save Image</button>
+          <button class="img-action-btn btn-regen-img" onclick="regenImage()">Regenerate</button>
+        </div>
+        <div class="prompt-box" id="img-prompt-box">
+          <div class="prompt-hint">Image prompt used:</div>
+          ${esc(state.imagePrompt || "")}
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="img-block" id="img-block">
+      <div class="img-block-header">
+        <div>
+          <div class="img-block-title">Featured Image</div>
+          <div class="img-block-sub">Optional · ${IMAGE_MODEL_LABEL} · generate a hero image for this content</div>
+        </div>
+      </div>
+      <div class="img-actions">
+        <button class="img-action-btn btn-regen-img" style="width:100%" onclick="generateWebsiteImage()">Generate Featured Image</button>
+      </div>
+      <div class="ref-library-copy" style="margin-top:8px">Open <strong>Image Setup</strong> to add reference images, a separate image brief, or change the aspect ratio (Landscape suits blog headers).</div>
+    </div>`;
+}
+
+async function generateWebsiteImage() {
+  const b = getBrandConfig(state.brand);
+  const { prompt } = buildCurrentImagePrompt();
+  await generateImage(prompt, b);
 }
 
 function buildWebsiteMarkup(r, b) {
